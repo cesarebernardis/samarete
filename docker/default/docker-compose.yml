@@ -1,0 +1,45 @@
+version: '2'
+services:
+### Applications Code Container #############################
+  application:
+    image: tianon/true
+    volumes:
+      - ../samarete/:/var/www/html/samarete
+### Applications Code Container #############################
+
+  apache2:
+    build: ./apache2
+    image: default/php:7.0-apache
+    ports:
+      - "80:80"
+    environment:
+      - APPLICATION_ENV=development
+    volumes_from:
+          - application
+    volumes:
+      - ./apache2/vhost/:/etc/apache2/sites-available
+      - ./apache2/vhost/:/etc/apache2/sites-enabled
+    depends_on:
+      - db
+  db:
+    image: mysql:5.7.16
+    ports:
+      - "3307:3306"
+    volumes_from:
+          - application
+    volumes:
+      - ./mysql/db_data:/var/lib/mysql
+      - ./mysql/mysql.cnf:/etc/mysql/conf.d/custom.cnf
+    environment:
+      TZ: "Europe/Rome"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+     - PMA_ARBITRARY=1
+    ports:
+     - "8081:80"
+    depends_on:
+     - db
+

@@ -1,0 +1,4 @@
+[mysqld]
+group_concat_max_len = 8192
+secure_file_priv = /var/www/html
+sql_mode = NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
