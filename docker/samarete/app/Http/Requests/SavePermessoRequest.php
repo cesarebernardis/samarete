@@ -17,7 +17,7 @@ class SavePermessoRequest extends FormRequest
      */
     public function authorize()
     {
-        return UserRepository::checkPermission(Auth::user(), 'edit-permesso');
+        return true;
     }
 
     /**

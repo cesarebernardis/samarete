@@ -56,7 +56,7 @@ class User extends Authenticatable
      */
     public function ruoli()
     {
-        return $this->belongsToMany('Samarete\Ruolo', 'user_has_ruolo');
+        return $this->belongsToMany('Samarete\Models\Ruolo', 'user_has_ruolo');
     }
     
     public function isAdmin()

@@ -28,7 +28,7 @@ class SaveEventoRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => '',
+            'id' => 'integer|nullable|exists:evento,id',
             'nome' => 'string|required|max:100',
             'oggetto' => 'string|nullable|max:200',
             'descrizione' => 'string|nullable',
@@ -38,6 +38,7 @@ class SaveEventoRequest extends FormRequest
             'giorno.data.*' => 'date_format:d/m/Y|after_or_equal:today',
             'giorno.da.*' => 'date_format:H:i',
             'giorno.a.*' => 'date_format:H:i',
+            'giorno.descrizione.*' => 'string|max:200',
             'creatore_id' => 'integer|required|exists:associazione,id',
         ];
     }

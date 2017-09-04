@@ -15,7 +15,7 @@ class ViewUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return UserRepository::checkPermesso('view-user');
+        return true;
     }
 
     /**

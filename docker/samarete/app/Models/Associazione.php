@@ -56,31 +56,7 @@ class Associazione extends Model
      */
     public function user()
     {
-        return $this->belongsTo('Samarete\User', 'gestore_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function associazioneHasEventi()
-    {
-        return $this->hasMany('Samarete\AssociazioneHasEvento');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function associazioneHasProgetti()
-    {
-        return $this->hasMany('Samarete\AssociazioneHasProgetto');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function associazioneHasServizi()
-    {
-        return $this->hasMany('Samarete\AssociazioneHasServizio');
+        return $this->belongsTo('Samarete\Models\User', 'gestore_id');
     }
 
     /**
@@ -88,7 +64,7 @@ class Associazione extends Model
      */
     public function chats()
     {
-        return $this->belongsToMany('Samarete\Chat', 'chat_has_associazione');
+        return $this->belongsToMany('Samarete\Models\Chat', 'chat_has_associazione');
     }
 
     /**
@@ -96,6 +72,21 @@ class Associazione extends Model
      */
     public function messaggi()
     {
-        return $this->hasMany('Samarete\Messaggio', 'autore_id');
+        return $this->hasMany('Samarete\Models\Messaggio', 'autore_id');
+    }
+
+    public function servizi()
+    {
+        return $this->belongsToMany('Samarete\Models\Servizio', 'associazione_has_servizio');
+    }
+
+    public function eventi()
+    {
+        return $this->belongsToMany('Samarete\Models\Evento', 'associazione_has_evento');
+    }
+
+    public function progetti()
+    {
+        return $this->belongsToMany('Samarete\Models\Progetto', 'associazione_has_progetto');
     }
 }

@@ -61,13 +61,13 @@ class EventoRepository
     {
         DB::delete('DELETE FROM evento_has_giorno WHERE evento_id = ?', [$evento['id']]);
         foreach($giorni as $giorno){
-            self::addGiorno($evento, $giorno->data, $giorno->da, $giorno->a);
+            self::addGiorno($evento, $giorno->data, $giorno->da, $giorno->a, $giorno->descrizione);
         }
     }
     
-    public static function addGiorno(Evento $evento, $giorno, $da, $a)
+    public static function addGiorno(Evento $evento, $giorno, $da, $a, $descrizione)
     {
-        DB::insert('INSERT INTO evento_has_giorno (evento_id, giorno, da, a) VALUES(?,?,?,?)', array($evento->id, $giorno, $da, $a));
+        DB::insert('INSERT INTO evento_has_giorno (evento_id, giorno, da, a, descrizione) VALUES(?,?,?,?,?)', array($evento->id, $giorno, $da, $a, $descrizione));
     }
     
     public static function addAssociazione(Evento $evento, Associazione $associazione, $creatore)

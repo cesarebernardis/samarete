@@ -40,7 +40,7 @@
 var eventi = [
     @foreach($evento->giorni as $giorno)
        {
-          title  : "{{ $evento->nome }}",
+          title  : "{{ $evento->nome }} - {{ $giorno->descrizione }}",
           start  : "{{ $giorno->giorno.'T'.$giorno->da }}",
           end    : "{{ $giorno->giorno.'T'.$giorno->a }}",
           color  : '#C2185B',

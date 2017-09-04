@@ -37,6 +37,6 @@ class Permesso extends Model
      */
     public function ruoli()
     {
-        return $this->belongsToMany('Samarete\Ruolo', 'ruolo_has_permesso');
+        return $this->belongsToMany('Samarete\Models\Ruolo', 'ruolo_has_permesso');
     }
 }

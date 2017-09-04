@@ -39,11 +39,11 @@ class Evento extends Model
     protected static $logOnlyDirty = true;
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function associazioneHasEventi()
+    public function associazioni()
     {
-        return $this->hasMany('Samarete\AssociazioneHasEvento');
+        return $this->belongsToMany('Samarete\Models\Associazione', 'associazione_has_evento');
     }
 
     /**
@@ -51,6 +51,6 @@ class Evento extends Model
      */
     public function eventoHasGiorni()
     {
-        return DB::select("SELECT giorno, da, a FROM evento_has_giorno WHERE evento_id = ? ORDER BY giorno ASC", [$this->id]);
+        return DB::select("SELECT giorno, da, a, descrizione FROM evento_has_giorno WHERE evento_id = ? ORDER BY giorno, da, a ASC", [$this->id]);
     }
 }

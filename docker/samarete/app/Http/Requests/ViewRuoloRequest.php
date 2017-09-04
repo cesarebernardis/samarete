@@ -15,8 +15,7 @@ class ViewRuoloRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
-        return UserRepository::checkPermesso('view-ruolo');
+        return true;
     }
 
     /**

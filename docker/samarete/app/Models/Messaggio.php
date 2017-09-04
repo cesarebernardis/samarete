@@ -41,7 +41,7 @@ class Messaggio extends Model
      */
     public function associazione()
     {
-        return $this->belongsTo('Samarete\Associazione', 'autore_id');
+        return $this->belongsTo('Samarete\Models\Associazione', 'autore_id');
     }
 
     /**
@@ -49,6 +49,6 @@ class Messaggio extends Model
      */
     public function chat()
     {
-        return $this->belongsTo('Samarete\Chat');
+        return $this->belongsTo('Samarete\Models\Chat');
     }
 }

@@ -43,15 +43,15 @@ class Progetto extends Model
      */
     public function chat()
     {
-        return $this->belongsTo('Samarete\Chat');
+        return $this->belongsTo('Samarete\Models\Chat');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function associazioneHasProgetti()
+    public function associazioni()
     {
-        return $this->hasMany('Samarete\AssociazioneHasProgetto');
+        return $this->belongsToMany('Samarete\Models\Associazione', 'associazione_has_progetto');
     }
 
     /**
@@ -59,6 +59,6 @@ class Progetto extends Model
      */
     public function files()
     {
-        return $this->belongsToMany('Samarete\File', 'progetto_has_file');
+        return $this->belongsToMany('Samarete\Models\File', 'progetto_has_file');
     }
 }

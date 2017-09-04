@@ -37,7 +37,7 @@ class Chat extends Model
      */
     public function associazioni()
     {
-        return $this->belongsToMany('Samarete\Associazione', 'chat_has_associazione');
+        return $this->belongsToMany('Samarete\Models\Associazione', 'chat_has_associazione');
     }
 
     /**
@@ -45,7 +45,7 @@ class Chat extends Model
      */
     public function messaggi()
     {
-        return $this->hasMany('Samarete\Messaggio');
+        return $this->hasMany('Samarete\Models\Messaggio');
     }
 
     /**
@@ -53,6 +53,6 @@ class Chat extends Model
      */
     public function progetti()
     {
-        return $this->hasMany('Samarete\Progetto');
+        return $this->hasMany('Samarete\Models\Progetto');
     }
 }

@@ -48,7 +48,7 @@ class RuoloController extends Controller
     
     public function getPermessiRuoli(Request $request)
     {
-        $this->authorize('edit', Ruolo::class);
+        $this->authorize('update', Ruolo::class);
         return response()->json($this->ruoli->getPermessiRuoli());
     }
     
@@ -88,7 +88,7 @@ class RuoloController extends Controller
     public function toggleRuolo(DeleteRuoloRequest $request)
     {
         $ruolo = $this->ruoli->getById($request->id);
-        $this->authorize('edit', $ruolo);
+        $this->authorize('update', $ruolo);
         $ruolo->attivo = !$ruolo->attivo;
         $ruolo->save();
         return response()->json(array("status" => 200, "message" => "OK"));
@@ -96,7 +96,7 @@ class RuoloController extends Controller
     
     public function deleteRuolo(DeleteRuoloRequest $request)
     {
-        $ruolo = $this->ruoli->getById($request->id)
+        $ruolo = $this->ruoli->getById($request->id);
         $this->authorize('delete', $ruolo);
         $this->ruoli->delete($ruolo);
         return response()->json(array("status" => 200, "message" => "OK"));
@@ -109,7 +109,7 @@ class RuoloController extends Controller
             $ruolo = RuoloRepository::getById($request->id);
             if(empty($ruolo))
                 return response()->json(array("status" => 400, "message" => "ID Ruolo non valido"));
-            $this->authorize('edit', $ruolo);
+            $this->authorize('update', $ruolo);
         }else{
             $this->authorize('create', Ruolo::class);
             $ruolo->data_creazione = new \DateTime();

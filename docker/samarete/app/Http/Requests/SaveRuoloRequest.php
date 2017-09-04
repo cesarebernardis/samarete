@@ -17,7 +17,7 @@ class SaveRuoloRequest extends FormRequest
      */
     public function authorize()
     {
-        return UserRepository::checkPermission(Auth::user(), 'edit-ruolo');
+        return true;
     }
 
     /**

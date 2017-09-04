@@ -2,6 +2,8 @@
 
 namespace Samarete\Repositories;
 
+use Carbon\Carbon;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
@@ -92,6 +94,22 @@ class FileRepository
         return $newfile;
     }
     
+    public static function deleteTmpById($id)
+    {
+        $file = self::getTmpById($id);
+        if(empty($file)){
+            return false;
+        }
+        return self::deleteTmp($file);
+    }
+    
+    public static function deleteTmp(FileTmp $file)
+    {
+        DB::delete('DELETE FROM file_tmp WHERE id = ?', [$file['id']]);
+        Storage::delete('tmp/'.$file['nome']);
+        return true;
+    }
+    
     public static function deleteById($id)
     {
         $file = self::getById($id);
@@ -113,6 +131,13 @@ class FileRepository
     {
         $content = Storage::get($file->getCompleteFilepath());
         return 'data:image/*;base64,'.base64_encode($content);
+    }
+    
+    public static function clearTmpFileTable()
+    {
+        foreach(FileTmp::where('data_caricamento', '<', Carbon::yesterday())->get() as $file){
+            self::deleteTmp($file);
+        }
     }
     
 }

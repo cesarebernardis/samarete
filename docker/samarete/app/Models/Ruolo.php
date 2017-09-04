@@ -40,7 +40,7 @@ class Ruolo extends Model
      */
     public function permessi()
     {
-        return $this->belongsToMany('Samarete\Permesso', 'ruolo_has_permesso');
+        return $this->belongsToMany('Samarete\Models\Permesso', 'ruolo_has_permesso');
     }
 
     /**
@@ -48,6 +48,6 @@ class Ruolo extends Model
      */
     public function users()
     {
-        return $this->belongsToMany('Samarete\User', 'user_has_ruolo');
+        return $this->belongsToMany('Samarete\Models\User', 'user_has_ruolo');
     }
 }

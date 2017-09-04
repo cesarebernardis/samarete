@@ -6,6 +6,7 @@ use Samarete\Http\Requests\ViewFileRequest;
 use Samarete\Http\Requests\SaveFileRequest;
 use Samarete\Http\Requests\SaveMultipleFileRequest;
 use Samarete\Http\Requests\SaveTmpFileRequest;
+use Samarete\Http\Requests\DeleteTmpFileRequest;
 use Samarete\Http\Requests\DeleteFileRequest;
 use Samarete\Http\Requests\ManagePermessoRequest;
 
@@ -60,7 +61,7 @@ class FileController extends Controller
         return response()->download($pathToFile, $file->nome_originale);
     }
     
-    public function deleteTmpFile(DeleteFileRequest $request)
+    public function deleteTmpFile(DeleteTmpFileRequest $request)
     {
         $file = $this->files->getTmpById($request->id);
         $this->authorize('delete', $file);

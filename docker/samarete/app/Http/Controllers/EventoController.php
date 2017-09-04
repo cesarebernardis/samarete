@@ -92,12 +92,8 @@ class EventoController extends Controller
         $evento = new Evento;
         $creatore = 0;
         if(!empty($request->id)){
-            $evento = $this->eventi->getById($request->id);
-            if(empty($evento))
-                return response()->json(array("status" => 400, "message" => "ID Evento non valido"));
+            $evento = Evento::where('id', $request->id)->first();
             $this->authorize('update', $evento);
-            unset($evento->logo_base64);
-            unset($evento->giorni);
         }else{
             $this->authorize('create', Evento::class);
             $evento->data_creazione = new \DateTime();
@@ -106,6 +102,7 @@ class EventoController extends Controller
         $evento->nome = $request->nome;
         $evento->oggetto = $request->oggetto;
         $evento->descrizione = $request->descrizione;
+        $evento->logo = $request->logo;
         $associazione = AssociazioneRepository::getById($request->creatore_id);
         if(!empty($request->new_logo)){
             $file = FileRepository::confirmFile($associazione, FileRepository::getTmpById($request->new_logo));
@@ -126,6 +123,7 @@ class EventoController extends Controller
             $g->data = date_create_from_format('d/m/Y', $giorni['data'][$i]);
             $g->da = date_create_from_format('H:i', $giorni['da'][$i]);
             $g->a = date_create_from_format('H:i', $giorni['a'][$i]);
+            $g->descrizione = $giorni['descrizione'][$i];
             $parsed[$i] = $g;
         }
         return $parsed;

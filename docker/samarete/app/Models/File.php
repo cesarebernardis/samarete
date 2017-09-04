@@ -58,7 +58,7 @@ class File extends Model
      */
     public function progetti()
     {
-        return $this->belongsToMany('Samarete\Progetto', 'progetto_has_file');
+        return $this->belongsToMany('Samarete\Models\Progetto', 'progetto_has_file');
     }
     
     public function getCompleteFilePath()

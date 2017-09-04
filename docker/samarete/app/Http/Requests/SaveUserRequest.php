@@ -17,7 +17,7 @@ class SaveUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return UserRepository::checkPermission(Auth::user(), 'edit-user');
+        return true;
     }
 
     /**

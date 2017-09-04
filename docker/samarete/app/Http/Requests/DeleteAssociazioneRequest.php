@@ -13,7 +13,6 @@ class DeleteAssociazioneRequest extends FormRequest
      */
     public function authorize()
     {
-        /*TODO check permissions*/
         return true;
     }
 

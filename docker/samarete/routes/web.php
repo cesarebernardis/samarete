@@ -86,6 +86,17 @@ Route::post('/eventi/save-evento', 'EventoController@saveEvento')->middleware('a
 Route::post('/eventi/delete-evento', 'EventoController@deleteEvento')->middleware('ajax');
 Route::post('/eventi/get-logo', 'EventoController@getLogo')->middleware('ajax');
 
+//SERVIZI
+Route::get('/servizi', 'EventoController@index');
+Route::get('/servizi/view-servizio', 'EventoController@viewEvento');
+Route::get('/servizi/edit-servizio', 'EventoController@editEvento');
+
+Route::post('/servizi/get-servizio', 'EventoController@getEvento')->middleware('ajax');
+Route::get('/servizi/get-servizi', 'EventoController@getEventi')->middleware('ajax');
+Route::post('/servizi/save-servizio', 'EventoController@saveEvento')->middleware('ajax');
+Route::post('/servizi/delete-servizio', 'EventoController@deleteEvento')->middleware('ajax');
+Route::post('/servizi/get-logo', 'EventoController@getLogo')->middleware('ajax');
+
 
 Auth::routes();
 

@@ -39,7 +39,7 @@
                       </div><div class="form-group">
                         <label class="control-label col-sm-4" for="descrizione">Descrizione: </label>
                         <div class="col-sm-8">
-                          <input type="textarea" class="form-control" id="descrizione" name="descrizione" placeholder="Descrizione" value="{{ $evento ? $evento->descrizione : '' }}">
+                          <textarea class="form-control" id="descrizione" name="descrizione" placeholder="Descrizione" rows="4">{{ $evento ? $evento->descrizione : '' }}</textarea>
                         </div>
                       </div>
                       <div class="giorni">
@@ -63,7 +63,7 @@
         <div class="col-md-8"></div>
         <div class="col-md-4 text-align-right">
             <button type="button" class="btn btn-primary submit">Salva</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+            <button type="button" class="btn btn-secondary cancel">Annulla</button>
         </div>
     </div>
     </form>
@@ -82,16 +82,21 @@ var logoDropzone = new Dropzone("div#upload-logo", {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
 		removedfile: function(file) {
-			var name = $("#filename").val();
-			$.ajax({
-				type: 'POST',
-				url: '/file/delete-tmp',
-				data: "id="+name
-			});
-			$("#new_logo").val("");
+            if($("#new_logo").val()){
+                var fileid = $("#new_logo").val();
+            }else{
+                $("#logo").val("");
+            }
+            if(fileid){
+                $.ajax({
+                    type: 'POST',
+                    url: '/file/delete-tmp',
+                    data: {id: fileid}
+                });
+                $("#new_logo").val("");
+            }
             $("div#upload-logo .dz-message span").show();
-			var _ref;
-    		return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+    		return file.previewElement != null ? file.previewElement.parentNode.removeChild(file.previewElement) : void 0;
 		},
         success: function(file, response){
             if(response){
@@ -113,30 +118,39 @@ function addDay(){
     var html = '\
         <div class="form-group" id="'+id+'">\
           <label class="control-label col-sm-4" for="descrizione">Giorno '+n+': </label>\
-            <div class="col-sm-8">\
-              <div class="input-group date giorno">\
-                <input type="text" name="giorno[data][]" class="form-control data" />\
-                <span class="input-group-addon">\
-                  <span class="glyphicon glyphicon-calendar"></span>\
-                </span>\
+            <div class="col-sm-4">\
+              <div class="col-md-12">\
+                  <div class="input-group date giorno">\
+                    <input type="text" name="giorno[data][]" class="form-control data" />\
+                    <span class="input-group-addon">\
+                      <span class="glyphicon glyphicon-calendar"></span>\
+                    </span>\
+                  </div>\
+              </div>\
+              <div class="col-sm-6">Da\
+                  <div class="input-group date da">\
+                    <input type="text" name="giorno[da][]" class="form-control da" />\
+                    <span class="input-group-addon">\
+                      <span class="glyphicon glyphicon-time"></span>\
+                    </span>\
+                  </div>\
+              </div>\
+              <div class="col-sm-6">A\
+                  <div class="input-group date a">\
+                    <input type="text" name="giorno[a][]" class="form-control a" />\
+                    <span class="input-group-addon">\
+                      <span class="glyphicon glyphicon-time"></span>\
+                    </span>\
+                  </div>\
               </div>\
             </div>\
-            <div class="col-sm-4"></div>\
-            <div class="col-sm-4">Da\
-              <div class="input-group date da">\
-                <input type="text" name="giorno[da][]" class="form-control da" />\
-                <span class="input-group-addon">\
-                  <span class="glyphicon glyphicon-time"></span>\
-                </span>\
-              </div>\
-            </div>\
-            <div class="col-sm-4">A\
-              <div class="input-group date a">\
-                <input type="text" name="giorno[a][]" class="form-control a" />\
-                <span class="input-group-addon">\
-                  <span class="glyphicon glyphicon-time"></span>\
-                </span>\
-              </div>\
+            <div class="col-sm-4">\
+                Descrizione:\
+                <div class="form-group">\
+                    <div class="col-sm-12">\
+                       <textarea class="form-control descrizione" name="giorno[descrizione][]" rows="2" maxlength="200"></textarea>\
+                    </div>\
+                </div>\
             </div>\
         </div>\
     ';
@@ -184,6 +198,7 @@ $(document).ready(function() {
             echo "$('#giorno_".$i." .data').val('".date_format($from, 'd/m/Y')."');\n";
             echo "$('#giorno_".$i." .da').val('".date_format($from, 'H:i')."');\n";
             echo "$('#giorno_".$i." .a').val('".date_format($to, 'H:i')."');\n";
+            echo "$('#giorno_".$i." .descrizione').val('".$giorno->descrizione."');\n";
             $i++;
         }
         ?>
@@ -251,6 +266,8 @@ $(document).ready(function() {
            }
        });
     });
+    
+    $("#evento button.cancel").click(function(){ window.location.href = "/eventi"; });
 });
 </script>
 @endsection

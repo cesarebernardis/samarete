@@ -37,12 +37,9 @@ class Servizio extends Model
     protected $fillable = ['nome', 'oggetto', 'descrizione', 'data_inizio', 'data_fine', 'logo', 'data_creazione'];
     protected static $logAttributes = ['nome', 'oggetto', 'descrizione', 'data_inizio', 'data_fine', 'logo', 'data_creazione'];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function associazioneHasServizi()
+    public function associazioni()
     {
-        return $this->hasMany('Samarete\AssociazioneHasServizio');
+        return $this->belongsToMany('Samarete\Models\Associazione', 'associazione_has_servizio');
     }
 
     /**
@@ -50,6 +47,6 @@ class Servizio extends Model
      */
     public function servizioHasGiorni()
     {
-        return $this->hasMany('Samarete\ServizioHasGiorno');
+        return DB::select("SELECT giorno, da, a, descrizione FROM servizio_has_giorno WHERE servizio_id = ? ORDER BY giorno, da, a ASC", [$this->id]);
     }
 }
