@@ -49,7 +49,11 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        <li><a href="/eventi">Eventi</a></li>
+                        <li><a href="/servizi">Servizi</a></li>
+                        <li><a href="/progetti">Progetti</a></li>
+                        <li><a href="/aiuto">Chiedi Aiuto</a></li>
+                        <li><a href="/calendario">Calendario</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

@@ -106,6 +106,14 @@ var logoDropzone = new Dropzone("div#upload-logo", {
         },
 		maxFiles: 1,
         maxFilesize: 5, //MB
+        init: function() {
+            this.on("maxfilesexceeded", function(file) {
+                if(file != null && this.files.length > 1){
+                  this.removeFile(file);
+                  swal("Attento!", "Puoi caricare un solo file alla volta!", "warning");
+                }
+            });
+        }  
 		uploadMultiple: false, 
 		dictMaxFilesExceeded: "Puoi caricaricare solo 1 file alla volta.",
 		dictRemoveFile: "Cancella file",

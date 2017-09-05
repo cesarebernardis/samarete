@@ -87,17 +87,33 @@ Route::post('/eventi/delete-evento', 'EventoController@deleteEvento')->middlewar
 Route::post('/eventi/get-logo', 'EventoController@getLogo')->middleware('ajax');
 
 //SERVIZI
-Route::get('/servizi', 'EventoController@index');
-Route::get('/servizi/view-servizio', 'EventoController@viewEvento');
-Route::get('/servizi/edit-servizio', 'EventoController@editEvento');
+Route::get('/servizi', 'ServizioController@index');
+Route::get('/servizi/view-servizio', 'ServizioController@viewEvento');
+Route::get('/servizi/edit-servizio', 'ServizioController@editEvento');
 
-Route::post('/servizi/get-servizio', 'EventoController@getEvento')->middleware('ajax');
-Route::get('/servizi/get-servizi', 'EventoController@getEventi')->middleware('ajax');
-Route::post('/servizi/save-servizio', 'EventoController@saveEvento')->middleware('ajax');
-Route::post('/servizi/delete-servizio', 'EventoController@deleteEvento')->middleware('ajax');
-Route::post('/servizi/get-logo', 'EventoController@getLogo')->middleware('ajax');
+Route::post('/servizi/get-servizio', 'ServizioController@getEvento')->middleware('ajax');
+Route::get('/servizi/get-servizi', 'ServizioController@getEventi')->middleware('ajax');
+Route::post('/servizi/save-servizio', 'ServizioController@saveEvento')->middleware('ajax');
+Route::post('/servizi/delete-servizio', 'ServizioController@deleteEvento')->middleware('ajax');
+Route::post('/servizi/get-logo', 'ServizioController@getLogo')->middleware('ajax');
+
+//PROGETTI
+Route::get('/progetti', 'ProgettoController@index');
+Route::get('/progetti/view-progettio', 'ProgettoController@viewEvento');
+Route::get('/progetti/edit-progettio', 'ProgettoController@editEvento');
+
+Route::post('/progetti/get-progettio', 'ProgettoController@getEvento')->middleware('ajax');
+Route::get('/progetti/get-progetti', 'ProgettoController@getEventi')->middleware('ajax');
+Route::post('/progetti/save-progettio', 'ProgettoController@saveEvento')->middleware('ajax');
+Route::post('/progetti/delete-progettio', 'ProgettoController@deleteEvento')->middleware('ajax');
+Route::post('/progetti/get-logo', 'ProgettoController@getLogo')->middleware('ajax');
+
+//CALENDARIO
+Route::get('/calendario', 'CalendarioController@index');
 
 
 Auth::routes();
 
+//HOME
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
