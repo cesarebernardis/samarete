@@ -1,6 +1,0 @@
-# exclude everything
-db_data/*
-
-# exception to the rule
-!db_data/auto.cnf
-!db_data/samarete/*
