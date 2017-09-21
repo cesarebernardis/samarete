@@ -111,6 +111,12 @@ Route::post('/progetti/get-logo', 'ProgettoController@getLogo')->middleware('aja
 //CALENDARIO
 Route::get('/calendario', 'CalendarioController@index');
 
+//RICHIESTE
+Route::get('/richieste', 'RichiestaController@index');
+Route::get('/richieste/new', 'RichiestaController@newRichiesta');
+Route::post('/richieste/get-richiesta', 'RichiestaController@getRichiesta')->middleware('ajax');
+Route::post('/richieste/save-richiesta', 'RichiestaController@saveRichiesta')->middleware('ajax');
+
 
 Auth::routes();
 

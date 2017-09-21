@@ -52,7 +52,7 @@
                         <li><a href="/eventi">Eventi</a></li>
                         <li><a href="/servizi">Servizi</a></li>
                         <li><a href="/progetti">Progetti</a></li>
-                        <li><a href="/aiuto">Chiedi Aiuto</a></li>
+                        <li><a href="/richieste/new">Chiedi Aiuto</a></li>
                         <li><a href="/calendario">Calendario</a></li>
                     </ul>
 

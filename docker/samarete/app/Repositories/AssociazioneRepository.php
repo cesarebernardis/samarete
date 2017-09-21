@@ -22,6 +22,16 @@ class AssociazioneRepository
         return $associazioni;
     }
     
+    public static function getActive()
+    {
+        $associazioni = array();
+        foreach(Associazione::where('attivo', 1)->get() as $associazione){
+            $associazione->logo_base64 = self::getLogoBase64($associazione);
+            $associazioni[] = $associazione;
+        }
+        return $associazioni;
+    }
+    
     public static function getByNome($name)
     {
         $associazione = Associazione::where('nome', $name)->first();

@@ -22,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
         'Samarete\Models\Evento' => 'Samarete\Policies\EventoPolicy',
         'Samarete\Models\Servizio' => 'Samarete\Policies\ServizioPolicy',
         'Samarete\Models\Progetto' => 'Samarete\Policies\ProgettoPolicy',
+        'Samarete\Models\Richiesta' => 'Samarete\Policies\RichiestaPolicy',
     ];
 
     /**

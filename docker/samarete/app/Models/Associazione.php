@@ -3,7 +3,11 @@
 namespace Samarete\Models;
 
 use Illuminate\Database\Eloquent\Model;
+
 use Spatie\Activitylog\Traits\LogsActivity;
+
+use Samarete\Models\Richiesta;
+use Samarete\Repositories\RichiestaRepository;
 
 /**
  * @property int $id
@@ -88,5 +92,15 @@ class Associazione extends Model
     public function progetti()
     {
         return $this->belongsToMany('Samarete\Models\Progetto', 'associazione_has_progetto');
+    }
+
+    public function richieste()
+    {
+        $richieste = RichiestaRepository::getGlobali();
+        foreach(DB::select('SELECT * FROM richiesta_has_associazione WHERE associazione_id = ?', [$this->id]) as $rid){
+            $richieste[] = RichiestaRepository::getById($rid);
+        }
+        
+        return $richieste;
     }
 }
