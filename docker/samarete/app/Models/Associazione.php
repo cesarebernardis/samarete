@@ -3,6 +3,7 @@
 namespace Samarete\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -98,7 +99,8 @@ class Associazione extends Model
     {
         $richieste = RichiestaRepository::getGlobali();
         foreach(DB::select('SELECT * FROM richiesta_has_associazione WHERE associazione_id = ?', [$this->id]) as $rid){
-            $richieste[] = RichiestaRepository::getById($rid);
+            $r = RichiestaRepository::getById($rid->richiesta_id);
+            if($r) $richieste[] = $r;
         }
         
         return $richieste;

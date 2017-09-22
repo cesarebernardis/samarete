@@ -1,33 +1,26 @@
 @extends('layouts.app')
 
 @section('styles')
-<link href="{{ asset('css/eventi/index.css') }}" rel="stylesheet">
+<link href="{{ asset('css/richieste/index.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
 <div class="container">
     <div class="row itemlist">
-    @if (empty($eventi))
-        <h2>Nessun evento trovato</h2>
+    @if (empty($richieste))
+        <h2>Nessun richiesta trovata</h2>
     @else
-        @foreach ($eventi as $evento)
-            <div class="col-md-4">
+        @foreach ($richieste->sortByDesc('data_creazione') as $richiesta)
+            <div class="col-md-6">
                 <div class="well item">
-                    <div class="thumbnail"><img src="{{ empty($evento->logo_base64) ? asset('img/no-image-available.png') : $evento->logo_base64 }}"/></div>
-                    <a href="/eventi/view-evento?id={{ $evento->id }}"><h4 class="title">{{ $evento->nome }}</h4></a>
-                    <p class="object">{{ $evento->oggetto }}</p>
+                    <a href="/richieste/view?id={{ $richiesta->id }}"><h4 class="title">{{ $richiesta->oggetto }}</h4></a>
+                    <div class="contacts">Contatti: {{ $richiesta->contatto_1.(empty($richiesta->contatto_2) ? '' : ', '.$richiesta->contatto_2) }}</div>
+                    <div class="date"><span>{{ $richiesta->data_creazione }}</span></div>
                 </div>
             </div>
         @endforeach
     @endif
     </div>
-    @can('create', Samarete\Models\Evento::class)
-    <div class="row">
-        <div class="col-md-12">
-            <a href="/eventi/edit-evento"><button class="btn btn-primary">Crea nuovo evento</button></a>
-        </div>
-    </div>
-    @endcan
 </div>
 @endsection
 

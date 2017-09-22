@@ -39,7 +39,7 @@ class RichiestaController extends Controller
     
     public function index(Request $request)
     {
-        $this->authorize('view');
+        $this->authorize('view', Richiesta::class);
         $associazione = Auth::user()->associazioni()->first();
         return response()->view('richieste.index', ['richieste' => $associazione->richieste()]);
     }
@@ -54,6 +54,14 @@ class RichiestaController extends Controller
         $richiesta = $request->richiesta();
         if(empty($richiesta)) redirect('/richieste');
         return response()->view('richieste.view', ['richiesta' => $richiesta]);
+    }
+    
+    public function evadiRichiesta(ViewRichiestaRequest $request)
+    {
+        $richiesta = $request->richiesta();
+        if(empty($richiesta)) response()->json(array("status" => 404, "message" => "NOT FOUND"));
+        $this->richieste->evadiRichiesta($richiesta, Auth::user()->associazioni()->first());
+        return response()->json(array("status" => 200, "message" => "OK"));
     }
     
     public function getRichieste(Request $request)

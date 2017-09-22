@@ -1,0 +1,26 @@
+.title {
+    margin-bottom: 10px;
+}
+
+.contacts {
+    font-size: 13px;
+    font-style: italic;
+}
+
+.text {
+    margin: 10px 0;
+}
+
+.date {
+    font-size: 12px;
+    font-style: italic;
+}
+
+.commands {
+    border-top: 1px solid #DDD;
+    padding-top: 10px;
+}
+
+.commands div {
+    padding: 0;
+}

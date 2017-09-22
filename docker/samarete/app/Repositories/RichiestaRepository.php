@@ -9,6 +9,8 @@ use Samarete\Models\Associazione;
 
 use Samarete\Repositories\FileRepository;
 
+use Carbon\Carbon;
+
 class RichiestaRepository
 {
     public static function getAll()
@@ -20,21 +22,25 @@ class RichiestaRepository
         return $richieste;
     }
     
-    public static function getByNome($name)
+    public static function getByNome($name, $showall = false)
     {
-        $richiesta = Richiesta::where('nome', $name)->first();
-        return $richiesta;
+        $richiesta = Richiesta::where('nome', $name);
+        if(!$showall) $richiesta = $richiesta->where('evasa_da', null);
+        return $richiesta->first();
     }
     
-    public static function getById($id)
+    public static function getById($id, $showall = false)
     {
-        $richiesta = Richiesta::where('id', $id)->first();
-        return $richiesta;
+        $richiesta = Richiesta::where('id', $id);
+        if(!$showall) $richiesta = $richiesta->where('evasa_da', null);
+        return $richiesta->first();
     }
     
-    public static function getGlobali()
+    public static function getGlobali($showall = false)
     {
-        return Richiesta::where('globale', 1)->get();
+        $richiesta = Richiesta::where('globale', 1);
+        if(!$showall) $richiesta = $richiesta->where('evasa_da', null);
+        return $richiesta->get();
     }
     
     public static function richiestaHasAssociazione(Richiesta $richiesta, Associazione $associazione)
@@ -50,6 +56,13 @@ class RichiestaRepository
     public static function addAssociazione(Richiesta $richiesta, Associazione $associazione)
     {
         DB::insert('INSERT IGNORE INTO richiesta_has_associazione (associazione_id, richiesta_id) VALUES(?,?)', array($associazione->id, $richiesta->id));
+    }
+    
+    public static function evadiRichiesta(Richiesta $richiesta, Associazione $associazione)
+    {
+        $richiesta->evasa_da = $associazione->id;
+        $richiesta->data_evasione = Carbon::now();
+        $richiesta->save();
     }
     
     public static function deleteById($id)

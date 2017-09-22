@@ -88,13 +88,13 @@ Route::post('/eventi/get-logo', 'EventoController@getLogo')->middleware('ajax');
 
 //SERVIZI
 Route::get('/servizi', 'ServizioController@index');
-Route::get('/servizi/view-servizio', 'ServizioController@viewEvento');
-Route::get('/servizi/edit-servizio', 'ServizioController@editEvento');
+Route::get('/servizi/view-servizio', 'ServizioController@viewServizio');
+Route::get('/servizi/edit-servizio', 'ServizioController@editServizio');
 
-Route::post('/servizi/get-servizio', 'ServizioController@getEvento')->middleware('ajax');
+Route::post('/servizi/get-servizio', 'ServizioController@getServizio')->middleware('ajax');
 Route::get('/servizi/get-servizi', 'ServizioController@getEventi')->middleware('ajax');
-Route::post('/servizi/save-servizio', 'ServizioController@saveEvento')->middleware('ajax');
-Route::post('/servizi/delete-servizio', 'ServizioController@deleteEvento')->middleware('ajax');
+Route::post('/servizi/save-servizio', 'ServizioController@saveServizio')->middleware('ajax');
+Route::post('/servizi/delete-servizio', 'ServizioController@deleteServizio')->middleware('ajax');
 Route::post('/servizi/get-logo', 'ServizioController@getLogo')->middleware('ajax');
 
 //PROGETTI
@@ -113,9 +113,12 @@ Route::get('/calendario', 'CalendarioController@index');
 
 //RICHIESTE
 Route::get('/richieste', 'RichiestaController@index');
+Route::get('/richieste/index', 'RichiestaController@index');
+Route::get('/richieste/view', 'RichiestaController@viewRichiesta');
 Route::get('/richieste/new', 'RichiestaController@newRichiesta');
 Route::post('/richieste/get-richiesta', 'RichiestaController@getRichiesta')->middleware('ajax');
 Route::post('/richieste/save-richiesta', 'RichiestaController@saveRichiesta')->middleware('ajax');
+Route::post('/richieste/evadi-richiesta', 'RichiestaController@evadiRichiesta')->middleware('ajax');
 
 
 Auth::routes();

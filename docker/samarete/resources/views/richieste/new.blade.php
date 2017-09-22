@@ -29,7 +29,7 @@
                           <input type="textarea" class="form-control" id="oggetto" name="oggetto" placeholder="Oggetto">
                         </div>
                       </div><div class="form-group">
-                        <label class="control-label col-sm-4" for="testo">Descrizione: </label>
+                        <label class="control-label col-sm-4" for="testo">Descrizione*: </label>
                         <div class="col-sm-8">
                           <textarea class="form-control" id="testo" name="testo" placeholder="Descrizione" rows="4"></textarea>
                         </div>
@@ -83,6 +83,9 @@ $(document).ready(function() {
             oggetto: {
                 required: true,
             },
+            testo: {
+                required: true,
+            },
         }, 
         messages: {
             contatto_1: {
@@ -90,6 +93,9 @@ $(document).ready(function() {
             },
             oggetto: {
                 required: "Inserisci un oggetto",
+            },
+            testo: {
+                required: "Inserisci una descrizione",
             },
         },
         submitHandler: function(form) {
