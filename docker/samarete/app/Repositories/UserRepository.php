@@ -100,7 +100,7 @@ class UserRepository
         }
         if(empty($user)) return false;
         
-        return self::hasRuolo($user, RuoloRepository::getAdmin());
+        return $user->admin == 1;
     }
     
     public static function checkPermesso(User $user, $permesso)

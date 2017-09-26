@@ -2,9 +2,9 @@
 
 namespace Samarete\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Samarete\Http\Requests\AssociazioneRequest;
 
-class DeleteAssociazioneRequest extends FormRequest
+class DeleteAssociazioneRequest extends AssociazioneRequest
 {
     /**
      * Determine if the user is authorized to make this request.

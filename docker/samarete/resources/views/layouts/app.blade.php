@@ -49,6 +49,7 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
+                        <li><a href="/associazioni">Associazioni</a></li>
                         <li><a href="/eventi">Eventi</a></li>
                         <li><a href="/servizi">Servizi</a></li>
                         <li><a href="/progetti">Progetti</a></li>
@@ -115,6 +116,7 @@
     <script src="{{ asset('components/select2/select2.min.js') }}"></script>
     <script src="{{ asset('components/dropzone/dropzone.js') }}"></script>
     <script src="{{ asset('components/fullcalendar/fullcalendar.min.js') }}"></script>
+    <script src="{{ asset('components/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     
     @yield('scripts')
@@ -124,6 +126,16 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+        
+        
+        tinymce.init({ 
+            selector: 'textarea.tinymce' ,
+            menubar: 'edit view format table tools',
+            plugins: [
+                'advlist lists textcolor searchreplace visualblocks fullscreen table contextmenu paste code help'
+              ],
+            toolbar1: 'undo redo | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table ',
         });
     </script>
     

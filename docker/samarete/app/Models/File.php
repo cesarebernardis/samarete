@@ -2,7 +2,7 @@
 
 namespace Samarete\Models;
 
-use Samarete\Repositories\AssociazioneRepository;
+use Samarete\Models\Associazione;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -68,7 +68,7 @@ class File extends Model
     
     public function getFilePath()
     {
-        $associazione = AssociazioneRepository::getById($this->proprietario_id);
+        $associazione = Associazione::where('id', $this->proprietario_id)->first();
         return 'associazioni/'.$associazione->datapath;
     }
 }

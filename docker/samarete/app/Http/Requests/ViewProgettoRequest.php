@@ -2,9 +2,9 @@
 
 namespace Samarete\Http\Requests;
 
-use Samarete\Http\Requests\EventoRequest;
+use Samarete\Http\Requests\ProgettoRequest;
 
-class ViewEventoRequest extends EventoRequest
+class ViewProgettoRequest extends ProgettoRequest
 {
 
 }

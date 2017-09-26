@@ -113,7 +113,7 @@ var logoDropzone = new Dropzone("div#upload-logo", {
                   swal("Attento!", "Puoi caricare un solo file alla volta!", "warning");
                 }
             });
-        }  
+        },
 		uploadMultiple: false, 
 		dictMaxFilesExceeded: "Puoi caricaricare solo 1 file alla volta.",
 		dictRemoveFile: "Cancella file",

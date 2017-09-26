@@ -3,6 +3,7 @@
 namespace Samarete\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Samarete\Http\Requests\EditAssociazioneRequest;
 use Samarete\Http\Requests\ViewAssociazioneRequest;
 use Samarete\Http\Requests\SaveAssociazioneRequest;
 use Samarete\Http\Requests\SaveFileRequest;
@@ -36,6 +37,26 @@ class AssociazioneController extends Controller
     public function __construct(AssociazioneRepository $associazioni)
     {
         $this->associazioni = $associazioni;
+    }
+    
+    public function index(Request $request)
+    {
+        return response()->view('associazioni.index', ['associazioni' => $this->associazioni->getAll()]);
+    }
+    
+    public function viewAssociazione(ViewAssociazioneRequest $request)
+    {
+        $associazione = $request->associazione();
+        if(empty($associazione)) redirect('/associazioni');
+        return response()->view('associazioni.view', ['associazione' => $associazione]);
+    }
+    
+    public function editAssociazione(EditAssociazioneRequest $request)
+    {
+        $associazione = $request->associazione();
+        $this->authorize('update', $associazione);
+        $this->associazione = Auth::user()->associazione();
+        return response()->view('associazioni.edit', ['associazione' => $this->associazione,'associazione' => is_object($associazione) ? $associazione : null]);
     }
     
     public function getAssociazioni(Request $request)
@@ -125,6 +146,6 @@ class AssociazioneController extends Controller
                 $associazione->update(['logo' => $logo->id]);
             }
         }
-        return response()->json(array("status" => 200, "message" => "OK"));
+        return response()->json(array("status" => 200, "message" => "OK", "associazioneid" => $associazione->id));
     }
 }

@@ -106,7 +106,7 @@ class LoginController extends Controller
     protected function sendFailedLoginResponse(Request $request)
     {
         activity()
-           ->withProperties(['username' => $this->username])
+           ->withProperties(['username' => $request[$this->username()]])
            ->log('login failed');
            
         $errors = [$this->username() => trans('auth.failed')];

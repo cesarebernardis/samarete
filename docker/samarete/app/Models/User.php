@@ -21,8 +21,8 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['username', 'password', 'remember_token', 'nome', 'cognome', 'email', 'ultimo_accesso', 'attivo', 'created_at', 'updated_at'];
-    protected static $logAttributes = ['username', 'remember_token', 'nome', 'cognome', 'email', 'ultimo_accesso', 'attivo', 'created_at', 'updated_at'];
+    protected $fillable = ['username', 'password', 'remember_token', 'nome', 'cognome', 'email', 'ultimo_accesso', 'attivo', 'admin', 'created_at', 'updated_at'];
+    protected static $logAttributes = ['username', 'remember_token', 'nome', 'cognome', 'email', 'attivo', 'admin', 'created_at', 'updated_at'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -61,7 +61,7 @@ class User extends Authenticatable
     
     public function isAdmin()
     {
-        return UserRepository::hasRuolo($this, RuoloRepository::getAdmin());
+        return $this->admin == 1;
     }
     
     public function associazione()

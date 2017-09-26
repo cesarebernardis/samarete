@@ -61,8 +61,13 @@ Route::middleware('admin')->group(function(){
     Route::post('/admin/associazione/check-nome', 'AssociazioneController@checkNome')->middleware('ajax');
 });
 //ASSOCIAZIONI
-Route::post('/associazione/save-logo', 'AssociazioneController@saveLogo');
-Route::post('/associazione/get-logo', 'AssociazioneController@getLogo');
+Route::get('/associazioni', 'AssociazioneController@index');
+Route::get('/associazioni/view-associazione', 'AssociazioneController@viewAssociazione');
+Route::get('/associazioni/edit-associazione', 'AssociazioneController@editAssociazione');
+Route::post('/associazioni/save-associazione', 'AssociazioneController@saveAssociazione');
+
+Route::post('/associazioni/save-logo', 'AssociazioneController@saveLogo');
+Route::post('/associazioni/get-logo', 'AssociazioneController@getLogo');
 
 //FILES
 Route::post('/file/upload', 'FileController@saveTmpFile')->middleware('ajax');

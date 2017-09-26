@@ -25,11 +25,6 @@ class RuoloRepository
         return Ruolo::where('id', $id)->first();
     }
     
-    public static function getAdmin()
-    {
-        return Ruolo::where('id', 1)->first();
-    }
-    
     public static function getPermessiRuoli()
     {
         $result = DB::select('

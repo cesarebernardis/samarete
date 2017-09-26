@@ -103,22 +103,22 @@
           <div class="form-group">
             <label class="control-label col-sm-4" for="referente_nome">Nome: </label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="referente_nome" name="referente_nome" placeholder="referente_nome">
+              <input type="text" class="form-control" id="referente_nome" name="referente_nome" placeholder="Nome">
             </div>
           </div><div class="form-group">
             <label class="control-label col-sm-4" for="referente_indirizzo">Indirizzo: </label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="referente_indirizzo" name="referente_indirizzo" placeholder="referente_indirizzo">
+              <input type="text" class="form-control" id="referente_indirizzo" name="referente_indirizzo" placeholder="Indirizzo">
             </div>
           </div><div class="form-group">
             <label class="control-label col-sm-4" for="referente_telefono_1">Telefono 1: </label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="referente_telefono_1" name="referente_telefono_1" placeholder="referente_telefono_1">
+              <input type="text" class="form-control" id="referente_telefono_1" name="referente_telefono_1" placeholder="Telefono Primario">
             </div>
           </div><div class="form-group">
             <label class="control-label col-sm-4" for="referente_telefono_2">Telefono 2: </label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="referente_telefono_2" name="referente_telefono_2" placeholder="referente_telefono_2">
+              <input type="text" class="form-control" id="referente_telefono_2" name="referente_telefono_2" placeholder="Telefono Secondario">
             </div>
           </div>
       </div>
@@ -200,7 +200,7 @@ function updateForm(){
        });
     
     $.ajax({
-           url: '/associazione/get-logo',
+           url: '/associazioni/get-logo',
            method: "post",
            data: {id: id},
            success: function(data) {
