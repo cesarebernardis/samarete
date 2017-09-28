@@ -17,6 +17,8 @@ use Samarete\Repositories\AssociazioneRepository;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
+use Carbon\Carbon;
+
 class ChatController extends Controller
 {
     /**
@@ -75,9 +77,15 @@ class ChatController extends Controller
     public function saveMessaggio(SaveMessaggioRequest $request)
     {
         $chat = $this->chats->getById($request->chat);
-        $this->authorize('sendMessage', $chat);
+        //$this->authorize('send-message', $chat);
         $associazione = Auth::user()->associazione();
-        $this->chats->saveMessaggio($chat, $request->messaggio);
-        return response()->json(array("status" => 200, "message" => "OK"));
+        $messaggio = $this->chats->saveMessaggio($chat, $request->messaggio);
+        return response()->json(array(
+            "status" => 200, 
+            "message" => "OK", 
+            'autore' => empty($messaggio->autore->acronimo) ? $messaggio->autore->nome : $messaggio->autore->acronimo,
+            'data' => $messaggio->data->formatLocalized('%d/%m/%Y %H:%M'),
+            'testo' => $messaggio->testo,
+        ));
     }
 }

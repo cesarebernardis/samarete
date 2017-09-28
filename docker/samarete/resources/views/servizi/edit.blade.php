@@ -7,7 +7,7 @@
 @section('content')
 <div class="container">
     <div class="row margin-bottom-20 border-bottom-thin">
-        <div class="col-md-12 text-align-center"><h2 class="title">Nuovo/Modifica Servizio</h2></div>
+        <div class="col-md-12 text-align-center"><h2 class="title">{{ $servizio ? 'Modifica' : 'Nuovo' }} Servizio</h2></div>
     </div>
     <form class="form-horizontal" id="servizio">
     <div class="row">
@@ -39,7 +39,7 @@
                       </div><div class="form-group">
                         <label class="control-label col-sm-4" for="descrizione">Descrizione: </label>
                         <div class="col-sm-8">
-                          <textarea class="form-control" id="descrizione" name="descrizione" placeholder="Descrizione" rows="4">{{ $servizio ? $servizio->descrizione : '' }}</textarea>
+                          <textarea class="form-control tinymce" id="descrizione" name="descrizione" placeholder="Descrizione" rows="8">{!! $servizio ? $servizio->descrizione : '' !!}</textarea>
                         </div>
                       </div>
                       <div class="giorni">
@@ -251,6 +251,7 @@ $(document).ready(function() {
     });
     
     $("#servizio button.submit").click(function(){
+        tinyMCE.triggerSave();
         if(!$('form#servizio').valid())
             return;
         var data = $("#servizio").serializeArray();

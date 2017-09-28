@@ -32,7 +32,6 @@ class ProgettoRepository
     {
         $progetto = Progetto::where('id', $id)->first();
         $progetto->logo_base64 = self::getLogoBase64($progetto);
-        $progetto->giorni = self::getGiorni($progetto);
         return $progetto;
     }
     

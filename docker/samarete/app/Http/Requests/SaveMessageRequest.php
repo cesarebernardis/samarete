@@ -29,7 +29,7 @@ class SaveMessaggioRequest extends FormRequest
     {
         return [
             'chat' => 'integer|required|exists:chat,id',
-            'messaggio' => 'string|required|size:65000',
+            'messaggio' => 'string|required|max:65000',
         ];
     }
 }

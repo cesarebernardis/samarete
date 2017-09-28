@@ -10,6 +10,7 @@ use Samarete\Http\Requests\EditProgettoRequest;
 use Samarete\Repositories\FileRepository;
 use Samarete\Repositories\ProgettoRepository;
 use Samarete\Repositories\AssociazioneRepository;
+use Samarete\Repositories\ChatRepository;
 
 use Samarete\Models\Progetto;
 use Samarete\Models\User;
@@ -91,19 +92,20 @@ class ProgettoController extends Controller
     {
         $progetto = new Progetto;
         $creatore = 0;
+        $associazione = AssociazioneRepository::getById($request->creatore_id);
         if(!empty($request->id)){
             $progetto = Progetto::where('id', $request->id)->first();
             $this->authorize('update', $progetto);
         }else{
             $this->authorize('create', Progetto::class);
             $progetto->data_creazione = new \DateTime();
+            $progetto->chat_id = ChatRepository::create($associazione)->id;
             $creatore = 1;
         }
         $progetto->nome = $request->nome;
         $progetto->oggetto = $request->oggetto;
         $progetto->descrizione = $request->descrizione;
         $progetto->logo = $request->logo;
-        $associazione = AssociazioneRepository::getById($request->creatore_id);
         if(!empty($request->new_logo)){
             $file = FileRepository::confirmFile($associazione, FileRepository::getTmpById($request->new_logo));
             $progetto->logo = $file['id'];

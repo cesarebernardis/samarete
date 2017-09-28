@@ -7,7 +7,7 @@
 @section('content')
 <div class="container">
     <div class="row margin-bottom-20 border-bottom-thin">
-        <div class="col-md-12 text-align-center"><h2 class="title">Nuovo/Modifica Progetto</h2></div>
+        <div class="col-md-12 text-align-center"><h2 class="title">{{ $progetto ? 'Modifica' : 'Nuovo' }} Progetto</h2></div>
     </div>
     <form class="form-horizontal" id="progetto">
     <div class="row">
@@ -34,12 +34,12 @@
                       </div><div class="form-group">
                         <label class="control-label col-sm-4" for="oggetto">Oggetto: </label>
                         <div class="col-sm-8">
-                          <input type="textarea" class="form-control" id="oggetto" name="oggetto" placeholder="Oggetto" value="{{ $progetto ? $progetto->oggetto : '' }}">
+                          <textarea class="form-control" id="oggetto" name="oggetto" placeholder="Oggetto">{{ $progetto ? $progetto->oggetto : '' }}</textarea>
                         </div>
                       </div><div class="form-group">
                         <label class="control-label col-sm-4" for="descrizione">Descrizione: </label>
                         <div class="col-sm-8">
-                          <textarea class="form-control" id="descrizione" name="descrizione" placeholder="Descrizione" rows="4">{{ $progetto ? $progetto->descrizione : '' }}</textarea>
+                          <textarea class="form-control tinymce" id="descrizione" name="descrizione" placeholder="Descrizione" rows="8">{!! $progetto ? $progetto->descrizione : '' !!}</textarea>
                         </div>
                       </div>
                       
@@ -99,7 +99,7 @@ var logoDropzone = new Dropzone("div#upload-logo", {
                   swal("Attento!", "Puoi caricare un solo file alla volta!", "warning");
                 }
             });
-        }  
+        },
 		uploadMultiple: false, 
 		dictMaxFilesExceeded: "Puoi caricaricare solo 1 file alla volta.",
 		dictRemoveFile: "Cancella file",
@@ -158,6 +158,7 @@ $(document).ready(function() {
     });
     
     $("#progetto button.submit").click(function(){
+        tinyMCE.triggerSave();
         if(!$('form#progetto').valid())
             return;
         var data = $("#progetto").serializeArray();
@@ -169,7 +170,7 @@ $(document).ready(function() {
                swal({title:"Fatto!", text:"Salvataggio riuscito", type:"success", onClose: function(){window.location.href = "/progetti/view-progetto?id="+data.progettoid;}});
            },
            error: function() {
-               swal("Errore!", "Errore durante il salvataggio dell'progetto", "error");
+               swal("Errore!", "Errore durante il salvataggio del progetto", "error");
            }
        });
     });

@@ -11,7 +11,7 @@ use Samarete\Repositories\PermessoRepository;
 use Samarete\Models\Chat;
 use Samarete\Models\User;
 use Samarete\Models\Associazione;
-use Samarete\Models\Message;
+use Samarete\Models\Messaggio;
 
 class ChatRepository
 {
@@ -32,6 +32,15 @@ class ChatRepository
             return false;
         }
         return self::delete($chat);
+    }
+    
+    public static function create(Associazione $associazione)
+    {
+        $chat = new Chat;
+        $chat->data_creazione = new \Datetime();
+        $chat->save();
+        self::addAssociazione($chat, $associazione);
+        return $chat;
     }
     
     public static function delete(Chat $chat)
@@ -64,9 +73,9 @@ class ChatRepository
     
     public static function saveMessaggio(Chat $chat, $text)
     {
-        $message = new Message;
+        $message = new Messaggio;
         $message->chat_id = $chat->id;
-        $message->autore_id = Auth::user()->associazione();
+        $message->autore_id = Auth::user()->associazione()->id;
         $message->data = new \Datetime();
         $message->testo = $text;
         $message->save();

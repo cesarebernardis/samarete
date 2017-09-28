@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use Spatie\Activitylog\Traits\LogsActivity;
 
+use Carbon\Carbon;
+
 /**
  * @property int $id
  * @property int $autore_id
@@ -39,7 +41,7 @@ class Messaggio extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function associazione()
+    public function autore()
     {
         return $this->belongsTo('Samarete\Models\Associazione', 'autore_id');
     }
@@ -51,4 +53,10 @@ class Messaggio extends Model
     {
         return $this->belongsTo('Samarete\Models\Chat');
     }
+    
+    public function getDataAttribute($value)
+    {
+        return Carbon::parse($value);
+    }
+    
 }

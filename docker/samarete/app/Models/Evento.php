@@ -53,4 +53,12 @@ class Evento extends Model
     {
         return DB::select("SELECT giorno, da, a, descrizione FROM evento_has_giorno WHERE evento_id = ? ORDER BY giorno, da, a ASC", [$this->id]);
     }
+    
+    public function save(array $options = [])
+    {
+        $this->descrizione = \Purifier::clean($this->descrizione);
+        unset($this->logo_base64);
+        parent::save($options);
+    }
+    
 }

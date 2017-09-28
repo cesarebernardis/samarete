@@ -61,4 +61,11 @@ class Progetto extends Model
     {
         return $this->belongsToMany('Samarete\Models\File', 'progetto_has_file');
     }
+    
+    public function save(array $options = [])
+    {
+        $this->descrizione = \Purifier::clean($this->descrizione);
+        unset($this->logo_base64);
+        parent::save($options);
+    }
 }

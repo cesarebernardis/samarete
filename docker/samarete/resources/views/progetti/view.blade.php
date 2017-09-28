@@ -22,10 +22,11 @@
     </div><div class="row">
         <div class="col-md-12">
         <div class="well">
-            {{ $progetto->descrizione }}
+            {!! $progetto->descrizione !!}
         </div>
         </div>
     </div>
+    @include('chat', ['chat' => $progetto->chat])
 </div>
 @endsection
 

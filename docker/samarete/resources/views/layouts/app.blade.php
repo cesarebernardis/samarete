@@ -25,6 +25,28 @@
     <link href="{{ asset('components/fullcalendar/fullcalendar.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('styles')
+    
+    <!-- Scripts -->
+    <script src="{{ asset('components/jquery/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('components/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('components/momentjs/moment-with-locales.js') }}"></script>
+    <script src="{{ asset('components/jquery-validation/jquery-validation.min.js') }}"></script>
+    <script src="{{ asset('components/jquery-validation/jquery-validation.addon.min.js') }}"></script>
+    <script src="{{ asset('components/metisMenu/metisMenu.min.js') }}"></script>
+    <script src="{{ asset('components/raphael/raphael.min.js') }}"></script>
+    <script src="{{ asset('components/morrisjs/morris.min.js') }}"></script>
+    <script src="{{ asset('components/sb-admin-2/js/sb-admin-2.min.js') }}"></script>
+    <script src="{{ asset('components/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('components/bootstrap-datatables/datatables-bootstrap.js') }}"></script>
+    <script src="{{ asset('components/bootstrap-datepicker/js/datepicker.min.js') }}"></script>
+    <script src="{{ asset('components/bootstrap-datepicker/locales/datepicker.it.min.js') }}"></script>
+    <script src="{{ asset('components/bootstrap-datetimepicker/datetimepicker.min.js') }}"></script>
+    <script src="{{ asset('components/sweetalert/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('components/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('components/dropzone/dropzone.js') }}"></script>
+    <script src="{{ asset('components/fullcalendar/fullcalendar.min.js') }}"></script>
+    <script src="{{ asset('components/tinymce/tinymce.min.js') }}"></script>
+    
 </head>
 <body>
     <div id="app">
@@ -97,26 +119,6 @@
         @yield('content')
     </div>
 
-    <!-- Scripts -->
-    <script src="{{ asset('components/jquery/jquery-3.2.1.min.js') }}"></script>
-    <script src="{{ asset('components/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('components/momentjs/moment-with-locales.js') }}"></script>
-    <script src="{{ asset('components/jquery-validation/jquery-validation.min.js') }}"></script>
-    <script src="{{ asset('components/jquery-validation/jquery-validation.addon.min.js') }}"></script>
-    <script src="{{ asset('components/metisMenu/metisMenu.min.js') }}"></script>
-    <script src="{{ asset('components/raphael/raphael.min.js') }}"></script>
-    <script src="{{ asset('components/morrisjs/morris.min.js') }}"></script>
-    <script src="{{ asset('components/sb-admin-2/js/sb-admin-2.min.js') }}"></script>
-    <script src="{{ asset('components/datatables/datatables.min.js') }}"></script>
-    <script src="{{ asset('components/bootstrap-datatables/datatables-bootstrap.js') }}"></script>
-    <script src="{{ asset('components/bootstrap-datepicker/js/datepicker.min.js') }}"></script>
-    <script src="{{ asset('components/bootstrap-datepicker/locales/datepicker.it.min.js') }}"></script>
-    <script src="{{ asset('components/bootstrap-datetimepicker/datetimepicker.min.js') }}"></script>
-    <script src="{{ asset('components/sweetalert/sweetalert2.min.js') }}"></script>
-    <script src="{{ asset('components/select2/select2.min.js') }}"></script>
-    <script src="{{ asset('components/dropzone/dropzone.js') }}"></script>
-    <script src="{{ asset('components/fullcalendar/fullcalendar.min.js') }}"></script>
-    <script src="{{ asset('components/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     
     @yield('scripts')
