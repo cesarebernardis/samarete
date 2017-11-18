@@ -52,7 +52,10 @@ class ServizioController extends Controller
     public function editServizio(EditServizioRequest $request)
     {
         $servizio = $request->servizio();
-        $this->authorize('update', $servizio);
+        if($servizio)
+            $this->authorize('create', Servizio::class);
+        else
+            $this->authorize('update', $servizio);
         $this->associazione = Auth::user()->associazione();
         return response()->view('servizi.edit', ['associazione' => $this->associazione,'servizio' => is_object($servizio) ? $servizio : null]);
     }

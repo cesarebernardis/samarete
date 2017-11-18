@@ -39,7 +39,9 @@ class ActivityLogger
 
         $this->properties = collect();
 
-        $this->authDriver = $config['laravel-activitylog']['default_auth_driver'] ?? $auth->getDefaultDriver();
+      $this->authDriver = $config['laravel-activitylog']['default_auth_driver'] != null ?
+            $config['laravel-activitylog']['default_auth_driver'] :
+            $auth->getDefaultDriver();
 
         if (starts_with(app()->version(), '5.1')) {
             $this->causedBy = $auth->driver($this->authDriver)->user();
@@ -49,7 +51,9 @@ class ActivityLogger
 
         $this->logName = $config['laravel-activitylog']['default_log_name'];
 
-        $this->logEnabled = $config['laravel-activitylog']['enabled'] ?? true;
+        $this->logEnabled = $config['laravel-activitylog']['enabled'] != null ?
+            $config['laravel-activitylog']['enabled'] :
+            true;
     }
 
     public function performedOn(Model $model)
@@ -101,21 +105,29 @@ class ActivityLogger
      *
      * @return $this
      */
-    public function withProperty(string $key, $value)
+    public function withProperty($key, $value)
     {
         $this->properties->put($key, $value);
 
         return $this;
     }
 
-    public function useLog(string $logName)
+    /**
+     * @param string $logName
+     * @return $this
+     */
+    public function useLog($logName)
     {
         $this->logName = $logName;
 
         return $this;
     }
 
-    public function inLog(string $logName)
+    /**
+     * @param string $logName
+     * @return ActivityLogger
+     */
+    public function inLog($logName)
     {
         return $this->useLog($logName);
     }
@@ -125,7 +137,7 @@ class ActivityLogger
      *
      * @return null|mixed
      */
-    public function log(string $description)
+    public function log($description)
     {
         if (! $this->logEnabled) {
             return;
@@ -159,26 +171,31 @@ class ActivityLogger
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    protected function normalizeCauser($modelOrId): Model
+    protected function normalizeCauser($modelOrId)
     {
         if ($modelOrId instanceof Model) {
             return $modelOrId;
         }
 
         if (starts_with(app()->version(), '5.1')) {
-            $model = $this->auth->driver($this->authDriver)->getProvider()->retrieveById($modelOrId);
+          $model = $this->auth->driver($this->authDriver)->getProvider()->retrieveById($modelOrId);
         } else {
-            $model = $this->auth->guard($this->authDriver)->getProvider()->retrieveById($modelOrId);
+          $model = $this->auth->guard($this->authDriver)->getProvider()->retrieveById($modelOrId);
         }
 
         if ($model) {
-            return $model;
+          return $model;
         }
 
         throw CouldNotLogActivity::couldNotDetermineUser($modelOrId);
     }
 
-    protected function replacePlaceholders(string $description, Activity $activity): string
+    /**
+     * @param string $description
+     * @param Activity $activity
+     * @return string
+     */
+    protected function replacePlaceholders($description, Activity $activity)
     {
         return preg_replace_callback('/:[a-z0-9._-]+/i', function ($match) use ($activity) {
             $match = $match[0];
@@ -194,7 +211,7 @@ class ActivityLogger
             $attributeValue = $activity->$attribute;
 
             if (is_null($attributeValue)) {
-                return $match;
+              return $match;
             }
 
             $attributeValue = $attributeValue->toArray();

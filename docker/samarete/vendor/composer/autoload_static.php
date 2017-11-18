@@ -17,8 +17,8 @@ class ComposerStaticInitf6e49bd2fcd517ef417a60f691a086dc
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
-        '72b1e3f4a2af9b30b3f137b3ec2057fc' => __DIR__ . '/..' . '/spatie/laravel-activitylog/src/helpers.php',
         'cb61d74ad51d00867155534456b38b23' => __DIR__ . '/..' . '/mews/purifier/src/helpers.php',
+        'adc56b70e0d294316fcea73dc74866c5' => __DIR__ . '/..' . '/linearsoft/laravel-activitylog-backport/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -199,7 +199,7 @@ class ComposerStaticInitf6e49bd2fcd517ef417a60f691a086dc
         ),
         'Spatie\\Activitylog\\' => 
         array (
-            0 => __DIR__ . '/..' . '/spatie/laravel-activitylog/src',
+            0 => __DIR__ . '/..' . '/linearsoft/laravel-activitylog-backport/src',
         ),
         'Samarete\\' => 
         array (
@@ -3369,6 +3369,7 @@ class ComposerStaticInitf6e49bd2fcd517ef417a60f691a086dc
         'Samarete\\Http\\Requests\\ViewEventoRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ViewEventoRequest.php',
         'Samarete\\Http\\Requests\\ViewFileRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ViewFileRequest.php',
         'Samarete\\Http\\Requests\\ViewPermessoRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ViewPermessoRequest.php',
+        'Samarete\\Http\\Requests\\ViewProgettoRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ViewProgettoRequest.php',
         'Samarete\\Http\\Requests\\ViewRichiestaRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ViewRichiestaRequest.php',
         'Samarete\\Http\\Requests\\ViewRuoloRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ViewRuoloRequest.php',
         'Samarete\\Http\\Requests\\ViewServizioRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ViewServizioRequest.php',
@@ -3491,16 +3492,17 @@ class ComposerStaticInitf6e49bd2fcd517ef417a60f691a086dc
         'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => __DIR__ . '/..' . '/sebastian/recursion-context/src/InvalidArgumentException.php',
         'SebastianBergmann\\ResourceOperations\\ResourceOperations' => __DIR__ . '/..' . '/sebastian/resource-operations/src/ResourceOperations.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
-        'Spatie\\Activitylog\\ActivityLogger' => __DIR__ . '/..' . '/spatie/laravel-activitylog/src/ActivityLogger.php',
-        'Spatie\\Activitylog\\ActivitylogServiceProvider' => __DIR__ . '/..' . '/spatie/laravel-activitylog/src/ActivitylogServiceProvider.php',
-        'Spatie\\Activitylog\\CleanActivitylogCommand' => __DIR__ . '/..' . '/spatie/laravel-activitylog/src/CleanActivitylogCommand.php',
-        'Spatie\\Activitylog\\Exceptions\\CouldNotLogActivity' => __DIR__ . '/..' . '/spatie/laravel-activitylog/src/Exceptions/CouldNotLogActivity.php',
-        'Spatie\\Activitylog\\Exceptions\\CouldNotLogChanges' => __DIR__ . '/..' . '/spatie/laravel-activitylog/src/Exceptions/CouldNotLogChanges.php',
-        'Spatie\\Activitylog\\Exceptions\\InvalidConfiguration' => __DIR__ . '/..' . '/spatie/laravel-activitylog/src/Exceptions/InvalidConfiguration.php',
-        'Spatie\\Activitylog\\Models\\Activity' => __DIR__ . '/..' . '/spatie/laravel-activitylog/src/Models/Activity.php',
-        'Spatie\\Activitylog\\Traits\\CausesActivity' => __DIR__ . '/..' . '/spatie/laravel-activitylog/src/Traits/CausesActivity.php',
-        'Spatie\\Activitylog\\Traits\\DetectsChanges' => __DIR__ . '/..' . '/spatie/laravel-activitylog/src/Traits/DetectsChanges.php',
-        'Spatie\\Activitylog\\Traits\\LogsActivity' => __DIR__ . '/..' . '/spatie/laravel-activitylog/src/Traits/LogsActivity.php',
+        'Spatie\\Activitylog\\ActivityLogger' => __DIR__ . '/..' . '/linearsoft/laravel-activitylog-backport/src/ActivityLogger.php',
+        'Spatie\\Activitylog\\ActivitylogFacade' => __DIR__ . '/..' . '/linearsoft/laravel-activitylog-backport/src/ActivitylogFacade.php',
+        'Spatie\\Activitylog\\ActivitylogServiceProvider' => __DIR__ . '/..' . '/linearsoft/laravel-activitylog-backport/src/ActivitylogServiceProvider.php',
+        'Spatie\\Activitylog\\CleanActivitylogCommand' => __DIR__ . '/..' . '/linearsoft/laravel-activitylog-backport/src/CleanActivitylogCommand.php',
+        'Spatie\\Activitylog\\Exceptions\\CouldNotLogActivity' => __DIR__ . '/..' . '/linearsoft/laravel-activitylog-backport/src/Exceptions/CouldNotLogActivity.php',
+        'Spatie\\Activitylog\\Exceptions\\CouldNotLogChanges' => __DIR__ . '/..' . '/linearsoft/laravel-activitylog-backport/src/Exceptions/CouldNotLogChanges.php',
+        'Spatie\\Activitylog\\Exceptions\\InvalidConfiguration' => __DIR__ . '/..' . '/linearsoft/laravel-activitylog-backport/src/Exceptions/InvalidConfiguration.php',
+        'Spatie\\Activitylog\\Models\\Activity' => __DIR__ . '/..' . '/linearsoft/laravel-activitylog-backport/src/Models/Activity.php',
+        'Spatie\\Activitylog\\Traits\\CausesActivity' => __DIR__ . '/..' . '/linearsoft/laravel-activitylog-backport/src/Traits/CausesActivity.php',
+        'Spatie\\Activitylog\\Traits\\DetectsChanges' => __DIR__ . '/..' . '/linearsoft/laravel-activitylog-backport/src/Traits/DetectsChanges.php',
+        'Spatie\\Activitylog\\Traits\\LogsActivity' => __DIR__ . '/..' . '/linearsoft/laravel-activitylog-backport/src/Traits/LogsActivity.php',
         'Spatie\\String\\Exceptions\\ErrorCreatingStringException' => __DIR__ . '/..' . '/spatie/string/src/Exceptions/ErrorCreatingStringException.php',
         'Spatie\\String\\Exceptions\\UnknownFunctionException' => __DIR__ . '/..' . '/spatie/string/src/Exceptions/UnknownFunctionException.php',
         'Spatie\\String\\Exceptions\\UnsetOffsetException' => __DIR__ . '/..' . '/spatie/string/src/Exceptions/UnsetOffsetException.php',

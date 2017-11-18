@@ -34,6 +34,11 @@ class ActivitylogServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(
+            'laravel-activitylog', function($app) {
+                return self::getActivityModelInstance();
+        });
+
         $this->app->bind('command.activitylog:clean', CleanActivitylogCommand::class);
 
         $this->commands([
@@ -41,9 +46,17 @@ class ActivitylogServiceProvider extends ServiceProvider
         ]);
     }
 
-    public static function determineActivityModel(): string
+
+    /**
+     * @throws \Spatie\Activitylog\Exceptions\InvalidConfiguration
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    static public function determineActivityModel()
     {
-        $activityModel = config('laravel-activitylog.activity_model') ?? Activity::class;
+        $activityModel = config('laravel-activitylog.activity_model') != null ?
+            config('laravel-activitylog.activity_model') :
+            Activity::class;
 
         if (! is_a($activityModel, Activity::class, true)) {
             throw InvalidConfiguration::modelIsNotValid($activityModel);
@@ -52,7 +65,7 @@ class ActivitylogServiceProvider extends ServiceProvider
         return $activityModel;
     }
 
-    public static function getActivityModelInstance(): Model
+    static public function getActivityModelInstance()
     {
         $activityModelClassName = self::determineActivityModel();
 

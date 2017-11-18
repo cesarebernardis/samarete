@@ -4,6 +4,8 @@ namespace Samarete\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Support\Facades\DB;
+
 use Spatie\Activitylog\Traits\LogsActivity;
 /**
  * @property int $id

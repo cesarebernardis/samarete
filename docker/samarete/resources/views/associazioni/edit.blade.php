@@ -14,7 +14,7 @@
         <div class="col-md-12">
             {{ csrf_field() }}
                       <input type="hidden" class="form-control" id="id" name="id" value="{{ $associazione ? $associazione->id : '' }}">
-                      <input type="hidden" class="form-control" id="gestore_id" name="gestore_id" value="{{ $associazione->gestore_id }}">
+                      <input type="hidden" class="form-control" id="gestore_id" name="gestore_id" value="{{ $associazione ? Auth::user()->id : '' }}">
                       <div class="form-group">
                         <label class="control-label col-sm-4" for="nome">Nome*: </label>
                         <div class="col-sm-8">

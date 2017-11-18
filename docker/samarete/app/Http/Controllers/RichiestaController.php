@@ -66,7 +66,7 @@ class RichiestaController extends Controller
     
     public function getRichieste(Request $request)
     {
-        $this->authorize('view');
+        $this->authorize('view', Richiesta::class);
         $associazione = Auth::user()->associazioni()->first();
         return response()->json($associazione->richieste());
     }

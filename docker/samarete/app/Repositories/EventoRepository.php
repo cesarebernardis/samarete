@@ -67,7 +67,7 @@ class EventoRepository
     
     public static function addGiorno(Evento $evento, $giorno, $da, $a, $descrizione)
     {
-        DB::insert('INSERT INTO evento_has_giorno (evento_id, giorno, da, a, descrizione) VALUES(?,?,?,?,?)', array($evento->id, $giorno, $da, $a, $descrizione));
+        DB::insert('INSERT IGNORE INTO evento_has_giorno (evento_id, giorno, da, a, descrizione) VALUES(?,?,?,?,?)', array($evento->id, $giorno, $da, $a, $descrizione));
     }
     
     public static function addAssociazione(Evento $evento, Associazione $associazione, $creatore)

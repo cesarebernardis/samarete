@@ -2510,79 +2510,6 @@
         ]
     },
     {
-        "name": "spatie/laravel-activitylog",
-        "version": "1.15.5",
-        "version_normalized": "1.15.5.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/spatie/laravel-activitylog.git",
-            "reference": "49623ca4e2d5ff593aff5ab56295cc87635a3d03"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/49623ca4e2d5ff593aff5ab56295cc87635a3d03",
-            "reference": "49623ca4e2d5ff593aff5ab56295cc87635a3d03",
-            "shasum": ""
-        },
-        "require": {
-            "illuminate/config": "~5.1.0|~5.2.0|~5.3.0|~5.4.0",
-            "illuminate/database": "~5.1.0|~5.2.0|~5.3.0|~5.4.0",
-            "illuminate/support": "~5.1.0|~5.2.0|~5.3.0|~5.4.0",
-            "php": "^7.0",
-            "spatie/string": "^2.1"
-        },
-        "require-dev": {
-            "orchestra/database": "~3.3.0|~3.4.0",
-            "orchestra/testbench": "~3.3.0|~3.4.0",
-            "phpunit/phpunit": "^5.7"
-        },
-        "time": "2017-08-08T22:12:12+00:00",
-        "type": "library",
-        "extra": {
-            "laravel": {
-                "providers": [
-                    "Spatie\\Activitylog\\ActivitylogServiceProvider"
-                ]
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Spatie\\Activitylog\\": "src"
-            },
-            "files": [
-                "src/helpers.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Sebastian De Deyne",
-                "email": "sebastian@spatie.be",
-                "homepage": "https://spatie.be",
-                "role": "Developer"
-            },
-            {
-                "name": "Freek Van der Herten",
-                "email": "freek@spatie.be",
-                "homepage": "https://spatie.be",
-                "role": "Developer"
-            }
-        ],
-        "description": "A very simple activity logger to monitor the users of your website or application",
-        "homepage": "https://github.com/spatie/activitylog",
-        "keywords": [
-            "activity",
-            "laravel",
-            "log",
-            "spatie",
-            "user"
-        ]
-    },
-    {
         "name": "fzaninotto/faker",
         "version": "v1.7.1",
         "version_normalized": "1.7.1.0",
@@ -4311,6 +4238,68 @@
             "laravel5 Security",
             "security",
             "xss"
+        ]
+    },
+    {
+        "name": "linearsoft/laravel-activitylog-backport",
+        "version": "1.15.3",
+        "version_normalized": "1.15.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/LinearSoft/laravel-activitylog-backport.git",
+            "reference": "080c9bd7ec0a6b6c4309bd62a94385a975ee1614"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/LinearSoft/laravel-activitylog-backport/zipball/080c9bd7ec0a6b6c4309bd62a94385a975ee1614",
+            "reference": "080c9bd7ec0a6b6c4309bd62a94385a975ee1614",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/config": "~5.1.0|~5.2.0|~5.3.0|~5.4.0",
+            "illuminate/database": "~5.1.0|~5.2.0|~5.3.0|~5.4.0",
+            "illuminate/support": "~5.1.0|~5.2.0|~5.3.0|~5.4.0",
+            "php": ">=5.6",
+            "spatie/string": "^2.1"
+        },
+        "time": "2017-07-07T20:41:57+00:00",
+        "type": "library",
+        "extra": {
+            "laravel": {
+                "providers": [
+                    "Spatie\\Activitylog\\ActivitylogServiceProvider"
+                ]
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Spatie\\Activitylog\\": "src"
+            },
+            "files": [
+                "src/helpers.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPLv3"
+        ],
+        "authors": [
+            {
+                "name": "Jason Abraham",
+                "email": "jason@linearsoft.com"
+            }
+        ],
+        "description": "A backport of Spatie's Laravel-ActivityLog to PHP 5.6",
+        "homepage": "https://github.com/LinearSoft/laravel-activitylog-backport",
+        "keywords": [
+            "activity",
+            "backport",
+            "laravel",
+            "linearsoft",
+            "log",
+            "spatie",
+            "user"
         ]
     }
 ]

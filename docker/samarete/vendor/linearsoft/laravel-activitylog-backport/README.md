@@ -1,12 +1,48 @@
-# Log activity inside your Laravel app
+# A backport of Spatie's Laravel-ActivityLog
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-activitylog.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-activitylog)
-[![Build Status](https://img.shields.io/travis/spatie/laravel-activitylog/master.svg?style=flat-square)](https://travis-ci.org/spatie/laravel-activitylog)
-[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-activitylog.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/laravel-activitylog)
-[![StyleCI](https://styleci.io/repos/61802818/shield)](https://styleci.io/repos/61802818)
-[![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-activitylog.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-activitylog)
+This is a backport package that allows Laravel-ActivityLog to work with PHP 5.6.  By design the namespace of the original project has been left untouched `Spatie\Activitylog`.  This allows for full use of the documentation with only minor modifications:
 
-The `spatie/laravel-activitylog` package provides easy to use functions to log the activities of the users of your app. It can also automatically log model events. All activity will be stored in the `activity_log` table.
+### Installation
+Change
+``` bash
+composer require spatie/laravel-activitylog
+```
+to
+``` bash
+composer require linearsoft/laravel-activitylog-backport
+```
+
+For your convenience the Activity facade infrastructure has been restored in this backport.
+All you need to do is register the facade:
+
+```php
+// config/app.php
+'aliases' => [
+    ...
+    'Activity' => Spatie\Activitylog\ActivitylogFacade::class,
+];
+```
+
+### Testing
+
+All testing has been stripped from the backport version.
+
+### Bugs or features requests
+
+For the most part most all bugs & requests should be submitted to the [Spatie Team](https://github.com/spatie/laravel-activitylog/issues). And the fixes/features will eventually be backported into this project.
+
+If, however, you found a problem specifically with the backport version please it via [GitHub](https://github.com/LinearSoft/entrust-cli/issues)
+
+### Licensing
+
+The licensing has been modified from MIT to the GPLv3 License - see the `LICENSE` file for details.
+You are requested, however, to still follow the Postcardware "requirements" of the original package.
+
+# START OF ORIGINAL ReadMe.md
+
+#### Log activity inside your Laravel app
+
+The `spatie/laravel-activity` package provides easy to use functions to log the activities of the users of your app. It can also automatically log model events. All activity will be stored in the `activity_log` table.
 
 Here's a litte demo of how you can use it:
 
@@ -69,11 +105,11 @@ Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview 
 
 ## Postcardware
 
-You're free to use this package (it's [MIT-licensed](LICENSE.md)), but if it makes it to your production environment we highly appreciated you sending us a postcard from your hometown, mentioning which of our package(s) you are using.
+You're free to use this package ~~(it's MIT-licensed)~~You're free to use this package (it's [MIT-licensed](LICENSE.md)), but if it makes it to your production environment we highly appreciated you sending us a postcard from your hometown, mentioning which of our package(s) you are using.
 
 Our address is: Spatie, Samberstraat 69D, 2060 Antwerp, Belgium.
 
-All postcards are published [on our website](https://spatie.be/en/opensource/postcards).
+The best postcards will get published on the open source page on our website.
 
 ## Documentation
 You'll find the documentation on [https://docs.spatie.be/laravel-activitylog/v1](https://docs.spatie.be/laravel-activitylog/v1).
@@ -187,4 +223,4 @@ Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview 
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+~~The MIT License (MIT). Please see License File for more information~~.

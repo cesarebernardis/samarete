@@ -26,7 +26,7 @@ return array(
     'Symfony\\Component\\CssSelector\\' => array($vendorDir . '/symfony/css-selector'),
     'Symfony\\Component\\Console\\' => array($vendorDir . '/symfony/console'),
     'Spatie\\String\\' => array($vendorDir . '/spatie/string/src'),
-    'Spatie\\Activitylog\\' => array($vendorDir . '/spatie/laravel-activitylog/src'),
+    'Spatie\\Activitylog\\' => array($vendorDir . '/linearsoft/laravel-activitylog-backport/src'),
     'Samarete\\' => array($baseDir . '/app'),
     'Ramsey\\Uuid\\' => array($vendorDir . '/ramsey/uuid/src'),
     'Psy\\' => array($vendorDir . '/psy/psysh/src/Psy'),

@@ -53,7 +53,10 @@ class ProgettoController extends Controller
     public function editProgetto(EditProgettoRequest $request)
     {
         $progetto = $request->progetto();
-        $this->authorize('update', $progetto);
+        if($progetto)
+            $this->authorize('create', Progetto::class);
+        else
+            $this->authorize('update', $progetto);
         $this->associazione = Auth::user()->associazione();
         return response()->view('progetti.edit', ['associazione' => $this->associazione,'progetto' => is_object($progetto) ? $progetto : null]);
     }

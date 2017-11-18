@@ -67,7 +67,7 @@ class ServizioRepository
     
     public static function addGiorno(Servizio $servizio, $giorno, $da, $a, $descrizione)
     {
-        DB::insert('INSERT INTO servizio_has_giorno (servizio_id, giorno, da, a, descrizione) VALUES(?,?,?,?,?)', array($servizio->id, $giorno, $da, $a, $descrizione));
+        DB::insert('INSERT IGNORE INTO servizio_has_giorno (servizio_id, giorno, da, a, descrizione) VALUES(?,?,?,?,?)', array($servizio->id, $giorno, $da, $a, $descrizione));
     }
     
     public static function addAssociazione(Servizio $servizio, Associazione $associazione, $creatore)

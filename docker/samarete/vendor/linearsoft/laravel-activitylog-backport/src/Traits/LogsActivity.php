@@ -39,25 +39,38 @@ trait LogsActivity
         });
     }
 
-    public function activity(): MorphMany
+    /**
+     * @return MorphMany
+     */
+    public function activity()
     {
         return $this->morphMany(ActivitylogServiceProvider::determineActivityModel(), 'subject');
     }
 
-    public function getDescriptionForEvent(string $eventName): string
+    /**
+     * @param string $eventName
+     * @return string
+     */
+    public function getDescriptionForEvent($eventName)
     {
         return $eventName;
     }
 
-    public function getLogNameToUse(string $eventName = ''): string
+    /**
+     * @param string $eventName
+     * @return string
+     */
+    public function getLogNameToUse($eventName = '')
     {
         return config('laravel-activitylog.default_log_name');
     }
 
-    /*
+    /**
      * Get the event names that should be recorded.
+     *
+     * @return Collection
      */
-    protected static function eventsToBeRecorded(): Collection
+    protected static function eventsToBeRecorded()
     {
         if (isset(static::$recordEvents)) {
             return collect(static::$recordEvents);
@@ -69,14 +82,17 @@ trait LogsActivity
             'deleted',
         ]);
 
-        if (collect(class_uses_recursive(__CLASS__))->contains(SoftDeletes::class)) {
+        if (collect(class_uses(__CLASS__))->contains(SoftDeletes::class)) {
             $events->push('restored');
         }
 
         return $events;
     }
 
-    public function attributesToBeIgnored(): array
+    /**
+     * @return array
+     */
+    public function attributesToBeIgnored()
     {
         if (! isset(static::$ignoreChangedAttributes)) {
             return [];
@@ -85,7 +101,7 @@ trait LogsActivity
         return static::$ignoreChangedAttributes;
     }
 
-    protected function shouldLogEvent(string $eventName): bool
+    protected function shouldLogEvent($eventName)
     {
         if (! in_array($eventName, ['created', 'updated'])) {
             return true;
