@@ -78,7 +78,7 @@ class ChatController extends Controller
     {
         $chat = $this->chats->getById($request->chat);
         //$this->authorize('send-message', $chat);
-        $associazione = Auth::user()->associazione();
+        $associazione = Auth::user()->associazione_id;
         $messaggio = $this->chats->saveMessaggio($chat, $request->messaggio);
         return response()->json(array(
             "status" => 200, 

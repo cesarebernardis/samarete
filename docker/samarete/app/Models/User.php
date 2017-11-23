@@ -21,8 +21,8 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['username', 'password', 'remember_token', 'nome', 'cognome', 'email', 'ultimo_accesso', 'attivo', 'admin', 'created_at', 'updated_at'];
-    protected static $logAttributes = ['username', 'remember_token', 'nome', 'cognome', 'email', 'attivo', 'admin', 'created_at', 'updated_at'];
+    protected $fillable = ['username', 'password', 'remember_token', 'nome', 'cognome', 'email', 'ultimo_accesso', 'attivo', 'admin', 'created_at', 'updated_at', 'associazione_id'];
+    protected static $logAttributes = ['username', 'remember_token', 'nome', 'cognome', 'email', 'attivo', 'admin', 'created_at', 'updated_at', 'associazione_id'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -34,14 +34,6 @@ class User extends Authenticatable
     ];
     
     protected static $logOnlyDirty = true;
-    
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function associazioni()
-    {
-        return $this->hasMany('Samarete\Models\Associazione', 'gestore_id');
-    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -66,6 +58,6 @@ class User extends Authenticatable
     
     public function associazione()
     {
-        return $this->associazioni->first();
+        return $this->associazione_id;
     }
 }

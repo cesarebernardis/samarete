@@ -57,7 +57,7 @@ class ProgettoController extends Controller
             $this->authorize('create', Progetto::class);
         else
             $this->authorize('update', $progetto);
-        $this->associazione = Auth::user()->associazione();
+        $this->associazione = Auth::user()->associazione_id;
         return response()->view('progetti.edit', ['associazione' => $this->associazione,'progetto' => is_object($progetto) ? $progetto : null]);
     }
     

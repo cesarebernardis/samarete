@@ -55,7 +55,7 @@ class AssociazioneController extends Controller
     {
         $associazione = $request->associazione();
         $this->authorize('update', $associazione);
-        $this->associazione = Auth::user()->associazione();
+        $this->associazione = Auth::user()->associazione_id;
         return response()->view('associazioni.edit', ['associazione' => $this->associazione,'associazione' => is_object($associazione) ? $associazione : null]);
     }
     

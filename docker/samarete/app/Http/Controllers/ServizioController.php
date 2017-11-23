@@ -56,7 +56,7 @@ class ServizioController extends Controller
             $this->authorize('create', Servizio::class);
         else
             $this->authorize('update', $servizio);
-        $this->associazione = Auth::user()->associazione();
+        $this->associazione = Auth::user()->associazione_id;
         return response()->view('servizi.edit', ['associazione' => $this->associazione,'servizio' => is_object($servizio) ? $servizio : null]);
     }
     
