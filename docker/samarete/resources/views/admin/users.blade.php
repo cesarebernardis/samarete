@@ -59,6 +59,7 @@
             </form>
         </div>
     </div>
+    <form action="/admin" method="GET" class="margin-top-20"><input type="submit" class="btn btn-primary" value="Indietro" /></form>
 </div>
 
 <form class="form-horizontal" id="user-form">

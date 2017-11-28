@@ -55,6 +55,18 @@ class ProgettoPolicy
     }
 
     /**
+     * Determine whether the user can invite other associations to the progetto.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \Samarete\Progetto  $progetto
+     * @return mixed
+     */
+    public function invite(User $user, Progetto $progetto)
+    {
+        return UserRepository::checkPermesso($user, 'invita-progetto') && $this->isOwner($user, $progetto);
+    }
+
+    /**
      * Determine whether the user can delete the progetto.
      *
      * @param  \App\Models\User  $user
@@ -69,9 +81,8 @@ class ProgettoPolicy
     private function isOwner(User $user, Progetto $progetto)
     {
         $isowner = false;
-        foreach($user->associazioni() as $associazione)
-            if(ProgettoRepository::progettoHasAssociazione($progetto, $associazione))
-                $isowner = true;
+        if(ProgettoRepository::progettoHasAssociazione($progetto, $user->associazione()))
+            $isowner = true;
         return $isowner;
     }
 }

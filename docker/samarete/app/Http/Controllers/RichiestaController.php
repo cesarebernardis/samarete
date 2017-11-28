@@ -39,8 +39,8 @@ class RichiestaController extends Controller
     
     public function index(Request $request)
     {
-        $this->authorize('view', Richiesta::class);
-        $associazione = Auth::user()->associazione_id;
+        $this->authorize('viewall', Richiesta::class);
+        $associazione = AssociazioneRepository::getById(Auth::user()->associazione_id);
         return response()->view('richieste.index', ['richieste' => $associazione->richieste()]);
     }
     

@@ -35,6 +35,7 @@ class AssociazioneRepository
     public static function getByNome($name)
     {
         $associazione = Associazione::where('nome', $name)->first();
+        if(empty($associazione)) return null;
         $associazione->logo_base64 = self::getLogoBase64($associazione);
         return $associazione;
     }
@@ -42,6 +43,7 @@ class AssociazioneRepository
     public static function getById($id)
     {
         $associazione = Associazione::where('id', $id)->first();
+        if(empty($associazione)) return null;
         $associazione->logo_base64 = self::getLogoBase64($associazione);
         return $associazione;
     }

@@ -56,7 +56,10 @@ class Messaggio extends Model
     
     public function getDataAttribute($value)
     {
-        return Carbon::parse($value);
+        if(is_object($value))
+            return new Carbon($value->format(DATE_ISO8601));
+        else
+            return Carbon::parse($value);
     }
     
 }

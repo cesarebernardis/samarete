@@ -80,9 +80,8 @@ class ChatPolicy
     private function isOwner(User $user, Chat $chat)
     {
         $isowner = false;
-        foreach($user->associazioni() as $associazione)
-            if(ChatRepository::chatHasAssociazione($chat, $associazione))
-                $isowner = true;
+        if(ChatRepository::chatHasAssociazione($chat, $user->associazione()))
+            $isowner = true;
         return $isowner;
     }
 }

@@ -22,6 +22,7 @@
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-form" onclick="cleanForm();"> Nuova Associazione </button>
         </div>
     </div>
+    <form action="/admin" method="GET" class="margin-top-20"><input type="submit" class="btn btn-primary" value="Indietro" /></form>
 </div>
 
 <div class="modal fade" id="modal-form">

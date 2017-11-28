@@ -12,7 +12,7 @@
         <div class="col-md-6">
             <h2>{{ $evento->nome }}</h2>
             <div class="oggetto well">{{ $evento->oggetto }}</div>
-            @can('edit', $evento)
+            @can('update', $evento)
                 <div class="inline"><a href="/eventi/edit-evento?id={{ $evento->id }}" id="modifica" class="btn btn-success">Modifica</a></div>
             @endcan
             @can('delete', $evento)

@@ -67,10 +67,6 @@ class AssociazionePolicy
     
     private function isOwner(User $user, Associazione $associazione)
     {
-        $isowner = false;
-        foreach($user->associazioni() as $a)
-            if($a['id'] == $associazione['id'])
-                $isowner = true;
-        return $isowner;
+        return $user['associazione_id'] == $associazione['id'];
     }
 }

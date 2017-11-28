@@ -9,6 +9,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 use Samarete\Repositories\RuoloRepository;
 use Samarete\Repositories\UserRepository;
+use Samarete\Repositories\AssociazioneRepository;
 
 class User extends Authenticatable
 {
@@ -58,6 +59,6 @@ class User extends Authenticatable
     
     public function associazione()
     {
-        return $this->associazione_id;
+        return AssociazioneRepository::getById($this->associazione_id);
     }
 }

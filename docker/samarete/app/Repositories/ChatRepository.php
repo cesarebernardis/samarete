@@ -75,7 +75,7 @@ class ChatRepository
     {
         $message = new Messaggio;
         $message->chat_id = $chat->id;
-        $message->autore_id = Auth::user()->associazione()->id;
+        $message->autore_id = Auth::user()->associazione_id;
         $message->data = new \Datetime();
         $message->testo = $text;
         $message->save();

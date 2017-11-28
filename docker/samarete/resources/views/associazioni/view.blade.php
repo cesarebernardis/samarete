@@ -60,7 +60,7 @@
                 @endif
             </div>
             <div class="col-md-12 text-align-center">
-                @can('edit', $associazione)
+                @can('update', $associazione)
                     <div class="inline"><a href="/associazioni/edit-associazione?id={{ $associazione->id }}" id="modifica" class="btn btn-success">Modifica</a></div>
                 @endcan
                 @can('delete', $associazione)

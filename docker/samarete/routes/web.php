@@ -76,6 +76,7 @@ Route::post('/file/delete-tmp', 'FileController@deleteTmpFile')->middleware('aja
 
 //CHAT
 Route::post('/chat/get-chat', 'ChatController@getChat')->middleware('ajax');
+Route::post('/chat/update-chat', 'ChatController@getMessaggi')->middleware('ajax');
 Route::post('/chat/save-chat', 'ChatController@saveChat')->middleware('ajax');
 Route::post('/chat/save-message', 'ChatController@saveMessaggio')->middleware('ajax');
 Route::post('/chat/delete-chat', 'ChatController@deleteChat')->middleware('ajax');

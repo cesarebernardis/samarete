@@ -13,6 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+        'Samarete\Models\Chat' => 'Samarete\Policies\ChatPolicy',
         'Samarete\Models\User' => 'Samarete\Policies\UserPolicy',
         'Samarete\Models\Ruolo' => 'Samarete\Policies\RuoloPolicy',
         'Samarete\Models\Permesso' => 'Samarete\Policies\PermessoPolicy',

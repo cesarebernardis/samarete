@@ -25,6 +25,18 @@ class RichiestaPolicy
      * @param  \Samarete\Models\Richiesta  $richiesta
      * @return mixed
      */
+    public function viewall(User $user)
+    {
+        return UserRepository::checkPermesso($user, 'view-richiesta');
+    }
+
+    /**
+     * Determine whether the user can view the richiesta.
+     *
+     * @param  \Samarete\Models\User  $user
+     * @param  \Samarete\Models\Richiesta  $richiesta
+     * @return mixed
+     */
     public function view(User $user, Richiesta $richiesta)
     {
         return UserRepository::checkPermesso($user, 'view-richiesta') && $this->isOwner($user, $richiesta);

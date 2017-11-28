@@ -9,7 +9,7 @@
                         <div class="panel-body">
                             <ul class="chat">
                                 @foreach($chat->messaggi as $messaggio)
-                                <li class="left clearfix">
+                                <li class="left clearfix message" data-id="{{ $messaggio->id }}">
                                     <div class="chat-body clearfix">
                                         <div class="header">
                                             <strong class="primary-font">{{ empty($messaggio->autore->acronimo) ? $messaggio->autore->nome : $messaggio->autore->acronimo }}</strong>
@@ -40,11 +40,22 @@
     </div>
 </div>
 
+<script type="text/javascript" src="{{ asset('js/chat.js') }}"></script>
 <script>
 
 $(document).ready(function(){
     
+    setInterval(function(){ chat_update({{ $chat->id }}); }, 20000);
+    
+    $('#chat-{{ $chat->id }} input#btn-input').keypress(function(e) {
+        if(e.which == 13) {
+            $('#chat-{{ $chat->id }} button#btn-chat').click();
+        }
+    });
+    
     $('#chat-{{ $chat->id }} button#btn-chat').click(function(){
+        var messaggio = $('#chat-{{ $chat->id }} input#btn-input').val().trim();
+        if(!messaggio) return;
         var d = {
             chat: {{ $chat->id }},
             messaggio: $('#chat-{{ $chat->id }} input#btn-input').val(),
@@ -54,25 +65,16 @@ $(document).ready(function(){
                method: "post",
                data: d,
                success: function(data) {
-                    $('#chat-{{ $chat->id }} ul.chat').append('\
-                        <li class="left clearfix">\
-                          <div class="chat-body clearfix">\
-                            <div class="header">\
-                              <strong class="primary-font">'+data.autore+'</strong>\
-                              <small class="pull-right text-muted">\
-                                 <i class="fa fa-clock-o fa-fw"></i> '+data.data+'\
-                              </small>\
-                            </div>\
-                            <p>'+data.testo+'</p>\
-                          </div>\
-                        </li>\
-                    ');
+                    chat_update({{ $chat->id }});
+                    $('#chat-{{ $chat->id }} input#btn-input').val("");
                },
                error: function() {
                    swal("Errore!", "Errore durante l'invio del messaggio", "error");
                }
         });
     });
+    
+    $("#chat-{{ $chat->id }} div.panel-body").scrollTop($("#chat-{{ $chat->id }} div.panel-body")[0].scrollHeight);
     
 });
 

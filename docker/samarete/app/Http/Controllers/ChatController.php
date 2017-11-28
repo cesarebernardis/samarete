@@ -37,7 +37,7 @@ class ChatController extends Controller
         $this->chats = $chats;
     }
     
-    public function getAssociazioni(Request $request)
+    public function getChats(Request $request)
     {
         $this->authorize('view', Chat::class);
         return response()->json($this->chats->getAll());
@@ -45,14 +45,32 @@ class ChatController extends Controller
     
     public function getChat(ViewChatRequest $request)
     {
-        $chat = $this->chats->getById($request->id);
+        $chat = $request->chat();
         $this->authorize('view', $chat);
         return response()->json($chat);
     }
     
+    public function getMessaggi(ViewChatRequest $request)
+    {
+        $chat = $request->chat();
+        $this->authorize('view', $chat);
+        $messaggi = array();
+        foreach($chat->messaggi as $messaggio){
+            $messaggi[] = array(
+                'id' => $messaggio->id,
+                'autore' => empty($messaggio->autore->acronimo) ? $messaggio->autore->nome : $messaggio->autore->acronimo,
+                'data' => $messaggio->data->formatLocalized('%d/%m/%Y %H:%M'),
+                'testo' => $messaggio->testo,
+                'chat_id' => $messaggio->chat_id,
+            );
+            
+        }
+        return response()->json(array("messaggi" => $messaggi));
+    }
+    
     public function deleteChat(DeleteChatRequest $request)
     {
-        $chat = $this->chats->getById($request->id);
+        $chat = $request->chat();
         $this->authorize('delete', $chat);
         $this->chats->delete(trim(strip_tags($request->id)));
         return response()->json(array("status" => 200, "message" => "OK"));
@@ -62,7 +80,7 @@ class ChatController extends Controller
     {
         $chat = new Chat;
         if(!empty($request->id)){
-            $chat = $this->chats->getById($request->id);
+            $chat = $request->chat();
             if(empty($chat))
                 return response()->json(array("status" => 400, "message" => "ID Chat non valido"));
             $this->authorize('update', $chat);
@@ -77,8 +95,7 @@ class ChatController extends Controller
     public function saveMessaggio(SaveMessaggioRequest $request)
     {
         $chat = $this->chats->getById($request->chat);
-        //$this->authorize('send-message', $chat);
-        $associazione = Auth::user()->associazione_id;
+        $this->authorize('send-message', $chat);
         $messaggio = $this->chats->saveMessaggio($chat, $request->messaggio);
         return response()->json(array(
             "status" => 200, 

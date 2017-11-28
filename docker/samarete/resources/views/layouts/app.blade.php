@@ -85,7 +85,7 @@
                         @if (Auth::guest())
                             <li><a href="{{ route('login') }}">Login</a></li>
                         @else
-                            @if (!empty(Auth::user()->associazioni()->first()))
+                            @if (!empty(Auth::user()->associazione_id))
                                 <li><a href="/richieste">Richieste</a></li>
                             @endif
                             <li class="dropdown">
