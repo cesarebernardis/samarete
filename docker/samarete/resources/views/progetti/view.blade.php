@@ -12,6 +12,9 @@
         <div class="col-md-6">
             <h2>{{ $progetto->nome }}</h2>
             <div class="oggetto well">{{ $progetto->oggetto }}</div>
+            @can('invite', $progetto)
+                <div class="inline"><button id="invita" class="btn btn-primary" data-toggle="modal" data-target="#modal-form">Invita a collaborare</button></div>
+            @endcan
             @can('update', $progetto)
                 <div class="inline"><a href="/progetti/edit-progetto?id={{ $progetto->id }}" id="modifica" class="btn btn-success">Modifica</a></div>
             @endcan
@@ -28,6 +31,40 @@
     </div>
     @include('chat', ['chat' => $progetto->chat])
 </div>
+
+<form class="form-horizontal" id="collaboration-form">
+<div class="modal fade" id="modal-form">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Invita a collaborare</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            {{ csrf_field() }}
+          <input type="hidden" class="form-control" id="progetto" name="progetto" value="{{ $progetto->id }}"/>
+          <div class="form-group">
+            <label class="control-label col-sm-4" for="associazioni[]">Associazioni: </label>
+            <div class="col-sm-8">
+              <select class="form-control" name="associazioni[]" id="associazioni" multiple="multiple">
+                @foreach($associazioni as $associazione)
+                  <option value="{{ $associazione->id }}">{{ empty($associazione->acronimo) ? $associazione->nome : $associazione->acronimo }}</option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary submit">Salva</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
 @endsection
 
 @section('scripts')
@@ -35,6 +72,7 @@
 
 $(document).ready(function() {
     
+    $('#associazioni').select2();
     
     $("#elimina").click(function(){
         swal({
@@ -56,6 +94,23 @@ $(document).ready(function() {
               });
         });
     });
+    
+    $("#collaboration-form button.submit").click(function(){
+        var data = $("#collaboration-form").serializeArray();
+        $.ajax({
+           url: '/progetti/invita',
+           method: "post",
+           data: data,
+           success: function() {
+               swal("Fatto!", "Associazioni invitate", "success");
+               $("#modal-form").modal('hide');
+           },
+           error: function() {
+               swal("Errore!", "Errore durante l'invio dell'invito", "error");
+           }
+       });
+    });
+    
 });
 </script>
 @endsection

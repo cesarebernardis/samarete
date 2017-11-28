@@ -110,6 +110,7 @@ Route::get('/progetti/edit-progetto', 'ProgettoController@editProgetto');
 
 Route::post('/progetti/get-progetto', 'ProgettoController@getProgetto')->middleware('ajax');
 Route::get('/progetti/get-progetti', 'ProgettoController@getProgetti')->middleware('ajax');
+Route::post('/progetti/invita', 'ProgettoController@invita')->middleware('ajax');
 Route::post('/progetti/save-progetto', 'ProgettoController@saveProgetto')->middleware('ajax');
 Route::post('/progetti/delete-progetto', 'ProgettoController@deleteProgetto')->middleware('ajax');
 Route::post('/progetti/get-logo', 'ProgettoController@getLogo')->middleware('ajax');

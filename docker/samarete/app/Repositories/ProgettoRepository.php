@@ -35,6 +35,13 @@ class ProgettoRepository
         return $progetto;
     }
     
+    public static function getAvailableAssociazioni(Progetto $progetto)
+    {
+        $ids = DB::select('SELECT associazione_id as id FROM associazione_has_progetto WHERE progetto_id = ?', [$progetto['id']]);
+        $result = Associazione::where('attivo', 1)->whereNotIn('id', array_map(function($x){ return $x->id; }, $ids))->get();
+        return empty($result) ? array() : $result;
+    }
+    
     public static function progettoHasAssociazione(Progetto $progetto, Associazione $associazione)
     {
         $result = DB::select('

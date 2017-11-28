@@ -5,6 +5,7 @@ namespace Samarete\Policies;
 use Samarete\Models\User;
 use Samarete\Models\Evento;
 use Samarete\Repositories\UserRepository;
+use Samarete\Repositories\EventoRepository;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -68,9 +69,8 @@ class EventoPolicy
     private function isOwner(User $user, Evento $evento)
     {
         $isowner = false;
-        foreach($user->associazioni() as $associazione)
-            if(EventoRepository::eventoHasAssociazione($evento, $associazione))
-                $isowner = true;
+        if(EventoRepository::eventoHasAssociazione($evento, $user->associazione()))
+            $isowner = true;
         return $isowner;
     }
 }

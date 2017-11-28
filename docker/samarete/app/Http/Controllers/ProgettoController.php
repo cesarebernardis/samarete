@@ -4,6 +4,7 @@ namespace Samarete\Http\Controllers;
 
 use Samarete\Http\Requests\ViewProgettoRequest;
 use Samarete\Http\Requests\SaveProgettoRequest;
+use Samarete\Http\Requests\InvitaProgettoRequest;
 use Samarete\Http\Requests\DeleteProgettoRequest;
 use Samarete\Http\Requests\EditProgettoRequest;
 
@@ -43,11 +44,22 @@ class ProgettoController extends Controller
         return response()->view('progetti.index', ['progetti' => $this->progetti->getAll()]);
     }
     
+    public function invita(InvitaProgettoRequest $request)
+    {
+        $progetto = ProgettoRepository::getById($request->progetto);
+        $this->authorize('invite', $progetto);
+        foreach($request->associazioni as $associazione_id){
+            $associazione = AssociazioneRepository::getById($associazione_id);
+            ProgettoRepository::addAssociazione($progetto, $associazione, 0);
+        }
+        return response()->json(["status" => 200, "message" => "OK"]);
+    }
+    
     public function viewProgetto(ViewProgettoRequest $request)
     {
         $progetto = $request->progetto();
         if(empty($progetto)) redirect('/progetti');
-        return response()->view('progetti.view', ['progetto' => $progetto]);
+        return response()->view('progetti.view', ['progetto' => $progetto, 'associazioni' => ProgettoRepository::getAvailableAssociazioni($progetto)]);
     }
     
     public function editProgetto(EditProgettoRequest $request)
@@ -57,7 +69,7 @@ class ProgettoController extends Controller
             $this->authorize('create', Progetto::class);
         else
             $this->authorize('update', $progetto);
-        $this->associazione = Auth::user()->associazione_id;
+        $this->associazione = Auth::user()->associazione();
         return response()->view('progetti.edit', ['associazione' => $this->associazione,'progetto' => is_object($progetto) ? $progetto : null]);
     }
     
@@ -88,7 +100,7 @@ class ProgettoController extends Controller
         $progetto = $request->progetto();
         $this->authorize('delete', $progetto);
         $this->progetti->deleteById($request->id);
-        return response()->json(array("status" => 200, "message" => "OK"));
+        return response()->json(["status" => 200, "message" => "OK"]);
     }
     
     public function saveProgetto(SaveProgettoRequest $request)

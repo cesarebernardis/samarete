@@ -56,7 +56,7 @@ class EventoController extends Controller
             $this->authorize('create', Evento::class);
         else
             $this->authorize('update', $evento);
-        $this->associazione = Auth::user()->associazione_id;
+        $this->associazione = Auth::user()->associazione();
         return response()->view('eventi.edit', ['associazione' => $this->associazione,'evento' => is_object($evento) ? $evento : null]);
     }
     

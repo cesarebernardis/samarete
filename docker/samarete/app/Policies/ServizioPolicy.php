@@ -69,9 +69,8 @@ class ServizioPolicy
     private function isOwner(User $user, Servizio $servizio)
     {
         $isowner = false;
-        foreach($user->associazioni() as $associazione)
-            if(ServizioRepository::servizioHasAssociazione($servizio, $associazione))
-                $isowner = true;
+        if(ServizioRepository::servizioHasAssociazione($servizio, $user->associazione()))
+            $isowner = true;
         return $isowner;
     }
 }
