@@ -60,6 +60,10 @@ Route::middleware('admin')->group(function(){
     Route::post('/admin/permesso/check-nome', 'PermessoController@checkNome')->middleware('ajax');
     Route::post('/admin/associazione/check-nome', 'AssociazioneController@checkNome')->middleware('ajax');
 });
+
+//USERS
+Route::post('/users/get-free', 'UserController@getFreeUsers')->middleware('ajax');
+
 //ASSOCIAZIONI
 Route::get('/associazioni', 'AssociazioneController@index');
 Route::get('/associazioni/view-associazione', 'AssociazioneController@viewAssociazione');
@@ -107,9 +111,13 @@ Route::post('/servizi/get-logo', 'ServizioController@getLogo')->middleware('ajax
 Route::get('/progetti', 'ProgettoController@index');
 Route::get('/progetti/view-progetto', 'ProgettoController@viewProgetto');
 Route::get('/progetti/edit-progetto', 'ProgettoController@editProgetto');
+Route::get('/progetti/download-file', 'ProgettoController@downloadFile');
 
 Route::post('/progetti/get-progetto', 'ProgettoController@getProgetto')->middleware('ajax');
 Route::get('/progetti/get-progetti', 'ProgettoController@getProgetti')->middleware('ajax');
+Route::get('/progetti/get-files', 'ProgettoController@getFiles')->middleware('ajax');
+Route::get('/progetti/publish-file', 'ProgettoController@publishFile')->middleware('ajax');
+Route::get('/progetti/delete-file', 'ProgettoController@deleteFile')->middleware('ajax');
 Route::post('/progetti/invita', 'ProgettoController@invita')->middleware('ajax');
 Route::post('/progetti/save-progetto', 'ProgettoController@saveProgetto')->middleware('ajax');
 Route::post('/progetti/delete-progetto', 'ProgettoController@deleteProgetto')->middleware('ajax');

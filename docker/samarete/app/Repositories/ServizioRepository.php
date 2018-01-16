@@ -61,8 +61,27 @@ class ServizioRepository
     {
         DB::delete('DELETE FROM servizio_has_giorno WHERE servizio_id = ?', [$servizio['id']]);
         foreach($giorni as $giorno){
-            self::addGiorno($servizio, $giorno->data, $giorno->da, $giorno->a, $giorno->descrizione);
+            $day = $giorno->data;
+            while($day->lte($servizio->data_fine)){
+                self::addGiorno($servizio, $giorno->data, $giorno->da, $giorno->a, $giorno->descrizione);
+                $day = self::getNextPeriodicalDate($servizio, $day);
+            }
         }
+    }
+    
+    public static function getNextPeriodicalDate(Servizio $servizio, $day)
+    {
+        $newday = clone($day);
+        switch($servizio->periodicita){
+            case 'Giornaliera': $newday->addDay(); break;
+            case 'Settimanale': $newday->addWeek(); break;
+            case 'Quattordicinale': $newday->addWeek(2); break;
+            case 'Mensile': $newday->addMonth(); break;
+            case 'Bimestrale': $newday->addMonth(2); break;
+            default: $newday = $servizio->data_fine;
+                   $newday->addDay();
+        }
+        return $newday;
     }
     
     public static function addGiorno(Servizio $servizio, $giorno, $da, $a, $descrizione)

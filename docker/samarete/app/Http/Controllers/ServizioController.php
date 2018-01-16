@@ -18,6 +18,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 
+use Carbon\Carbon
+
 class ServizioController extends Controller
 {
     /**
@@ -105,6 +107,8 @@ class ServizioController extends Controller
         $servizio->nome = $request->nome;
         $servizio->oggetto = $request->oggetto;
         $servizio->descrizione = $request->descrizione;
+        $servizio->periodicita = $request->periodicita;
+        $servizio->data_fine = Carbon::createFromFormat('d/m/Y', $request->data_fine);
         $servizio->logo = $request->logo;
         $associazione = AssociazioneRepository::getById($request->creatore_id);
         if(!empty($request->new_logo)){
@@ -122,10 +126,11 @@ class ServizioController extends Controller
     {
         $parsed = array();
         for($i = 0; $i < count($giorni['data']); $i++){
+            if(empty($giorni['data'][$i])) continue;
             $g = new \stdClass();
-            $g->data = date_create_from_format('d/m/Y', $giorni['data'][$i]);
-            $g->da = date_create_from_format('H:i', $giorni['da'][$i]);
-            $g->a = date_create_from_format('H:i', $giorni['a'][$i]);
+            $g->data = Carbon::createFromFormat('d/m/Y', $giorni['data'][$i]);
+            $g->da = Carbon::createFromFormat('H:i', $giorni['da'][$i]);
+            $g->a = Carbon::createFromFormat('H:i', $giorni['a'][$i]);
             $g->descrizione = $giorni['descrizione'][$i];
             $parsed[$i] = $g;
         }

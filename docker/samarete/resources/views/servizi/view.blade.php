@@ -86,7 +86,7 @@ $(document).ready(function() {
                method: "post",
                data: {id: {{ $servizio->id}} },
                success: function(data) {
-                    swal({title:"Fatto!", text:"Servizio eliminato con successo", type:"success", onClose: function(){window.location.href = "/servizi/view-servizio?id="+data.servizioid;}});
+                    swal({title:"Fatto!", text:"Servizio eliminato con successo", type:"success", onClose: function(){window.location.href = "/servizi"}});
                },
                error: function() {
                    swal("Errore!", "Errore durante l'eliminazione dell'servizio", "error");

@@ -25,14 +25,18 @@
                         </div>
                         <!-- /.panel-body -->
                         <div class="panel-footer">
-                            <div class="input-group">
-                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Scrivi...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-warning btn-sm" id="btn-chat">
-                                        Invia
-                                    </button>
-                                </span>
-                            </div>
+                            @can('send-message', $chat)
+                                @if(!empty(Auth::user()->associazione_id))
+                                <div class="input-group">
+                                    <input id="btn-input" type="text" class="form-control input-sm" placeholder="Scrivi...">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-warning btn-sm" id="btn-chat">
+                                            Invia
+                                        </button>
+                                    </span>
+                                </div>
+                                @endif
+                            @endcan
                         </div>
                         <!-- /.panel-footer -->
                     </div>

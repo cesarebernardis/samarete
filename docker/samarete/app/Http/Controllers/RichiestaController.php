@@ -60,14 +60,14 @@ class RichiestaController extends Controller
     {
         $richiesta = $request->richiesta();
         if(empty($richiesta)) response()->json(array("status" => 404, "message" => "NOT FOUND"));
-        $this->richieste->evadiRichiesta($richiesta, Auth::user()->associazione_id);
+        $this->richieste->evadiRichiesta($richiesta, Auth::user()->associazione());
         return response()->json(array("status" => 200, "message" => "OK"));
     }
     
     public function getRichieste(Request $request)
     {
         $this->authorize('view', Richiesta::class);
-        $associazione = Auth::user()->associazione_id;
+        $associazione = Auth::user()->associazione();
         return response()->json($associazione->richieste());
     }
     

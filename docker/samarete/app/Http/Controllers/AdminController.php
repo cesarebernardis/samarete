@@ -9,6 +9,8 @@ use Samarete\Models\Ruolo;
 use Samarete\Models\Permesso;
 use Samarete\Models\Associazione;
 
+use Samarete\Repositories\UserRepository;
+
 class AdminController extends Controller
 {
     //
@@ -51,7 +53,7 @@ class AdminController extends Controller
     
     public function associazioni()
     {
-        return response()->view('admin.associazioni', ['users' => User::all()]);
+        return response()->view('admin.associazioni', ['users' => UserRepository::getFree()]);
     }
     
 }

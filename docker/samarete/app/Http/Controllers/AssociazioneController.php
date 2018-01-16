@@ -54,9 +54,16 @@ class AssociazioneController extends Controller
     public function editAssociazione(EditAssociazioneRequest $request)
     {
         $associazione = $request->associazione();
-        $this->authorize('update', $associazione);
-        $this->associazione = Auth::user()->associazione_id;
-        return response()->view('associazioni.edit', ['associazione' => $this->associazione,'associazione' => is_object($associazione) ? $associazione : null]);
+        if($associazione)
+            $this->authorize('create', Associazione::class);
+        else
+            $this->authorize('update', $associazione);
+        $this->associazione = Auth::user()->associazione();
+        
+        $params = ['associazione' => $this->associazione,'associazione' => is_object($associazione) ? $associazione : null];
+        if(Auth::user()->isAdmin())
+            $params['users'] = UserRepository::getFree();
+        return response()->view('associazioni.edit', $params);
     }
     
     public function getAssociazioni(Request $request)
@@ -105,7 +112,7 @@ class AssociazioneController extends Controller
     {
         $associazione = $this->associazioni->getById($request->id);
         $this->authorize('delete', $associazione);
-        $this->associazioni->delete(trim(strip_tags($request->id)));
+        $this->associazioni->delete($associazione);
         return response()->json(array("status" => 200, "message" => "OK"));
     }
     
@@ -146,6 +153,8 @@ class AssociazioneController extends Controller
                 $associazione->update(['logo' => $logo->id]);
             }
         }
+        $user = UserRepository::getById($associazione->gestore_id);
+        if($user) $user->update(['associazione_id' => $associazione->id]);
         return response()->json(array("status" => 200, "message" => "OK", "associazioneid" => $associazione->id));
     }
 }

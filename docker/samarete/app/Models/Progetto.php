@@ -2,6 +2,8 @@
 
 namespace Samarete\Models;
 
+use Samarete\Models\File;
+
 use Illuminate\Database\Eloquent\Model;
 
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -67,5 +69,11 @@ class Progetto extends Model
         $this->descrizione = \Purifier::clean($this->descrizione);
         unset($this->logo_base64);
         parent::save($options);
+    }
+    
+    public function isPublic(File $file)
+    {
+        if(empty($file)) return false;
+        $this->files()->where('file_id', '=', $file->id)->first()->public > 0;
     }
 }

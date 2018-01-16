@@ -49,6 +49,38 @@
                                   <h4>Durata Servizio</h4>
                               </div>
                           </div>
+                          <div class="form-group">
+                          <div class="col-sm-4"></div>
+                          <div class="col-sm-8">
+                            La durata del servizio si basa sulla combinazione tra le informazioni che verranno inserite nel form sottostante.
+                            I giorni di erogazione del servizio verranno automaticamente replicati secondo quanto specificato alla voce <i>Periodicit&agrave;</i>
+                            a partire dal <i>Giorno 1</i> fino alla <i>Data fine</i> inserita.
+                          </div>
+                          </div>
+                          <div class="form-group">
+                                <label class="control-label col-sm-4" for="periodicita">Periodicit&agrave;*: </label>
+                                <div class="col-sm-4">
+                                <select class="custom-select form-control" name="periodicita" id="periodicita">
+                                        <option value="Nessuna" maxdays="100" selected>Nessuna</option>
+                                        <option value="Giornaliera" maxdays="1">Giornaliera</option>
+                                        <option value="Settimanale" maxdays="7">Settimanale</option>
+                                        <option value="Quattordicinale" maxdays="14">Quattordicinale</option>
+                                        <option value="Mensile" maxdays="31">Mensile</option>
+                                        <option value="Bimestrale" maxdays="62">Bimestrale</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    <label class="control-label col-sm-4" for="data_fine">Data fine*: </label>
+                                    <div class="col-sm-4">
+                                      <div class="input-group date" id="data_fine">
+                                        <input type="text" name="data_fine" class="form-control data" />
+                                        <span class="input-group-addon">
+                                          <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                      </div>
+                                    </div>
+                            </div>
                       </div>
                       <div class="form-group">
                           <label class="control-label col-sm-4" for="descrizione"></label>
@@ -114,6 +146,11 @@ var logoDropzone = new Dropzone("div#upload-logo", {
 
 function addDay(){
     var n = $("div.giorni .giorno").length + 1;
+    /*var maxdays = parseInt($('#periodicita option:selected').attr('maxdays'));
+    if(maxdays < n){
+        swal("Attenzione!", "Non puoi inserire più di "+maxdays+" giorni per la periodicità selezionata", "warning");
+        return;
+    }*/
     var id = 'giorno_'+n;
     var html = '\
         <div class="form-group" id="'+id+'">\
@@ -187,6 +224,19 @@ function removeDay(){
 
 $(document).ready(function() {
     
+    /*$("#data_inizio").datetimepicker({
+        locale: 'it',
+        minDate: moment(),
+        defaultDate: moment().add(1, 'day'),
+        format: "DD/MM/YYYY",
+    });*/
+    
+    $("#data_fine").datetimepicker({
+        locale: 'it',
+        minDate: moment().add(1, 'day'),
+        format: "DD/MM/YYYY",
+    });
+    
     @if (!empty($servizio))
 
         <?php
@@ -239,10 +289,22 @@ $(document).ready(function() {
             nome: {
                 required: true,
             },
+            periodicita: {
+                required: true,
+            },
+            data_fine: {
+                required: true,
+            },
         }, 
         messages: {
             nome: {
                 required: "Inserisci un nome",
+            },
+            periodicita: {
+                required: "Inserisci una periodicit&agrave;",
+            },
+            data_fine: {
+                required: "Inserisci una data fine",
             },
         },
         submitHandler: function(form) {

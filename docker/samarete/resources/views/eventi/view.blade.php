@@ -86,7 +86,7 @@ $(document).ready(function() {
                method: "post",
                data: {id: {{ $evento->id}} },
                success: function(data) {
-                    swal({title:"Fatto!", text:"Evento eliminato con successo", type:"success", onClose: function(){window.location.href = "/eventi/view-evento?id="+data.eventoid;}});
+                    swal({title:"Fatto!", text:"Evento eliminato con successo", type:"success", onClose: function(){window.location.href = "/eventi"}});
                },
                error: function() {
                    swal("Errore!", "Errore durante l'eliminazione dell'evento", "error");

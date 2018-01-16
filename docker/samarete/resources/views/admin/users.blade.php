@@ -176,7 +176,7 @@ function deleteForm(){
                 $('#users').DataTable().ajax.reload();
            },
            error: function() {
-               swal("Errore!", "Errore durante il salvataggio dell'utente", "error");
+               swal("Errore!", "Errore durante l'eliminazione dell'utente", "error");
            }
        });
 }

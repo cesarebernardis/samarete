@@ -24,6 +24,11 @@ class UserRepository
         return User::where('attivo', 1)->get();
     }
     
+    public static function getFree()
+    {
+        return User::where('attivo', 1)->whereNull('associazione_id')->where('admin', 0)->get();
+    }
+    
     public static function getByUsername($username)
     {
         return User::where('username', $username)->first();

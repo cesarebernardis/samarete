@@ -5,6 +5,7 @@ namespace Samarete\Policies;
 use Samarete\Models\User;
 use Samarete\Models\Chat;
 use Samarete\Repositories\UserRepository;
+use Samarete\Repositories\ChatRepository;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 

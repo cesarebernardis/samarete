@@ -114,7 +114,7 @@ function updateForm(){
                 $("#modal-form").modal('show');
            },
            error: function() {
-               swal("Errore!", "Errore durante il salvataggio dell'ruolo", "error");
+               swal("Errore!", "Errore durante il salvataggio del ruolo", "error");
            }
        });
 }
@@ -130,7 +130,7 @@ function deleteForm(){
                 $('#ruoli').DataTable().ajax.reload();
            },
            error: function() {
-               swal("Errore!", "Errore durante il salvataggio del ruolo", "error");
+               swal("Errore!", "Errore durante l'eliminazione del ruolo", "error");
            }
        });
 }

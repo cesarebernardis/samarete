@@ -67,6 +67,42 @@ class ProgettoPolicy
     }
 
     /**
+     * Determine whether the user can publish a file of the progetto.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \Samarete\Progetto  $progetto
+     * @return mixed
+     */
+    public function publishFile(User $user, Progetto $progetto, File $file)
+    {
+        return UserRepository::checkPermesso($user, 'publish-file') && $this->isOwner($user, $progetto);
+    }
+
+    /**
+     * Determine whether the user can download a file of the progetto.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \Samarete\Progetto  $progetto
+     * @return mixed
+     */
+    public function downloadFile(User $user, Progetto $progetto, File $file)
+    {
+        return (UserRepository::checkPermesso($user, 'download-file') && $this->isOwner($user, $progetto)) || $progetto->isPublic($file);
+    }
+
+    /**
+     * Determine whether the user can download a file of the progetto.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \Samarete\Progetto  $progetto
+     * @return mixed
+     */
+    public function deleteFile(User $user, Progetto $progetto, File $file)
+    {
+        return UserRepository::checkPermesso($user, 'delete-file') && $this->isOwner($user, $progetto);
+    }
+
+    /**
      * Determine whether the user can delete the progetto.
      *
      * @param  \App\Models\User  $user

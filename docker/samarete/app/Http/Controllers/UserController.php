@@ -41,6 +41,12 @@ class UserController extends Controller
         return response()->json($this->users->getAll());
     }
     
+    public function getFreeUsers(Request $request)
+    {
+        $this->authorize('view', User::class);
+        return response()->json($this->users->getFree());
+    }
+    
     public function getUser(ViewUserRequest $request)
     {
         $user = $this->users->getById($request->id);

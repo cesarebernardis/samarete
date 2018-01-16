@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 
 use Samarete\Models\Progetto;
 use Samarete\Models\Associazione;
+use Samarete\Models\File;
 
 use Samarete\Repositories\FileRepository;
 
@@ -55,6 +56,7 @@ class ProgettoRepository
     public static function addAssociazione(Progetto $progetto, Associazione $associazione, $creatore)
     {
         DB::insert('INSERT IGNORE INTO associazione_has_progetto (associazione_id, progetto_id, creatore) VALUES(?,?,?)', array($associazione->id, $progetto->id, $creatore));
+        DB::insert('INSERT IGNORE INTO chat_has_associazione (chat_id, associazione_id) VALUES(?,?)', array($progetto->chat_id, $associazione->id));
     }
     
     public static function deleteById($id)
@@ -83,6 +85,32 @@ class ProgettoRepository
         $logo = FileRepository::getById($progetto->logo);
         if(empty($logo)) return null;
         return FileRepository::getBase64Uri($logo);
+    }
+    
+    public static function publishFile(Progetto $progetto, File $file, $public=true)
+    {
+        if(empty($progetto) || empty($file)) return null;
+        DB::table('progetto_has_file')->where('progetto_id', $progetto->id)->where('file_id', $file->id)->update(['public' => $public]);
+        return true;
+    }
+    
+    public static function deleteFile(Progetto $progetto, File $file)
+    {
+        if(empty($progetto) || empty($file)) return null;
+        DB::delete('DELETE FROM progetto_has_file WHERE progetto_id = ? AND file_id = ?', [$progetto->id, $file->id]);
+        FileRepository::delete($file);
+        return true;
+    }
+    
+    public static function getFilesWithSideInfo(Progetto $progetto)
+    {
+        if(empty($progetto)) return array();
+        $files = array();
+        foreach($progetto->files as $file){
+            $file->public = $progetto->isPublic($file);
+            $files[] = $file;
+        }
+        return $files;
     }
     
 }

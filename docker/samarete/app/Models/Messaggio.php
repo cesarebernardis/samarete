@@ -62,4 +62,10 @@ class Messaggio extends Model
             return Carbon::parse($value);
     }
     
+    public function save(array $options = [])
+    {
+        $this->testo = \Purifier::clean($this->testo);
+        parent::save($options);
+    }
+    
 }

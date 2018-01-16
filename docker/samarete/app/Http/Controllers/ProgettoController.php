@@ -7,6 +7,8 @@ use Samarete\Http\Requests\SaveProgettoRequest;
 use Samarete\Http\Requests\InvitaProgettoRequest;
 use Samarete\Http\Requests\DeleteProgettoRequest;
 use Samarete\Http\Requests\EditProgettoRequest;
+use Samarete\Http\Requests\FileProgettoRequest;
+use Samarete\Http\Requests\PublishFileProgettoRequest;
 
 use Samarete\Repositories\FileRepository;
 use Samarete\Repositories\ProgettoRepository;
@@ -46,13 +48,51 @@ class ProgettoController extends Controller
     
     public function invita(InvitaProgettoRequest $request)
     {
-        $progetto = ProgettoRepository::getById($request->progetto);
+        $progetto = $this->progetti->getById($request->progetto);
         $this->authorize('invite', $progetto);
         foreach($request->associazioni as $associazione_id){
             $associazione = AssociazioneRepository::getById($associazione_id);
             ProgettoRepository::addAssociazione($progetto, $associazione, 0);
         }
         return response()->json(["status" => 200, "message" => "OK"]);
+    }
+    
+    public function publishFile(PublishFileProgettoRequest $request)
+    {
+        $progetto = $this->progetti->getById($request->progetto_id);
+        $file = FileRepository::getById($request->file_id);
+        $this->authorize('publishFile', $progetto, $file);
+        if(empty($file) || empty($progetto))
+            return response()->json(array("status" => 400, "message" => "ERROR"));
+        if(!isset($request->public)){
+            $public = 0;
+        }else{
+            $public = $request->public;
+        }
+        $this->progetti->publishFile($progetto, $file, $public);
+        return response()->json(["status" => 200, "message" => "OK"]);
+    }
+    
+    public function deleteFile(FileProgettoRequest $request)
+    {
+        $progetto = $this->progetti->getById($request->progetto_id);
+        $file = FileRepository::getById($request->file_id);
+        $this->authorize('deleteFile', $progetto, $file);
+        if(empty($file) || empty($progetto))
+            return response()->json(array("status" => 400, "message" => "ERROR"));
+        $this->progetti->deleteFile($progetto, $file);
+        return response()->json(["status" => 200, "message" => "OK"]);
+    }
+    
+    public function downloadFile(FileProgettoRequest $request)
+    {
+        $progetto = $this->progetti->getById($request->progetto_id);
+        $file = FileRepository::getById($request->file_id);
+        $this->authorize('downloadFile', $progetto, $file);
+        if(empty($file))
+            return response()->json(array("status" => 400, "message" => "ERROR"));
+        $pathToFile = $this->files->getCompleteFilePath($file);
+        return response()->download($pathToFile, $file->nome_originale);
     }
     
     public function viewProgetto(ViewProgettoRequest $request)
@@ -71,6 +111,12 @@ class ProgettoController extends Controller
             $this->authorize('update', $progetto);
         $this->associazione = Auth::user()->associazione();
         return response()->view('progetti.edit', ['associazione' => $this->associazione,'progetto' => is_object($progetto) ? $progetto : null]);
+    }
+    
+    public function getFiles(ViewProgettoRequest $request)
+    {
+        $progetto = $request->progetto();
+        return response()->json($this->progetti->getFilesWithSideInfo($progetto));
     }
     
     public function getProgetti(Request $request)

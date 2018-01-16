@@ -32,6 +32,8 @@ class SaveServizioRequest extends FormRequest
             'nome' => 'string|required|max:100',
             'oggetto' => 'string|nullable|max:200',
             'descrizione' => 'string|nullable',
+            'periodicita' => 'string|nullable',
+            'data_fine' => 'date_format:d/m/Y|after_or_equal:today|nullable',
             'logo' => 'integer|nullable|exists:file,id',
             'new_logo' => 'integer|nullable|exists:file_tmp,id',
             'giorno' => 'array',

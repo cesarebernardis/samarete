@@ -77,7 +77,7 @@ function updateForm(){
                 $("#modal-form").modal('show');
            },
            error: function() {
-               swal("Errore!", "Errore durante il salvataggio dell'permesso", "error");
+               swal("Errore!", "Errore durante il salvataggio del permesso", "error");
            }
        });
 }
@@ -93,7 +93,7 @@ function deleteForm(){
                 $('#permessi').DataTable().ajax.reload();
            },
            error: function() {
-               swal("Errore!", "Errore durante il salvataggio dell'permesso", "error");
+               swal("Errore!", "Errore durante l'eliminazione del permesso", "error");
            }
        });
 }

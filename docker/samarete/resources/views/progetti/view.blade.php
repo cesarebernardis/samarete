@@ -28,6 +28,32 @@
             {!! $progetto->descrizione !!}
         </div>
         </div>
+    </div><div class="row">
+        <div class="col-md-12">
+            <table id="files" class="table table-bordered table-hover table-striped dataTable">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Dimensione</th>
+                        @can('publish-file-progetto', $progetto, $file)
+                        <th>Pubblico</th>
+                        @endcan
+                        @can('delete', $file)
+                        <th></th>
+                        @endcan
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div><div class="row">
+        <div class="col-md-12">
+            <div class="dropzone dz-little" id="upload-file">
+                <div class="dz-default dz-message">
+                    <span>Trascina i documenti o clicca per selezionarli</span>
+                </div>
+            </div>
+        </div>
     </div>
     @include('chat', ['chat' => $progetto->chat])
 </div>
@@ -70,6 +96,80 @@
 @section('scripts')
 <script type="text/javascript">
 
+var fileDropzone = new Dropzone("div#upload-file", {
+		paramName: "file", 
+        url: "/file/upload",
+		//acceptedFiles: "image/*",
+		addRemoveLinks: true,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+		removedfile: function(file) {
+            if(file.id){
+                $.ajax({
+                    type: 'POST',
+                    url: '/file/delete-tmp',
+                    data: {id: file.id}
+                });
+            }
+            $("div#upload-logo .dz-message span").show();
+    		return file.previewElement != null ? file.previewElement.parentNode.removeChild(file.previewElement) : void 0;
+		},
+        success: function(file, response){
+            if(response){
+                file.id = response.file_id;
+                $("div#upload-logo .dz-message span").hide();
+            }
+        },
+		maxFiles: 10,
+        maxFilesize: 5, //MB
+        init: function() {
+            this.on("maxfilesexceeded", function(file) {
+                if(file != null && this.files.length > 10){
+                  this.removeFile(file);
+                  swal("Attento!", "Puoi caricare un solo 10 file alla volta!", "warning");
+                }
+            });
+        },
+		uploadMultiple: true, 
+		dictMaxFilesExceeded: "Puoi caricaricare al massimo 10 file alla volta.",
+		dictRemoveFile: "Cancella file",
+		dictInvalidFileType: "Formato file non valido."
+    });
+
+function deleteForm(){
+    var progetto = parseInt($(this).attr('data-progetto-id'));
+    var file = parseInt($(this).attr('data-file-id'));
+    $.ajax({
+           url: '/progetto/delete-file',
+           method: "post",
+           data: {progetto_id: progetto, file_id: file},
+           success: function(data) {
+                swal("Fatto!", "File eliminato con successo", "success");
+                $('#files').DataTable().ajax.reload();
+           },
+           error: function() {
+               swal("Errore!", "Errore durante l'eliminazione del file", "error");
+           }
+       });
+}
+    
+function toggleForm(){
+    var progetto = parseInt($(this).attr('data-progetto-id'));
+    var file = parseInt($(this).attr('data-file-id'));
+    $.ajax({
+           url: '/progetto/publish-file',
+           method: "post",
+           data: {progetto_id: progetto, file_id: file, public: $(this).val()},
+           success: function(data) {
+                $('#files').DataTable().ajax.reload();
+           },
+           error: function() {
+               swal("Errore!", "Errore durante il salvataggio del file", "error");
+           }
+       });
+}
+
 $(document).ready(function() {
     
     $('#associazioni').select2();
@@ -86,7 +186,7 @@ $(document).ready(function() {
                method: "post",
                data: {id: {{ $progetto->id}} },
                success: function(data) {
-                    swal({title:"Fatto!", text:"Progetto eliminato con successo", type:"success", onClose: function(){window.location.href = "/progetti/view-progetto?id="+data.progettoid;}});
+                    swal({title:"Fatto!", text:"Progetto eliminato con successo", type:"success", onClose: function(){window.location.href = "/progetti"}});
                },
                error: function() {
                    swal("Errore!", "Errore durante l'eliminazione dell'progetto", "error");
@@ -109,6 +209,53 @@ $(document).ready(function() {
                swal("Errore!", "Errore durante l'invio dell'invito", "error");
            }
        });
+    });
+    
+    $('#files').DataTable({
+        ajax: {
+            url: '/progetto/get-files',
+            data: { progetto: {{ $progetto->id }} }
+            dataSrc: '',
+        },
+        columns: [{
+                data: "nome_originale",
+                render: function ( data, type, row ) {
+                    return '<a href="/progetto/download-file?progetto_id={{ $progetto->id }}&file_id='+row.id+'">'+data+'</a>';
+                }
+            },{
+                data: "dimensione",
+            },
+            @can('publish-file-progetto', $progetto, $file)
+            {
+                data: "public",
+                class: "text-align-center",
+                searchable: false,
+                render: function ( data, type, row ) {
+                    var checked = ""
+                    if(parseInt(data)){
+                        checked = "checked";
+                    }
+                    return '<input class="toggle" type="checkbox" value="1" data-progetto-id="{{ $progetto->id }}" data-file-id="'+row.id+'" '+checked+' />';
+                },
+            },
+            @endcan
+            @can('delete', $file)
+            {
+                data: "id",
+                searchable: false,
+                orderable: false,
+                width: "100px",
+                class: "text-align-center",
+                render: function ( data, type, row ) {
+                        return '<button class="btn btn-primary btn-icon-only delete red" data-id="'+data+'"><i class="fa fa-trash"></i></button>';
+                },
+            },
+            @endcan
+        ],
+        drawCallback: function (settings) {
+            $('#files button.delete').click(deleteForm);
+            $('#files input.toggle').click(toggleForm);
+        },
     });
     
 });

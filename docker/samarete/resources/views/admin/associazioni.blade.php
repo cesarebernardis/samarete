@@ -241,7 +241,7 @@ function deleteForm(){
                 $('#associazioni').DataTable().ajax.reload();
            },
            error: function() {
-               swal("Errore!", "Errore durante il salvataggio dell'associazione", "error");
+               swal("Errore!", "Errore durante l'eliminazione dell'associazione", "error");
            }
        });
 }
@@ -256,7 +256,7 @@ function toggleForm(){
                 $('#associazioni').DataTable().ajax.reload();
            },
            error: function() {
-               swal("Errore!", "Errore durante il salvataggio del associazione", "error");
+               swal("Errore!", "Errore durante il salvataggio dell'associazione", "error");
            }
        });
 }

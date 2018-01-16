@@ -8,22 +8,22 @@ use Samarete\Models\Permesso;
 
 class PermessoRepository
 {
-    public function getAll()
+    public static function getAll()
     {
         return Permesso::all();
     }
     
-    public function getByNome($name)
+    public static function getByNome($name)
     {
         return Permesso::where('nome', $name)->first();
     }
     
-    public function getById($id)
+    public static function getById($id)
     {
         return Permesso::where('id', $id)->first();
     }
     
-    public function checkNome($nome, $id='')
+    public static function checkNome($nome, $id='')
     {
         $permesso = self::getByNome($nome);
         if(!empty($permesso)){
@@ -39,7 +39,7 @@ class PermessoRepository
         return true;
     }
     
-    public function deleteById($id)
+    public static function deleteById($id)
     {
         $permesso = self::getById($id);
         if(empty($permesso)){
@@ -48,7 +48,7 @@ class PermessoRepository
         return self::delete($permesso);
     }
     
-    public function delete(Permesso $permesso)
+    public static function delete(Permesso $permesso)
     {
         DB::delete('DELETE FROM ruolo_has_permesso WHERE permesso_id = ?', [$permesso['id']]);
         DB::delete('DELETE FROM permesso WHERE id = ?', [$permesso['id']]);
