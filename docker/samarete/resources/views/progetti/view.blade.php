@@ -35,10 +35,9 @@
                     <tr>
                         <th>Nome</th>
                         <th>Dimensione</th>
-                        @can('publish-file-progetto', $progetto, $file)
+                        <th>Data caricamento</th>
+                        @can('update', $progetto)
                         <th>Pubblico</th>
-                        @endcan
-                        @can('delete', $file)
                         <th></th>
                         @endcan
                     </tr>
@@ -46,7 +45,9 @@
                 <tbody></tbody>
             </table>
         </div>
-    </div><div class="row">
+    </div>
+    @can('uploadFile', $progetto)
+    <div class="row margin-bottom-20">
         <div class="col-md-12">
             <div class="dropzone dz-little" id="upload-file">
                 <div class="dz-default dz-message">
@@ -54,7 +55,11 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-12">
+        <button type="button" class="btn btn-primary" id="confirm-files">Conferma i file caricati</button>
+        </div>
     </div>
+    @endcan
     @include('chat', ['chat' => $progetto->chat])
 </div>
 
@@ -96,6 +101,7 @@
 @section('scripts')
 <script type="text/javascript">
 
+@can('uploadFile', $progetto)
 var fileDropzone = new Dropzone("div#upload-file", {
 		paramName: "file", 
         url: "/file/upload",
@@ -103,6 +109,12 @@ var fileDropzone = new Dropzone("div#upload-file", {
 		addRemoveLinks: true,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+		addedfile: function(file) {
+            $('button#confirm-files').prop("disabled", true);
+        },
+		queuecomplete: function(file) {
+            $('button#confirm-files').prop("disabled", false);
         },
 		removedfile: function(file) {
             if(file.id){
@@ -112,7 +124,6 @@ var fileDropzone = new Dropzone("div#upload-file", {
                     data: {id: file.id}
                 });
             }
-            $("div#upload-logo .dz-message span").show();
     		return file.previewElement != null ? file.previewElement.parentNode.removeChild(file.previewElement) : void 0;
 		},
         success: function(file, response){
@@ -127,21 +138,22 @@ var fileDropzone = new Dropzone("div#upload-file", {
             this.on("maxfilesexceeded", function(file) {
                 if(file != null && this.files.length > 10){
                   this.removeFile(file);
-                  swal("Attento!", "Puoi caricare un solo 10 file alla volta!", "warning");
+                  swal("Attento!", "Puoi caricare solo 10 file alla volta!", "warning");
                 }
             });
         },
-		uploadMultiple: true, 
+		uploadMultiple: false, 
 		dictMaxFilesExceeded: "Puoi caricaricare al massimo 10 file alla volta.",
 		dictRemoveFile: "Cancella file",
 		dictInvalidFileType: "Formato file non valido."
     });
-
+@endcan
+    
 function deleteForm(){
     var progetto = parseInt($(this).attr('data-progetto-id'));
     var file = parseInt($(this).attr('data-file-id'));
     $.ajax({
-           url: '/progetto/delete-file',
+           url: '/progetti/delete-file',
            method: "post",
            data: {progetto_id: progetto, file_id: file},
            success: function(data) {
@@ -158,7 +170,7 @@ function toggleForm(){
     var progetto = parseInt($(this).attr('data-progetto-id'));
     var file = parseInt($(this).attr('data-file-id'));
     $.ajax({
-           url: '/progetto/publish-file',
+           url: '/progetti/publish-file',
            method: "post",
            data: {progetto_id: progetto, file_id: file, public: $(this).val()},
            success: function(data) {
@@ -213,19 +225,21 @@ $(document).ready(function() {
     
     $('#files').DataTable({
         ajax: {
-            url: '/progetto/get-files',
-            data: { progetto: {{ $progetto->id }} }
+            url: '/progetti/get-files',
+            data: { id: {{ $progetto->id }} },
             dataSrc: '',
         },
         columns: [{
                 data: "nome_originale",
                 render: function ( data, type, row ) {
-                    return '<a href="/progetto/download-file?progetto_id={{ $progetto->id }}&file_id='+row.id+'">'+data+'</a>';
+                    return '<a href="/progetti/download-file?progetto_id={{ $progetto->id }}&file_id='+row.id+'">'+data+'</a>';
                 }
             },{
                 data: "dimensione",
+            },{
+                data: "data_caricamento",
             },
-            @can('publish-file-progetto', $progetto, $file)
+            @can('update', $progetto)
             {
                 data: "public",
                 class: "text-align-center",
@@ -239,7 +253,7 @@ $(document).ready(function() {
                 },
             },
             @endcan
-            @can('delete', $file)
+            @can('update', $progetto)
             {
                 data: "id",
                 searchable: false,
@@ -256,6 +270,28 @@ $(document).ready(function() {
             $('#files button.delete').click(deleteForm);
             $('#files input.toggle').click(toggleForm);
         },
+    });
+    
+    $('button#confirm-files').click(function(){
+        
+        files = fileDropzone.getAcceptedFiles();
+        if(files.length <= 0) return;
+        
+        var ids = files.map(function(x){ return x.id; }).join()
+        
+        $.ajax({
+           url: '/progetti/confirm-files',
+           method: "post",
+           data: { progetto_id: {{ $progetto->id }}, file_ids: ids },
+           success: function() {
+               swal("Fatto!", "File confermati", "success");
+               $('#files').DataTable().ajax.reload();
+               fileDropzone.removeAllFiles();
+           },
+           error: function() {
+               swal("Errore!", "Errore durante la conferma dei file", "error");
+           }
+       });
     });
     
 });

@@ -61,7 +61,7 @@ class Progetto extends Model
      */
     public function files()
     {
-        return $this->belongsToMany('Samarete\Models\File', 'progetto_has_file');
+        return $this->belongsToMany('Samarete\Models\File', 'progetto_has_file')->withPivot('public');
     }
     
     public function save(array $options = [])
@@ -74,6 +74,6 @@ class Progetto extends Model
     public function isPublic(File $file)
     {
         if(empty($file)) return false;
-        $this->files()->where('file_id', '=', $file->id)->first()->public > 0;
+        $this->files()->where('file_id', '=', $file->id)->first()->pivot->public > 0;
     }
 }

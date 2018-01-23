@@ -22,8 +22,8 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['username', 'password', 'remember_token', 'nome', 'cognome', 'email', 'ultimo_accesso', 'attivo', 'admin', 'created_at', 'updated_at', 'associazione_id'];
-    protected static $logAttributes = ['username', 'remember_token', 'nome', 'cognome', 'email', 'attivo', 'admin', 'created_at', 'updated_at', 'associazione_id'];
+    protected $fillable = ['username', 'password', 'remember_token', 'nome', 'cognome', 'email', 'ultimo_accesso', 'attivo', 'datapath', 'admin', 'created_at', 'updated_at', 'associazione_id'];
+    protected static $logAttributes = ['username', 'remember_token', 'nome', 'cognome', 'email', 'attivo', 'admin', 'associazione_id'];
 
     /**
      * The attributes that should be hidden for arrays.

@@ -4,11 +4,7 @@ namespace Samarete\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-use Illuminate\Support\Facades\Auth;
-
-use Samarete\Repositories\UserRepository;
-
-class SaveFileRequest extends FormRequest
+class ConfirmFileProgettoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,8 +24,8 @@ class SaveFileRequest extends FormRequest
     public function rules()
     {
         return [
-            'user' => 'integer|required|exists:user,id',
-            'file' => 'integer|required|exists:file_tmp,id',
+            'file_ids' => 'string|required|max:150',
+            'progetto_id' => 'integer|required|exists:progetto,id',
         ];
     }
 }

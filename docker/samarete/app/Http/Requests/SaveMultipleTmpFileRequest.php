@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 use Samarete\Repositories\UserRepository;
 
-class SaveFileRequest extends FormRequest
+class SaveMultipleTmpFileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,8 +28,7 @@ class SaveFileRequest extends FormRequest
     public function rules()
     {
         return [
-            'user' => 'integer|required|exists:user,id',
-            'file' => 'integer|required|exists:file_tmp,id',
+            'files.*' => 'file|required|max:10000',
         ];
     }
 }

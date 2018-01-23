@@ -122,8 +122,10 @@ class UserController extends Controller
         }else{
             if(empty($request->password))
                 return response()->json(array("status" => 400, "message" => "Password vuota"));
-            $user->created_at = new \DateTime();
             $this->authorize('create', User::class);
+            $user->created_at = new \DateTime();
+            $user->datapath = hash('sha256', time().'$_$'.$request->username);
+            Storage::makeDirectory('utenti/'.$user->datapath, 0775, true);
         }
         
         if($request->password != $request->conferma_password){

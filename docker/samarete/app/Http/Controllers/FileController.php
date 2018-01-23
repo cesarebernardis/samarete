@@ -4,7 +4,7 @@ namespace Samarete\Http\Controllers;
 
 use Samarete\Http\Requests\ViewFileRequest;
 use Samarete\Http\Requests\SaveFileRequest;
-use Samarete\Http\Requests\SaveMultipleFileRequest;
+//use Samarete\Http\Requests\SaveMultipleFileRequest;
 use Samarete\Http\Requests\SaveTmpFileRequest;
 use Samarete\Http\Requests\DeleteTmpFileRequest;
 use Samarete\Http\Requests\DeleteFileRequest;
@@ -13,6 +13,7 @@ use Samarete\Http\Requests\ManagePermessoRequest;
 use Samarete\Models\File;
 use Samarete\Models\Permesso;
 use Samarete\Models\Associazione;
+use Samarete\Models\User;
 
 use Samarete\Repositories\FileRepository;
 
@@ -58,7 +59,7 @@ class FileController extends Controller
         if(empty($file))
             return response()->json(array("status" => 400, "message" => "ERROR"));
         $pathToFile = $this->files->getCompleteFilePath($file);
-        return response()->download($pathToFile, $file->nome_originale);
+        return response()->download(storage_path("app/data/".$pathToFile), $file->nome_originale);
     }
     
     public function deleteTmpFile(DeleteTmpFileRequest $request)
@@ -88,12 +89,22 @@ class FileController extends Controller
         return response()->json(array("status" => empty($file) ? 400 : 200, "file_id" => $fileid));
     }
     
+    public function saveMultipleTmpFiles(SaveMultipleTmpFileRequest $request)
+    {
+        $this->authorize('upload', File::class);
+        $fileids = [];
+        foreach($request->files as $file){
+            $savedfile = $this->files->saveTmpFile($file);
+            $fileids[] = $savedfile->id;
+        }
+        return response()->json(array("status" => empty($fileids) ? 400 : 200, "file_ids" => $fileids));
+    }
+    
     public function confirmFile(SaveFileRequest $request)
     {
-        $associazione = AssociazioneRepository::getById($request->associazione);
         $file = $this->files->getTmpById($request->file);
         $this->authorize('save', $file);
-        $this->files->saveFile($associazione, $request->file);
+        $this->files->confirmFile(Auth::user(), $file);
         return response()->json(array("status" => 200, "message" => "OK"));
     }
     
@@ -108,7 +119,7 @@ class FileController extends Controller
         return response()->json(array("status" => empty($file) ? 400 : 200, "file_id" => $fileid));
     }
     
-    public function saveMultipleFile(SaveMultipleFileRequest $request)
+    /*public function saveMultipleFile(SaveMultipleFileRequest $request)
     {
         $associazione = AssociazioneRepository::getById($request->associazione);
         foreach(explode(',', $request->files) as $fileid){
@@ -118,5 +129,5 @@ class FileController extends Controller
             $this->files->saveFile($associazione, $request->file);
         }
         return response()->json(array("status" => 200, "message" => "OK"));
-    }
+    }*/
 }

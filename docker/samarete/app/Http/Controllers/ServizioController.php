@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 
-use Carbon\Carbon
+use Carbon\Carbon;
 
 class ServizioController extends Controller
 {

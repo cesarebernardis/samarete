@@ -59,6 +59,11 @@ class ProgettoRepository
         DB::insert('INSERT IGNORE INTO chat_has_associazione (chat_id, associazione_id) VALUES(?,?)', array($progetto->chat_id, $associazione->id));
     }
     
+    public static function addFile(Progetto $progetto, File $file, $public=false)
+    {
+        DB::insert('INSERT IGNORE INTO progetto_has_file (progetto_id, file_id, public) VALUES(?,?,?)', array($progetto->id, $file->id, $public));
+    }
+    
     public static function deleteById($id)
     {
         $progetto = self::getById($id);
@@ -107,7 +112,7 @@ class ProgettoRepository
         if(empty($progetto)) return array();
         $files = array();
         foreach($progetto->files as $file){
-            $file->public = $progetto->isPublic($file);
+            $file->public = $file->pivot->public;
             $files[] = $file;
         }
         return $files;

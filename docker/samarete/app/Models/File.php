@@ -68,7 +68,7 @@ class File extends Model
     
     public function getFilePath()
     {
-        $associazione = Associazione::where('id', $this->proprietario_id)->first();
-        return 'associazioni/'.$associazione->datapath;
+        $user = User::where('id', $this->proprietario_id)->first();
+        return 'utenti/'.$user->datapath;
     }
 }

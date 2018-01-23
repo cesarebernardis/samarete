@@ -49,8 +49,8 @@ class FileRepository
     
     public static function getFilePath(File $file)
     {
-        $associazione = AssociazioneRepository::getById($file->proprietario_id);
-        return 'associazioni/'.$associazione->datapath;
+        $user = UserRepository::getById($file->proprietario_id);
+        return 'utenti/'.$user->datapath;
     }
     
     public static function saveTmpFile($file)
@@ -67,29 +67,37 @@ class FileRepository
         return $newfile;
     }
     
-    public static function confirmFile(Associazione $associazione, FileTmp $tmpfile)
+    public static function confirmFileById(User $user, $tmpfileid)
     {
+        $file = self::getTmpById($tmpfileid);
+        if(empty($file)) return null;
+        return self::confirmFile($user, $file);
+    }
+    
+    public static function confirmFile(User $user, FileTmp $tmpfile)
+    {
+        if(empty($tmpfile)) return null;
         $newfile = new File;
         $newfile->nome = $tmpfile->nome;
         $newfile->nome_originale = $tmpfile->nome_originale;
         $newfile->dimensione = $tmpfile->dimensione;
         $newfile->data_caricamento = $tmpfile->data_caricamento;
-        $newfile->proprietario_id = $associazione['id'];
-        Storage::move('tmp/'.$newfile->nome, 'associazioni/'.$associazione->datapath.'/'.$newfile->nome);
+        $newfile->proprietario_id = $user->id;
+        Storage::move('tmp/'.$newfile->nome, 'utenti/'.$user->datapath.'/'.$newfile->nome);
         $newfile->save();
         $tmpfile->delete();
         return $newfile;
     }
     
-    public static function saveFile(Associazione $associazione, $file)
+    public static function saveFile(User $user, $file)
     {
         $newfile = new File;
-        $newdir = Storage::putFile('associazioni/'.$associazione->datapath, $file);
+        $newdir = Storage::putFile('utenti/'.$user->datapath, $file);
         $newfile->nome = end(explode('/', $newdir));
         $newfile->nome_originale = $file->getClientOriginalName();
         $newfile->dimensione = intval($file->getClientSize());
         $newfile->data_caricamento = new \DateTime();
-        $newfile->proprietario_id = $associazione['id'];
+        $newfile->proprietario_id = $user->id;
         $newfile->save();
         return $newfile;
     }

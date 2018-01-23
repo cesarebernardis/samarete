@@ -127,8 +127,6 @@ class AssociazioneController extends Controller
         }else{
             $this->authorize('create', Associazione::class);
             $associazione->data_creazione = new \DateTime();
-            $associazione->datapath = hash('sha256', time().'$_$'.$request->nome);
-            Storage::makeDirectory('associazioni/'.$associazione->datapath, 0775, true);
         }
         $associazione->nome = $request->nome;
         $associazione->acronimo = $request->acronimo;

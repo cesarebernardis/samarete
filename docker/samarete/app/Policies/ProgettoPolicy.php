@@ -3,11 +3,14 @@
 namespace Samarete\Policies;
 
 use Samarete\Models\User;
+use Samarete\Models\File;
 use Samarete\Models\Progetto;
 use Samarete\Repositories\UserRepository;
 use Samarete\Repositories\ProgettoRepository;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
+
+
 
 class ProgettoPolicy
 {
@@ -67,13 +70,25 @@ class ProgettoPolicy
     }
 
     /**
+     * Determine whether the user can upload a file of the progetto.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \Samarete\Progetto  $progetto
+     * @return mixed
+     */
+    public function uploadFile(User $user, Progetto $progetto)
+    {
+        return UserRepository::checkPermesso($user, 'upload-file') && $this->isOwner($user, $progetto);
+    }
+
+    /**
      * Determine whether the user can publish a file of the progetto.
      *
      * @param  \App\Models\User  $user
      * @param  \Samarete\Progetto  $progetto
      * @return mixed
      */
-    public function publishFile(User $user, Progetto $progetto, File $file)
+    public function publishFile(User $user, Progetto $progetto)
     {
         return UserRepository::checkPermesso($user, 'publish-file') && $this->isOwner($user, $progetto);
     }

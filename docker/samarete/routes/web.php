@@ -75,6 +75,7 @@ Route::post('/associazioni/get-logo', 'AssociazioneController@getLogo');
 
 //FILES
 Route::post('/file/upload', 'FileController@saveTmpFile')->middleware('ajax');
+Route::post('/file/upload-multiple', 'FileController@saveMultipleTmpFiles')->middleware('ajax');
 Route::post('/file/delete', 'FileController@deleteFile')->middleware('ajax');
 Route::post('/file/delete-tmp', 'FileController@deleteTmpFile')->middleware('ajax');
 
@@ -116,8 +117,9 @@ Route::get('/progetti/download-file', 'ProgettoController@downloadFile');
 Route::post('/progetti/get-progetto', 'ProgettoController@getProgetto')->middleware('ajax');
 Route::get('/progetti/get-progetti', 'ProgettoController@getProgetti')->middleware('ajax');
 Route::get('/progetti/get-files', 'ProgettoController@getFiles')->middleware('ajax');
-Route::get('/progetti/publish-file', 'ProgettoController@publishFile')->middleware('ajax');
 Route::get('/progetti/delete-file', 'ProgettoController@deleteFile')->middleware('ajax');
+Route::post('/progetti/publish-file', 'ProgettoController@publishFile')->middleware('ajax');
+Route::post('/progetti/confirm-files', 'ProgettoController@confirmFile')->middleware('ajax');
 Route::post('/progetti/invita', 'ProgettoController@invita')->middleware('ajax');
 Route::post('/progetti/save-progetto', 'ProgettoController@saveProgetto')->middleware('ajax');
 Route::post('/progetti/delete-progetto', 'ProgettoController@deleteProgetto')->middleware('ajax');

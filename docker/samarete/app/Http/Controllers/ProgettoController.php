@@ -9,6 +9,7 @@ use Samarete\Http\Requests\DeleteProgettoRequest;
 use Samarete\Http\Requests\EditProgettoRequest;
 use Samarete\Http\Requests\FileProgettoRequest;
 use Samarete\Http\Requests\PublishFileProgettoRequest;
+use Samarete\Http\Requests\ConfirmFileProgettoRequest;
 
 use Samarete\Repositories\FileRepository;
 use Samarete\Repositories\ProgettoRepository;
@@ -17,6 +18,7 @@ use Samarete\Repositories\ChatRepository;
 
 use Samarete\Models\Progetto;
 use Samarete\Models\User;
+use Samarete\Models\File;
 
 use Illuminate\Http\Request;
 
@@ -57,13 +59,28 @@ class ProgettoController extends Controller
         return response()->json(["status" => 200, "message" => "OK"]);
     }
     
+    public function confirmFile(ConfirmFileProgettoRequest $request)
+    {
+        $progetto = $this->progetti->getById($request->progetto_id);
+        if(empty($progetto))
+            return response()->json(array("status" => 400, "message" => "ERROR"));
+        $this->authorize('uploadFile', $progetto);
+        
+        foreach(explode(',', $request->file_ids) as $fileid)
+            $file = FileRepository::confirmFileById(Auth::user(), $fileid);
+            if(empty($file)) continue;
+            $this->progetti->addFile($progetto, $file);
+        
+        return response()->json(["status" => 200, "message" => "OK"]);
+    }
+    
     public function publishFile(PublishFileProgettoRequest $request)
     {
         $progetto = $this->progetti->getById($request->progetto_id);
         $file = FileRepository::getById($request->file_id);
-        $this->authorize('publishFile', $progetto, $file);
         if(empty($file) || empty($progetto))
             return response()->json(array("status" => 400, "message" => "ERROR"));
+        $this->authorize('publishFile', $progetto);
         if(!isset($request->public)){
             $public = 0;
         }else{
@@ -77,9 +94,9 @@ class ProgettoController extends Controller
     {
         $progetto = $this->progetti->getById($request->progetto_id);
         $file = FileRepository::getById($request->file_id);
-        $this->authorize('deleteFile', $progetto, $file);
         if(empty($file) || empty($progetto))
             return response()->json(array("status" => 400, "message" => "ERROR"));
+        $this->authorize('deleteFile', $progetto, $file);
         $this->progetti->deleteFile($progetto, $file);
         return response()->json(["status" => 200, "message" => "OK"]);
     }
@@ -88,11 +105,12 @@ class ProgettoController extends Controller
     {
         $progetto = $this->progetti->getById($request->progetto_id);
         $file = FileRepository::getById($request->file_id);
-        $this->authorize('downloadFile', $progetto, $file);
-        if(empty($file))
+        if(empty($file) || empty($progetto))
             return response()->json(array("status" => 400, "message" => "ERROR"));
-        $pathToFile = $this->files->getCompleteFilePath($file);
-        return response()->download($pathToFile, $file->nome_originale);
+        //print_r($file);
+        //$this->authorize('downloadFile', $progetto, $file);
+        $pathToFile = FileRepository::getCompleteFilePath($file);
+        return response()->download(storage_path("app/data/".$pathToFile), $file->nome_originale);
     }
     
     public function viewProgetto(ViewProgettoRequest $request)
