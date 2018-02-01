@@ -110,12 +110,6 @@ var fileDropzone = new Dropzone("div#upload-file", {
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-		addedfile: function(file) {
-            $('button#confirm-files').prop("disabled", true);
-        },
-		queuecomplete: function(file) {
-            $('button#confirm-files').prop("disabled", false);
-        },
 		removedfile: function(file) {
             if(file.id){
                 $.ajax({
@@ -141,6 +135,9 @@ var fileDropzone = new Dropzone("div#upload-file", {
                   swal("Attento!", "Puoi caricare solo 10 file alla volta!", "warning");
                 }
             });
+            
+            this.on("addedfile", function(file) { $('button#confirm-files').prop("disabled", true); });
+            this.on("queuecomplete", function(file) { $('button#confirm-files').prop("disabled", false); });
         },
 		uploadMultiple: false, 
 		dictMaxFilesExceeded: "Puoi caricaricare al massimo 10 file alla volta.",
@@ -172,7 +169,7 @@ function toggleForm(){
     $.ajax({
            url: '/progetti/publish-file',
            method: "post",
-           data: {progetto_id: progetto, file_id: file, public: $(this).val()},
+           data: {progetto_id: progetto, file_id: file, public: this.checked * $(this).val()},
            success: function(data) {
                 $('#files').DataTable().ajax.reload();
            },
@@ -236,6 +233,9 @@ $(document).ready(function() {
                 }
             },{
                 data: "dimensione",
+                render: function ( data, type, row ) {
+                    return bytesToSize(data);
+                },
             },{
                 data: "data_caricamento",
             },
@@ -261,7 +261,7 @@ $(document).ready(function() {
                 width: "100px",
                 class: "text-align-center",
                 render: function ( data, type, row ) {
-                        return '<button class="btn btn-primary btn-icon-only delete red" data-id="'+data+'"><i class="fa fa-trash"></i></button>';
+                        return '<button class="btn btn-primary btn-icon-only delete red" data-progetto-id="{{ $progetto->id }}" data-file-id="'+row.id+'"><i class="fa fa-trash"></i></button>';
                 },
             },
             @endcan

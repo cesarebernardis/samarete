@@ -37,18 +37,6 @@
 @section('scripts')
 <script type="text/javascript">
 
-var servizi = [
-    @foreach($servizio->giorni as $giorno)
-       {
-          title  : "{{ $servizio->nome }} - {{ $giorno->descrizione }}",
-          start  : "{{ $giorno->giorno.'T'.$giorno->da }}",
-          end    : "{{ $giorno->giorno.'T'.$giorno->a }}",
-          color  : '#C2185B',
-          allDay : false,
-       },
-    @endforeach
-];
-
 $(document).ready(function() {
     $('#calendar').fullCalendar({
         defaultView: 'listWeek',
@@ -65,7 +53,18 @@ $(document).ready(function() {
         timeFormat: 'HH:mm',
         locale: 'it',
         timezone: 'local',
-        events: servizi,
+        events: {
+            url: '/servizi/get-calendar',
+            type: 'GET',
+            data: {
+                id: {{ $servizio->id }},
+            },
+            error: function() {
+                swal("Errore!", "Errore durante il caricamento del calendario", "error");
+            },
+            color  : '#C2185B',
+            allDay : false,
+        },
         viewRender: function( view, element ){
             $('#calendar .fc-scroller').attr("style", "overflow-x: hidden; overflow-y: auto; height: auto;");
         },
@@ -89,7 +88,7 @@ $(document).ready(function() {
                     swal({title:"Fatto!", text:"Servizio eliminato con successo", type:"success", onClose: function(){window.location.href = "/servizi"}});
                },
                error: function() {
-                   swal("Errore!", "Errore durante l'eliminazione dell'servizio", "error");
+                   swal("Errore!", "Errore durante l'eliminazione del servizio", "error");
                }
               });
         });

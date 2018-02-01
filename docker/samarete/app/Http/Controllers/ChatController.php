@@ -3,7 +3,9 @@
 namespace Samarete\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Samarete\Http\Requests\ChatIndexRequest;
 use Samarete\Http\Requests\ViewChatRequest;
+use Samarete\Http\Requests\CreateChatRequest;
 use Samarete\Http\Requests\SaveChatRequest;
 use Samarete\Http\Requests\SaveMessaggioRequest;
 use Samarete\Http\Requests\DeleteChatRequest;
@@ -35,6 +37,23 @@ class ChatController extends Controller
     public function __construct(ChatRepository $chats)
     {
         $this->chats = $chats;
+    }
+    
+    public function index(ChatIndexRequest $request)
+    {
+        $chat = $request->chat();
+        $associazione = Auth::user()->associazione();
+        
+        if(empty($associazione))
+            return redirect('/');
+        if(empty($chat)){
+            $chat = $associazione->lastChat();
+        }
+        /*if(!empty($chat)){
+            $this->authorize('view', $chat);
+        }*/
+        
+        return response()->view('chat.index', ['mainchat' => $chat, 'chats' => $associazione->chats, 'associazioni' => AssociazioneRepository::getAll()]);
     }
     
     public function getChats(Request $request)
@@ -74,6 +93,33 @@ class ChatController extends Controller
         $this->authorize('delete', $chat);
         $this->chats->delete(trim(strip_tags($request->id)));
         return response()->json(array("status" => 200, "message" => "OK"));
+    }
+    
+    public function createChat(CreateChatRequest $request)
+    {
+        $associazioni = array();
+        foreach($request->associazioni as $associazioneid){
+            $associazione = AssociazioneRepository::getById($associazioneid);
+            if(!empty($associazione)) $associazioni[] = $associazione;
+        }
+        if(empty($associazioni))
+            return response()->json(array("status" => 400, "message" => "ID Associazione non valido"));
+        
+        $associazioni[] = Auth::user()->associazione();
+        $chat = $this->chats->chatExists($associazioni);
+        
+        if(empty($chat)){
+            $chat = new Chat;
+            $this->authorize('create', Chat::class);
+            $chat->data_creazione = new \DateTime();
+            $chat->save();
+            
+            foreach($associazioni as $associazione){
+                $this->chats->addAssociazione($chat, $associazione);
+            }
+        }
+        
+        return response()->json(array("status" => 200, "message" => "OK", "chat_id" => $chat->id));
     }
     
     public function saveChat(SaveChatRequest $request)

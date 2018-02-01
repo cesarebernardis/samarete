@@ -37,7 +37,7 @@ class Chat extends Model
      */
     public function associazioni()
     {
-        return $this->belongsToMany('Samarete\Models\Associazione', 'chat_has_associazione');
+        return $this->belongsToMany('Samarete\Models\Associazione', 'chat_has_associazione')->withPivot('last_access');
     }
 
     /**
@@ -46,6 +46,11 @@ class Chat extends Model
     public function messaggi()
     {
         return $this->hasMany('Samarete\Models\Messaggio');
+    }
+    
+    public function ultimo_messaggio()
+    {
+        return $this->messaggi()->orderBy('data', 'DESC')->first();
     }
 
     /**

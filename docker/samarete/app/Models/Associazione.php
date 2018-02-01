@@ -9,6 +9,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 use Samarete\Models\Richiesta;
 use Samarete\Repositories\RichiestaRepository;
+use Samarete\Repositories\ChatRepository;
 
 /**
  * @property int $id
@@ -69,7 +70,7 @@ class Associazione extends Model
      */
     public function chats()
     {
-        return $this->belongsToMany('Samarete\Models\Chat', 'chat_has_associazione');
+        return $this->belongsToMany('Samarete\Models\Chat', 'chat_has_associazione')->withPivot('last_access');
     }
 
     /**
@@ -104,6 +105,13 @@ class Associazione extends Model
         }
         
         return $richieste;
+    }
+    
+    public function lastChat()
+    {
+        $chats = DB::select('SELECT c.* FROM chat c JOIN messaggio m ON m.chat_id = c.id WHERE autore_id = ? ORDER BY m.data DESC', [$this->id]);
+        $chat = empty($chats) ? null : reset($chats);
+        return empty($chat) ? null : ChatRepository::getById($chat->id);
     }
     
     public function save(array $options = [])

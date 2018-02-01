@@ -107,12 +107,13 @@ class ProgettoRepository
         return true;
     }
     
-    public static function getFilesWithSideInfo(Progetto $progetto)
+    public static function getFilesWithSideInfo(Progetto $progetto, $onlypublic = false)
     {
         if(empty($progetto)) return array();
         $files = array();
         foreach($progetto->files as $file){
             $file->public = $file->pivot->public;
+            if($onlypublic && $file->public < 1) continue;
             $files[] = $file;
         }
         return $files;

@@ -21,34 +21,6 @@
 @section('scripts')
 <script type="text/javascript">
 
-var eventi = [
-    @foreach($eventi as $evento)
-        @foreach($evento->giorni as $giorno)
-           {
-              title  : "{{ $evento->nome }} - {{ $giorno->descrizione }}",
-              start  : "{{ $giorno->giorno.'T'.$giorno->da }}",
-              end    : "{{ $giorno->giorno.'T'.$giorno->a }}",
-              color  : '#2196F3',
-              allDay : false,
-           },
-        @endforeach
-    @endforeach
-];
-
-var servizi = [
-    @foreach($servizi as $servizio)
-        @foreach($servizio->giorni as $giorno)
-           {
-              title  : "{{ $servizio->nome }} - {{ $giorno->descrizione }}",
-              start  : "{{ $giorno->giorno.'T'.$giorno->da }}",
-              end    : "{{ $giorno->giorno.'T'.$giorno->a }}",
-              color  : '#4CAF50',
-              allDay : false,
-           },
-        @endforeach
-    @endforeach
-];
-
 $(document).ready(function() {
     
     $('#calendar').fullCalendar({
@@ -64,7 +36,33 @@ $(document).ready(function() {
         timeFormat: 'HH:mm',
         locale: 'it',
         timezone: 'local',
-        events: eventi,
+        eventSources: [
+            {
+                url: '/calendario/get-eventi',
+                type: 'GET',
+                data: {},
+                error: function() {
+                    swal("Errore!", "Errore durante il caricamento del calendario", "error");
+                },
+                color  : '#2196F3',
+                allDay : false,
+            },{
+                url: '/calendario/get-servizi',
+                type: 'GET',
+                data: {},
+                error: function() {
+                    swal("Errore!", "Errore durante il caricamento del calendario", "error");
+                },
+                color  : '#4CAF50',
+                allDay : false,
+            },
+        ],
+        eventClick: function(event) {
+            if (event.url) {
+                window.open(event.url);
+                return false;
+            }
+        },
         viewRender: function( view, element ){
             $('#calendar .fc-scroller').attr("style", "overflow-x: hidden; overflow-y: auto; height: auto;");
         },

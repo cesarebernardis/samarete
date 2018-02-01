@@ -28,7 +28,7 @@ class ServizioPolicy
      */
     public function view(User $user, Servizio $servizio)
     {
-        return UserRepository::checkPermesso($user, 'view-servizio') && $this->isOwner($user, $servizio);
+        return true;
     }
 
     /**

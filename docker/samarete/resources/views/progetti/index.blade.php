@@ -13,7 +13,7 @@
         @foreach ($progetti as $progetto)
             <div class="col-md-4">
                 <div class="well item">
-                    <div class="thumbnail"><img src="{{ empty($progetto->logo_base64) ? asset('img/no-image-available.png') : $progetto->logo_base64 }}"/></div>
+                    <div class="thumbnail"><a href="/progetti/view-progetto?id={{ $progetto->id }}"><img src="{{ empty($progetto->logo_base64) ? asset('img/no-image-available.png') : $progetto->logo_base64 }}"/></a></div>
                     <a href="/progetti/view-progetto?id={{ $progetto->id }}"><h4 class="title">{{ $progetto->nome }}</h4></a>
                     <p class="object">{{ $progetto->oggetto }}</p>
                 </div>

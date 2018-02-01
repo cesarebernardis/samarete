@@ -31,7 +31,8 @@ class ProgettoPolicy
      */
     public function view(User $user, Progetto $progetto)
     {
-        return UserRepository::checkPermesso($user, 'view-progetto') && $this->isOwner($user, $progetto);
+        return true;
+        //return UserRepository::checkPermesso($user, 'view-progetto') && $this->isOwner($user, $progetto);
     }
 
     /**
@@ -102,7 +103,7 @@ class ProgettoPolicy
      */
     public function downloadFile(User $user, Progetto $progetto, File $file)
     {
-        return (UserRepository::checkPermesso($user, 'download-file') && $this->isOwner($user, $progetto)) || $progetto->isPublic($file);
+        return $progetto->isPublic($file) || (UserRepository::checkPermesso($user, 'download-file') && $this->isOwner($user, $progetto));
     }
 
     /**

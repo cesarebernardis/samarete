@@ -40,11 +40,8 @@ class ServizioRepository
     
     private static function getGiorni(Servizio $servizio)
     {
-        $giorni = array();
-        foreach($servizio->servizioHasGiorni() as $giorno){
-            $giorni[] = $giorno;
-        }
-        return $giorni;
+        if(empty($servizio)) return array();
+        return $servizio->getGiorni();
     }
     
     public static function servizioHasAssociazione(Servizio $servizio, Associazione $associazione)
@@ -61,27 +58,19 @@ class ServizioRepository
     {
         DB::delete('DELETE FROM servizio_has_giorno WHERE servizio_id = ?', [$servizio['id']]);
         foreach($giorni as $giorno){
-            $day = $giorno->data;
+            /*$day = $giorno->data;
             while($day->lte($servizio->data_fine)){
-                self::addGiorno($servizio, $giorno->data, $giorno->da, $giorno->a, $giorno->descrizione);
+                self::addGiorno($servizio, $day, $giorno->da, $giorno->a, $giorno->descrizione);
                 $day = self::getNextPeriodicalDate($servizio, $day);
-            }
+            }*/
+            self::addGiorno($servizio, $giorno->data, $giorno->da, $giorno->a, $giorno->descrizione);
         }
     }
     
     public static function getNextPeriodicalDate(Servizio $servizio, $day)
     {
-        $newday = clone($day);
-        switch($servizio->periodicita){
-            case 'Giornaliera': $newday->addDay(); break;
-            case 'Settimanale': $newday->addWeek(); break;
-            case 'Quattordicinale': $newday->addWeek(2); break;
-            case 'Mensile': $newday->addMonth(); break;
-            case 'Bimestrale': $newday->addMonth(2); break;
-            default: $newday = $servizio->data_fine;
-                   $newday->addDay();
-        }
-        return $newday;
+        if(empty($servizio)) return null;
+        return $servizio->getNextPeriodicalDate($day);
     }
     
     public static function addGiorno(Servizio $servizio, $giorno, $da, $a, $descrizione)

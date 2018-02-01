@@ -2,6 +2,7 @@
 
 namespace Samarete\Http\Controllers;
 
+use Samarete\Http\Requests\ViewServizioCalendarRequest;
 use Samarete\Http\Requests\ViewServizioRequest;
 use Samarete\Http\Requests\SaveServizioRequest;
 use Samarete\Http\Requests\DeleteServizioRequest;
@@ -59,10 +60,10 @@ class ServizioController extends Controller
         else
             $this->authorize('update', $servizio);
         $this->associazione = Auth::user()->associazione();
-        return response()->view('servizi.edit', ['associazione' => $this->associazione,'servizio' => is_object($servizio) ? $servizio : null]);
+        return response()->view('servizi.edit', ['associazione' => $this->associazione, 'servizio' => is_object($servizio) ? $servizio : null]);
     }
     
-    public function getEventi(Request $request)
+    public function getServizi(Request $request)
     {
         return response()->json($this->servizi->getAll());
     }
@@ -75,13 +76,28 @@ class ServizioController extends Controller
     
     public function getLogo(ViewServizioRequest $request)
     {
-        $servizio = $this->servizi->getById($request->id);
+        $servizio = $request->servizio();
         $this->authorize('view', $servizio);
         $logo = FileRepository::getById($servizio->logo);
         if(empty($logo)){
             return '';
         }
         return response()->json(['filename' => $logo->nome_originale, 'content' => FileRepository::getBase64Uri($logo)]);
+    }
+    
+    public function getCalendar(ViewServizioCalendarRequest $request)
+    {
+        $servizio = $request->servizio();
+        $this->authorize('view', $servizio);
+        $giorni = [];
+        foreach($servizio->getGiorni($request->start, $request->end) as $giorno){
+            $obj = new \stdClass();
+            $obj->title = $servizio->nome." - ".$giorno->descrizione;
+            $obj->start = $giorno->giorno.'T'.$giorno->da;
+            $obj->end = $giorno->giorno.'T'.$giorno->a;
+            $giorni[] = $obj;
+        }
+        return response()->json($giorni);
     }
     
     public function deleteServizio(DeleteServizioRequest $request)

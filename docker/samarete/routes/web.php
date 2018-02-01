@@ -80,8 +80,10 @@ Route::post('/file/delete', 'FileController@deleteFile')->middleware('ajax');
 Route::post('/file/delete-tmp', 'FileController@deleteTmpFile')->middleware('ajax');
 
 //CHAT
+Route::get('/chat', 'ChatController@index');
 Route::post('/chat/get-chat', 'ChatController@getChat')->middleware('ajax');
 Route::post('/chat/update-chat', 'ChatController@getMessaggi')->middleware('ajax');
+Route::post('/chat/create-chat', 'ChatController@createChat')->middleware('ajax');
 Route::post('/chat/save-chat', 'ChatController@saveChat')->middleware('ajax');
 Route::post('/chat/save-message', 'ChatController@saveMessaggio')->middleware('ajax');
 Route::post('/chat/delete-chat', 'ChatController@deleteChat')->middleware('ajax');
@@ -103,7 +105,8 @@ Route::get('/servizi/view-servizio', 'ServizioController@viewServizio');
 Route::get('/servizi/edit-servizio', 'ServizioController@editServizio');
 
 Route::post('/servizi/get-servizio', 'ServizioController@getServizio')->middleware('ajax');
-Route::get('/servizi/get-servizi', 'ServizioController@getEventi')->middleware('ajax');
+Route::get('/servizi/get-servizi', 'ServizioController@getServizi')->middleware('ajax');
+Route::get('/servizi/get-calendar', 'ServizioController@getCalendar')->middleware('ajax');
 Route::post('/servizi/save-servizio', 'ServizioController@saveServizio')->middleware('ajax');
 Route::post('/servizi/delete-servizio', 'ServizioController@deleteServizio')->middleware('ajax');
 Route::post('/servizi/get-logo', 'ServizioController@getLogo')->middleware('ajax');
@@ -117,7 +120,7 @@ Route::get('/progetti/download-file', 'ProgettoController@downloadFile');
 Route::post('/progetti/get-progetto', 'ProgettoController@getProgetto')->middleware('ajax');
 Route::get('/progetti/get-progetti', 'ProgettoController@getProgetti')->middleware('ajax');
 Route::get('/progetti/get-files', 'ProgettoController@getFiles')->middleware('ajax');
-Route::get('/progetti/delete-file', 'ProgettoController@deleteFile')->middleware('ajax');
+Route::post('/progetti/delete-file', 'ProgettoController@deleteFile')->middleware('ajax');
 Route::post('/progetti/publish-file', 'ProgettoController@publishFile')->middleware('ajax');
 Route::post('/progetti/confirm-files', 'ProgettoController@confirmFile')->middleware('ajax');
 Route::post('/progetti/invita', 'ProgettoController@invita')->middleware('ajax');
@@ -127,6 +130,8 @@ Route::post('/progetti/get-logo', 'ProgettoController@getLogo')->middleware('aja
 
 //CALENDARIO
 Route::get('/calendario', 'CalendarioController@index');
+Route::get('/calendario/get-eventi', 'CalendarioController@getEventi')->middleware('ajax');
+Route::get('/calendario/get-servizi', 'CalendarioController@getServizi')->middleware('ajax');
 
 //RICHIESTE
 Route::get('/richieste', 'RichiestaController@index');

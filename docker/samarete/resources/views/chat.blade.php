@@ -3,7 +3,7 @@
     <div class="col-md-12">
         <div id="chat-{{ $chat->id }}" class="chat-panel panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-comments fa-fw"></i> Chat
+                            <i class="fa fa-comments fa-fw"></i> {{ isset($titolo) ? $titolo : "Chat" }}
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">

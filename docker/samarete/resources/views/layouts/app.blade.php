@@ -87,6 +87,7 @@
                         @else
                             @if (!empty(Auth::user()->associazione_id))
                                 <li><a href="/richieste">Richieste</a></li>
+                                <li><a href="/chat">Chat</a></li>
                             @endif
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

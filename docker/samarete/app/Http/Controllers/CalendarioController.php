@@ -27,9 +27,41 @@ class CalendarioController extends Controller
     
     public function index(Request $request)
     {
+        return view('calendario.index', []);
+    }
+    
+    public function getEventi(Request $request)
+    {
         $eventi = EventoRepository::getAll();
+        $giorni = array();
+        foreach($eventi as $evento){
+            foreach($evento->giorni as $giorno){
+                $obj = new \stdClass();
+                $obj->title = $evento->nome." - ".$giorno->descrizione;
+                $obj->start = $giorno->giorno.'T'.$giorno->da;
+                $obj->end = $giorno->giorno.'T'.$giorno->a;
+                $obj->url = '/eventi/view-evento?id='.$evento->id;
+                $giorni[] = $obj;
+            }
+        }
+        return response()->json($giorni);
+    }
+    
+    public function getServizi(Request $request)
+    {
         $servizi = ServizioRepository::getAll();
-        return view('calendario.index', ['eventi' => $eventi, 'servizi' => $servizi]);
+        $giorni = array();
+        foreach($servizi as $servizio){
+            foreach($servizio->getGiorni($request->start, $request->end) as $giorno){
+                $obj = new \stdClass();
+                $obj->title = $servizio->nome." - ".$giorno->descrizione;
+                $obj->start = $giorno->giorno.'T'.$giorno->da;
+                $obj->end = $giorno->giorno.'T'.$giorno->a;
+                $obj->url = '/servizi/view-servizio?id='.$servizio->id;
+                $giorni[] = $obj;
+            }
+        }
+        return response()->json($giorni);
     }
     
 }

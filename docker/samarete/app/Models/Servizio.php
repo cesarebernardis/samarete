@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Support\Facades\DB;
 
+use Carbon\Carbon;
+
 use Spatie\Activitylog\Traits\LogsActivity;
 /**
  * @property int $id
@@ -47,9 +49,48 @@ class Servizio extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function servizioHasGiorni()
+    public function getGiorni($from=null, $to=null)
     {
-        return DB::select("SELECT giorno, da, a, descrizione FROM servizio_has_giorno WHERE servizio_id = ? ORDER BY giorno, da, a ASC", [$this->id]);
+        $params = ['id' => $this->id];
+        $where = "servizio_id = :id";
+        $giorni_calc = array();
+        $giorni = DB::select("SELECT giorno, da, a, descrizione FROM servizio_has_giorno WHERE $where ORDER BY giorno, da, a ASC", $params);
+        $from = new Carbon($from);
+        $to = new Carbon($to);
+        $datafine = new Carbon($this->data_fine);
+        foreach($giorni as $giorno){
+            $day = new Carbon($giorno->giorno);
+            while($day->lte($datafine)){
+                $cond_from = $cond_to = false;
+                if(empty($from) || $from->lte($day)){
+                    $cond_from = true;
+                }if(empty($to) || $to->gte($day)){
+                    $cond_to = true;
+                }
+                if($cond_from && $cond_to){
+                    $new_giorno = clone($giorno);
+                    $new_giorno->giorno = $day->toDateString();
+                    $giorni_calc[] = $new_giorno;
+                }
+                $day = $this->getNextPeriodicalDate($day);
+            }
+        }
+        return $giorni_calc;
+    }
+    
+    public function getNextPeriodicalDate($day)
+    {
+        $newday = clone($day);
+        switch($this->periodicita){
+            case 'Giornaliera': $newday->addDay(); break;
+            case 'Settimanale': $newday->addWeek(); break;
+            case 'Quattordicinale': $newday->addWeek(2); break;
+            case 'Mensile': $newday->addMonth(); break;
+            case 'Bimestrale': $newday->addMonth(2); break;
+            default: $newday = new Carbon($this->data_fine);
+                   $newday->addDay();
+        }
+        return $newday;
     }
     
     public function save(array $options = [])

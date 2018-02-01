@@ -28,7 +28,7 @@ class SaveServizioRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'integer|nullable|exists:evento,id',
+            'id' => 'integer|nullable|exists:servizio,id',
             'nome' => 'string|required|max:100',
             'oggetto' => 'string|nullable|max:200',
             'descrizione' => 'string|nullable',

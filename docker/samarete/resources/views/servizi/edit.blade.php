@@ -325,7 +325,7 @@ $(document).ready(function() {
                swal({title:"Fatto!", text:"Salvataggio riuscito", type:"success", onClose: function(){window.location.href = "/servizi/view-servizio?id="+data.servizioid;}});
            },
            error: function() {
-               swal("Errore!", "Errore durante il salvataggio dell'servizio", "error");
+               swal("Errore!", "Errore durante il salvataggio del servizio", "error");
            }
        });
     });

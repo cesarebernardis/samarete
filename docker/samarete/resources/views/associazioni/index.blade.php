@@ -13,7 +13,9 @@
         @foreach ($associazioni as $associazione)
             <div class="col-md-4">
                 <div class="well item">
-                    <div class="thumbnail"><img src="{{ empty($associazione->logo_base64) ? asset('img/no-image-available.png') : $associazione->logo_base64 }}"/></div>
+                    <div class="thumbnail">
+                        <a href="/associazioni/view-associazione?id={{ $associazione->id }}"><img src="{{ empty($associazione->logo_base64) ? asset('img/no-image-available.png') : $associazione->logo_base64 }}"/></a>
+                    </div>
                     <a href="/associazioni/view-associazione?id={{ $associazione->id }}"><h4 class="title">{{ $associazione->nome }}</h4></a>
                 </div>
             </div>

@@ -66,10 +66,11 @@ class ProgettoController extends Controller
             return response()->json(array("status" => 400, "message" => "ERROR"));
         $this->authorize('uploadFile', $progetto);
         
-        foreach(explode(',', $request->file_ids) as $fileid)
-            $file = FileRepository::confirmFileById(Auth::user(), $fileid);
+        foreach(explode(',', $request->file_ids) as $fileid){
+            $file = FileRepository::confirmFileById(Auth::user(), intval($fileid));
             if(empty($file)) continue;
             $this->progetti->addFile($progetto, $file);
+        }
         
         return response()->json(["status" => 200, "message" => "OK"]);
     }
@@ -107,8 +108,7 @@ class ProgettoController extends Controller
         $file = FileRepository::getById($request->file_id);
         if(empty($file) || empty($progetto))
             return response()->json(array("status" => 400, "message" => "ERROR"));
-        //print_r($file);
-        //$this->authorize('downloadFile', $progetto, $file);
+        $this->authorize('downloadFile', $progetto, $file);
         $pathToFile = FileRepository::getCompleteFilePath($file);
         return response()->download(storage_path("app/data/".$pathToFile), $file->nome_originale);
     }
@@ -134,7 +134,8 @@ class ProgettoController extends Controller
     public function getFiles(ViewProgettoRequest $request)
     {
         $progetto = $request->progetto();
-        return response()->json($this->progetti->getFilesWithSideInfo($progetto));
+        $onlypublic = empty(Auth::user()) || !Auth::user()->can('update', $progetto);
+        return response()->json($this->progetti->getFilesWithSideInfo($progetto, $onlypublic));
     }
     
     public function getProgetti(Request $request)

@@ -105,7 +105,7 @@ class RichiestaController extends Controller
             $richiesta->globale = $request->globale;
         }
         $richiesta->save();
-        if(isset($request->associazioni)){
+        if(isset($request->associazioni) && !$richiesta->globale){
             foreach($request->associazioni as $associazioneid){
                 $this->richieste->addAssociazione($richiesta, AssociazioneRepository::getById($associazioneid));
             }
