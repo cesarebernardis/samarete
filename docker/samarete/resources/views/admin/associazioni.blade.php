@@ -145,7 +145,7 @@ var logoDropzone = new Dropzone("div#upload-logo", {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
 		removedfile: function(file) {
-			var name = $("#filename").val();
+			var name = $("#new_logo").val();
 			$.ajax({
 				type: 'POST',
 				url: '/file/delete-tmp',
@@ -276,11 +276,17 @@ $(document).ready(function() {
                     }
                 }
             },
+            gestore_id{
+                required: true,
+            },
         }, 
         messages: {
             nome: {
                 required: "Inserisci un nome",
                 remote: "Nome già in uso",
+            },
+            gestore_id{
+                required: 'Inserisci un gestore',
             },
         },
         submitHandler: function(form) {

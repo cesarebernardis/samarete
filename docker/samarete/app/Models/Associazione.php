@@ -109,7 +109,7 @@ class Associazione extends Model
     
     public function lastChat()
     {
-        $chats = DB::select('SELECT c.* FROM chat c JOIN messaggio m ON m.chat_id = c.id WHERE autore_id = ? ORDER BY m.data DESC', [$this->id]);
+        $chats = DB::select('SELECT c.* FROM chat c JOIN messaggio m ON m.chat_id = c.id WHERE autore_id = ? AND NOT EXISTS(SELECT * FROM progetto p WHERE p.chat_id = c.id) ORDER BY m.data DESC', [$this->id]);
         $chat = empty($chats) ? null : reset($chats);
         return empty($chat) ? null : ChatRepository::getById($chat->id);
     }

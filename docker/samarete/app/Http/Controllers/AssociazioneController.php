@@ -147,7 +147,7 @@ class AssociazioneController extends Controller
         if (!empty($request->new_logo)) {
             $file = FileRepository::getTmpById($request->new_logo);
             if(!empty($file)){
-                $logo = FileRepository::confirmFile($associazione, $file);
+                $logo = FileRepository::confirmFile(UserRepository::getById($associazione->gestore_id), $file);
                 $associazione->update(['logo' => $logo->id]);
             }
         }

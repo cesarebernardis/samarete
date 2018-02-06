@@ -64,7 +64,7 @@ class Messaggio extends Model
     
     public function save(array $options = [])
     {
-        $this->testo = \Purifier::clean($this->testo);
+        $this->testo = strip_tags($this->testo);
         parent::save($options);
     }
     

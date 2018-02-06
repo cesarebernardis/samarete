@@ -49,11 +49,22 @@ class ChatController extends Controller
         if(empty($chat)){
             $chat = $associazione->lastChat();
         }
-        /*if(!empty($chat)){
+        if(!empty((array)$chat)){
             $this->authorize('view', $chat);
-        }*/
+        }
+        $associazioni = array();
+        foreach(AssociazioneRepository::getAll() as $a){
+            if($associazione->id != $a->id)
+                $associazioni[$a->id] = $a;
+        }
         
-        return response()->view('chat.index', ['mainchat' => $chat, 'chats' => $associazione->chats, 'associazioni' => AssociazioneRepository::getAll()]);
+        $chats = array();
+        foreach($associazione->chats as $c){
+            if(empty($c->progetto))
+                $chats[$c->id] = $c;
+        }
+        
+        return response()->view('chat.index', ['mainchat' => $chat, 'chats' => $chats, 'associazioni' => $associazioni]);
     }
     
     public function getChats(Request $request)
@@ -106,7 +117,7 @@ class ChatController extends Controller
             return response()->json(array("status" => 400, "message" => "ID Associazione non valido"));
         
         $associazioni[] = Auth::user()->associazione();
-        $chat = $this->chats->chatExists($associazioni);
+        $chat = $this->chats->chatExists($associazioni, false);
         
         if(empty($chat)){
             $chat = new Chat;

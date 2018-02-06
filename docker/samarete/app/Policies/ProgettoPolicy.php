@@ -5,6 +5,7 @@ namespace Samarete\Policies;
 use Samarete\Models\User;
 use Samarete\Models\File;
 use Samarete\Models\Progetto;
+
 use Samarete\Repositories\UserRepository;
 use Samarete\Repositories\ProgettoRepository;
 
@@ -111,6 +112,7 @@ class ProgettoPolicy
      *
      * @param  \App\Models\User  $user
      * @param  \Samarete\Progetto  $progetto
+     * @param  \Samarete\File  $file
      * @return mixed
      */
     public function deleteFile(User $user, Progetto $progetto, File $file)

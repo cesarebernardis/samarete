@@ -71,14 +71,22 @@ class ChatRepository
         return count($result) > 0;
     }
     
-    public static function chatExists($associazioni)
+    public static function chatExists($associazioni, $consider_progetti=true)
     {
         $returnchat = null;
         $first = reset($associazioni);
-        $chats = $first->chats;
+        if($consider_progetti){
+            $chats = $first->chats;
+        }else{
+            $chats = array();
+            foreach($first->chats as $c){
+                if(empty($c->progetto))
+                    $chats[$c->id] = $c;
+            }
+        }
         foreach($chats as $chat){
             $result = DB::select('SELECT COUNT(*) as nass FROM chat_has_associazione WHERE chat_id = ?', [$chat->id]);
-            if($result->nass != count($associazioni)) continue;
+            if(reset($result)->nass != count($associazioni)) continue;
             $exists = true;
             foreach($associazioni as $associazione){
                 $exists = $exists && self::chatHasAssociazione($chat, $associazione);

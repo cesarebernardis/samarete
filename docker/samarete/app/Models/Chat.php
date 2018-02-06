@@ -54,10 +54,15 @@ class Chat extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function progetti()
+    public function progetto()
     {
-        return $this->hasMany('Samarete\Models\Progetto');
+        return $this->hasOne('Samarete\Models\Progetto');
+    }
+    
+    public function partecipanti()
+    {
+        return implode(', ', array_map(function($x){ return $x['acronimo'] ? $x['acronimo'] : $x['nome']; }, $this->associazioni->toArray()));
     }
 }

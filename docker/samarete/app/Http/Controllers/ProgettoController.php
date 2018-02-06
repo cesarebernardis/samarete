@@ -62,7 +62,7 @@ class ProgettoController extends Controller
     public function confirmFile(ConfirmFileProgettoRequest $request)
     {
         $progetto = $this->progetti->getById($request->progetto_id);
-        if(empty($progetto))
+        if(empty((array)$progetto))
             return response()->json(array("status" => 400, "message" => "ERROR"));
         $this->authorize('uploadFile', $progetto);
         
@@ -79,7 +79,7 @@ class ProgettoController extends Controller
     {
         $progetto = $this->progetti->getById($request->progetto_id);
         $file = FileRepository::getById($request->file_id);
-        if(empty($file) || empty($progetto))
+        if(empty($file) || empty((array)$progetto))
             return response()->json(array("status" => 400, "message" => "ERROR"));
         $this->authorize('publishFile', $progetto);
         if(!isset($request->public)){
@@ -95,7 +95,7 @@ class ProgettoController extends Controller
     {
         $progetto = $this->progetti->getById($request->progetto_id);
         $file = FileRepository::getById($request->file_id);
-        if(empty($file) || empty($progetto))
+        if(empty($file) || empty((array)$progetto))
             return response()->json(array("status" => 400, "message" => "ERROR"));
         $this->authorize('deleteFile', $progetto, $file);
         $this->progetti->deleteFile($progetto, $file);
@@ -106,7 +106,7 @@ class ProgettoController extends Controller
     {
         $progetto = $this->progetti->getById($request->progetto_id);
         $file = FileRepository::getById($request->file_id);
-        if(empty($file) || empty($progetto))
+        if(empty($file) || empty((array)$progetto))
             return response()->json(array("status" => 400, "message" => "ERROR"));
         $this->authorize('downloadFile', $progetto, $file);
         $pathToFile = FileRepository::getCompleteFilePath($file);
@@ -116,7 +116,7 @@ class ProgettoController extends Controller
     public function viewProgetto(ViewProgettoRequest $request)
     {
         $progetto = $request->progetto();
-        if(empty($progetto)) redirect('/progetti');
+        if(empty((array)$progetto)) redirect('/progetti');
         return response()->view('progetti.view', ['progetto' => $progetto, 'associazioni' => ProgettoRepository::getAvailableAssociazioni($progetto)]);
     }
     

@@ -8,8 +8,7 @@
 <div class="container">
     @if (!empty($mainchat))
         <div class="row">
-            
-            @include('chat', ['titolo' => 'Chat pi&ugrave; recente', 'chat' => $mainchat])
+            @include('chat', ['titolo' => 'Chat pi&ugrave; recente: '.$mainchat->partecipanti(), 'chat' => $mainchat])
         </div>
     @endif
     <div class="row itemlist">
@@ -21,13 +20,14 @@
         <div class="panel-body">
            <ul class="chat">
             @foreach ($chats as $chat)
+                <a href="/chat/?id={{ $chat->id }}">
                 <li class="left clearfix">
                      <span class="chat-img pull-left">
                          <img src="/public/img/user-icon.png" alt="Avatar Associazione" class="img-circle">
                      </span>
                      <div class="chat-body clearfix">
                          <div class="header">
-                              <strong class="primary-font">{{ implode(', ', array_map(function($x){ return $x['acronimo'] ? $x['acronimo'] : $x['nome']; }, $chat->associazioni->toArray())) }}</strong>
+                              <strong class="primary-font">{{ $chat->partecipanti() }}</strong>
                               <small class="pull-right text-muted">
                                    <i class="fa fa-clock-o fa-fw"></i> {{ empty($chat->ultimo_messaggio()) ? 'Nessun invio' : $chat->ultimo_messaggio()->data->diffForHumans() }}
                               </small>
@@ -35,6 +35,7 @@
                          <p>{{ empty($chat->ultimo_messaggio()) ? 'Nessun messaggio' : $chat->ultimo_messaggio()->testo }}</p>
                      </div>
                 </li>
+                </a>
             @endforeach
             </ul>
         </div>
@@ -46,7 +47,9 @@
         <div class="col-md-10 col-xs-12">
             <select class="form-control" name="associazioni[]" id="associazioni" multiple="multiple">
                 @foreach($associazioni as $associazione)
-                  <option value="{{ $associazione->id }}">{{ empty($associazione->acronimo) ? $associazione->nome : $associazione->acronimo }}</option>
+                  @if($associazione->id != Auth::user()->associazione()->id)
+                    <option value="{{ $associazione->id }}">{{ empty($associazione->acronimo) ? $associazione->nome : $associazione->acronimo }}</option>
+                  @endif
                 @endforeach
             </select>
         </div>
