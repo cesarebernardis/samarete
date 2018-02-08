@@ -12,10 +12,17 @@ use Samarete\Repositories\FileRepository;
 
 class ProgettoRepository
 {
-    public static function getAll()
+    public static function getAll($query = '')
     {
         $progetti = array();
-        foreach(Progetto::all() as $progetto){
+        $a = new Progetto;
+        if(!empty($query)){
+            $query = '%'.$query.'%';
+            $a = $a->whereRaw('LOWER(nome) LIKE ?', [$query])->orWhereRaw('LOWER(oggetto) LIKE ?', [$query])->orWhereRaw('LOWER(descrizione) LIKE ?', [$query])->get();
+        }else{
+            $a = $a->all();
+        }
+        foreach($a as $progetto){
             $progetto->logo_base64 = self::getLogoBase64($progetto);
             $progetti[] = $progetto;
         }

@@ -3,6 +3,7 @@
 namespace Samarete\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Samarete\Http\Requests\SearchAssociazioneRequest;
 use Samarete\Http\Requests\EditAssociazioneRequest;
 use Samarete\Http\Requests\ViewAssociazioneRequest;
 use Samarete\Http\Requests\SaveAssociazioneRequest;
@@ -39,9 +40,11 @@ class AssociazioneController extends Controller
         $this->associazioni = $associazioni;
     }
     
-    public function index(Request $request)
+    public function index(SearchAssociazioneRequest $request)
     {
-        return response()->view('associazioni.index', ['associazioni' => $this->associazioni->getAll()]);
+        $query = trim(strip_tags($request->search));
+        $associazioni = $this->associazioni->getAll(strtolower($query));
+        return response()->view('associazioni.index', ['associazioni' => $associazioni, 'query' => $query]);
     }
     
     public function viewAssociazione(ViewAssociazioneRequest $request)

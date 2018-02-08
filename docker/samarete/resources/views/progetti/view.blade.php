@@ -60,7 +60,9 @@
         </div>
     </div>
     @endcan
-    @include('chat', ['chat' => $progetto->chat])
+    @can('update', $progetto)
+        @include('chat', ['chat' => $progetto->chat])
+    @endcan
 </div>
 
 <form class="form-horizontal" id="collaboration-form">

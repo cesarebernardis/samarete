@@ -2,6 +2,7 @@
 
 namespace Samarete\Http\Controllers;
 
+use Samarete\Http\Requests\SearchEventoRequest;
 use Samarete\Http\Requests\ViewEventoRequest;
 use Samarete\Http\Requests\SaveEventoRequest;
 use Samarete\Http\Requests\DeleteEventoRequest;
@@ -37,9 +38,11 @@ class EventoController extends Controller
         $this->eventi = $eventi;
     }
     
-    public function index(Request $request)
+    public function index(SearchEventoRequest $request)
     {
-        return response()->view('eventi.index', ['eventi' => $this->eventi->getAll()]);
+        $query = trim(strip_tags($request->search));
+        $eventi = $this->eventi->getAll(strtolower($query));
+        return response()->view('eventi.index', ['eventi' => $eventi, 'query' => $query]);
     }
     
     public function viewEvento(ViewEventoRequest $request)

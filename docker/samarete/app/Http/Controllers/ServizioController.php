@@ -2,6 +2,7 @@
 
 namespace Samarete\Http\Controllers;
 
+use Samarete\Http\Requests\SearchServizioRequest;
 use Samarete\Http\Requests\ViewServizioCalendarRequest;
 use Samarete\Http\Requests\ViewServizioRequest;
 use Samarete\Http\Requests\SaveServizioRequest;
@@ -40,9 +41,11 @@ class ServizioController extends Controller
         $this->servizi = $servizi;
     }
     
-    public function index(Request $request)
+    public function index(SearchServizioRequest $request)
     {
-        return response()->view('servizi.index', ['servizi' => $this->servizi->getAll()]);
+        $query = trim(strip_tags($request->search));
+        $servizi = $this->servizi->getAll(strtolower($query));
+        return response()->view('servizi.index', ['servizi' => $servizi, 'query' => $query]);
     }
     
     public function viewServizio(ViewServizioRequest $request)

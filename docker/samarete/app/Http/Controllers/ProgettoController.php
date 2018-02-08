@@ -2,6 +2,7 @@
 
 namespace Samarete\Http\Controllers;
 
+use Samarete\Http\Requests\SearchProgettoRequest;
 use Samarete\Http\Requests\ViewProgettoRequest;
 use Samarete\Http\Requests\SaveProgettoRequest;
 use Samarete\Http\Requests\InvitaProgettoRequest;
@@ -43,9 +44,11 @@ class ProgettoController extends Controller
         $this->progetti = $progetti;
     }
     
-    public function index(Request $request)
+    public function index(SearchProgettoRequest $request)
     {
-        return response()->view('progetti.index', ['progetti' => $this->progetti->getAll()]);
+        $query = trim(strip_tags($request->search));
+        $progetti = $this->progetti->getAll(strtolower($query));
+        return response()->view('progetti.index', ['progetti' => $progetti, 'query' => $query]);
     }
     
     public function invita(InvitaProgettoRequest $request)
@@ -95,9 +98,9 @@ class ProgettoController extends Controller
     {
         $progetto = $this->progetti->getById($request->progetto_id);
         $file = FileRepository::getById($request->file_id);
-        if(empty($file) || empty((array)$progetto))
+        if(empty((array)$file) || empty((array)$progetto))
             return response()->json(array("status" => 400, "message" => "ERROR"));
-        $this->authorize('deleteFile', $progetto, $file);
+        $this->authorize('deleteFile', $progetto);
         $this->progetti->deleteFile($progetto, $file);
         return response()->json(["status" => 200, "message" => "OK"]);
     }
@@ -106,9 +109,10 @@ class ProgettoController extends Controller
     {
         $progetto = $this->progetti->getById($request->progetto_id);
         $file = FileRepository::getById($request->file_id);
-        if(empty($file) || empty((array)$progetto))
+        if(empty((array)$file) || empty((array)$progetto))
             return response()->json(array("status" => 400, "message" => "ERROR"));
-        $this->authorize('downloadFile', $progetto, $file);
+        if(!$progetto->isPublic($file))
+            $this->authorize('downloadFile', $progetto);
         $pathToFile = FileRepository::getCompleteFilePath($file);
         return response()->download(storage_path("app/data/".$pathToFile), $file->nome_originale);
     }

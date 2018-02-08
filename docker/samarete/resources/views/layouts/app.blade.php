@@ -45,6 +45,7 @@
     <script src="{{ asset('components/select2/select2.min.js') }}"></script>
     <script src="{{ asset('components/dropzone/dropzone.js') }}"></script>
     <script src="{{ asset('components/fullcalendar/fullcalendar.min.js') }}"></script>
+    <script src="{{ asset('components/fullcalendar/locale/it.js') }}"></script>
     <script src="{{ asset('components/tinymce/tinymce.min.js') }}"></script>
     
 </head>
@@ -132,7 +133,6 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        
         
         tinymce.init({ 
             selector: 'textarea.tinymce' ,

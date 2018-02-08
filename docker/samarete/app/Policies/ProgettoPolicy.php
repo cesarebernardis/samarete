@@ -102,9 +102,9 @@ class ProgettoPolicy
      * @param  \Samarete\Progetto  $progetto
      * @return mixed
      */
-    public function downloadFile(User $user, Progetto $progetto, File $file)
+    public function downloadFile(User $user, Progetto $progetto)
     {
-        return $progetto->isPublic($file) || (UserRepository::checkPermesso($user, 'download-file') && $this->isOwner($user, $progetto));
+        return UserRepository::checkPermesso($user, 'download-file') && $this->isOwner($user, $progetto);
     }
 
     /**
@@ -115,7 +115,7 @@ class ProgettoPolicy
      * @param  \Samarete\File  $file
      * @return mixed
      */
-    public function deleteFile(User $user, Progetto $progetto, File $file)
+    public function deleteFile(User $user, Progetto $progetto)
     {
         return UserRepository::checkPermesso($user, 'delete-file') && $this->isOwner($user, $progetto);
     }

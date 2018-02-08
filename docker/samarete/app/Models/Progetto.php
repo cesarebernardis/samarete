@@ -74,6 +74,6 @@ class Progetto extends Model
     public function isPublic(File $file)
     {
         if(empty($file)) return false;
-        $this->files()->where('file_id', '=', $file->id)->first()->pivot->public > 0;
+        return $this->files()->where('file_id', '=', $file->id)->first()->pivot->public > 0;
     }
 }

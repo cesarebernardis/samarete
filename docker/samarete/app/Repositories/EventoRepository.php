@@ -11,10 +11,17 @@ use Samarete\Repositories\FileRepository;
 
 class EventoRepository
 {
-    public static function getAll()
+    public static function getAll($query = '')
     {
         $eventi = array();
-        foreach(Evento::all() as $evento){
+        $a = new Evento;
+        if(!empty($query)){
+            $query = '%'.$query.'%';
+            $a = $a->whereRaw('LOWER(nome) LIKE ?', [$query])->orWhereRaw('LOWER(oggetto) LIKE ?', [$query])->orWhereRaw('LOWER(descrizione) LIKE ?', [$query])->get();
+        }else{
+            $a = $a->all();
+        }
+        foreach($a as $evento){
             $evento->logo_base64 = self::getLogoBase64($evento);
             $evento->giorni = self::getGiorni($evento);
             $eventi[] = $evento;

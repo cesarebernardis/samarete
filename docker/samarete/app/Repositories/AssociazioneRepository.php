@@ -12,20 +12,34 @@ use Samarete\Repositories\FileRepository;
 
 class AssociazioneRepository
 {
-    public static function getAll()
+    public static function getAll($query = '')
     {
         $associazioni = array();
-        foreach(Associazione::all() as $associazione){
+        $a = new Associazione;
+        if(!empty($query)){
+            $query = '%'.$query.'%';
+            $a = $a->whereRaw('LOWER(nome) LIKE ?', [$query])->orWhereRaw('LOWER(acronimo) LIKE ?', [$query])->orWhereRaw('LOWER(descrizione) LIKE ?', [$query])->orWhereRaw('LOWER(email) LIKE ?', [$query])->get();
+        }else{
+            $a = $a->all();
+        }
+        foreach($a as $associazione){
             $associazione->logo_base64 = self::getLogoBase64($associazione);
             $associazioni[] = $associazione;
         }
         return $associazioni;
     }
     
-    public static function getActive()
+    public static function getActive($query = '')
     {
         $associazioni = array();
-        foreach(Associazione::where('attivo', 1)->get() as $associazione){
+        $a = Associazione::where('attivo', 1);
+        if(!empty($query)){
+            $query = '%'.$query.'%';
+            $a = $a->whereRaw('LOWER(nome) LIKE ?', [$query])->orWhereRaw('LOWER(acronimo) LIKE ?', [$query])->orWhereRaw('LOWER(descrizione) LIKE ?', [$query])->orWhereRaw('LOWER(email) LIKE ?', [$query])->get();
+        }else{
+            $a = $a->all();
+        }
+        foreach($a as $associazione){
             $associazione->logo_base64 = self::getLogoBase64($associazione);
             $associazioni[] = $associazione;
         }
