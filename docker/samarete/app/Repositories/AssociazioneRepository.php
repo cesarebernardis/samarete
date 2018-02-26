@@ -37,7 +37,7 @@ class AssociazioneRepository
             $query = '%'.$query.'%';
             $a = $a->whereRaw('LOWER(nome) LIKE ?', [$query])->orWhereRaw('LOWER(acronimo) LIKE ?', [$query])->orWhereRaw('LOWER(descrizione) LIKE ?', [$query])->orWhereRaw('LOWER(email) LIKE ?', [$query])->get();
         }else{
-            $a = $a->all();
+            $a = $a->get();
         }
         foreach($a as $associazione){
             $associazione->logo_base64 = self::getLogoBase64($associazione);

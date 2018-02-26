@@ -55,3 +55,9 @@ button.btn.btn-icon-only { width: 38px; border-color: transparent; }
 #app-navbar-collapse .nav .dropdown i.fa {
     margin: 0 8px 0 0;
 }
+
+div.portfolio-carousel div.carousel-items div.portfolio-item.span div.image.hoverlay img{
+    max-height: 210px;
+    width: auto;
+    margin: 0 auto;
+}

@@ -32,7 +32,7 @@
                     <a href="/associazioni/view-associazione?id={{ $associazione->id }}"><h4 class="title">{{ $associazione->nome }}</h4></a>
                     <h6>{{ $associazione->email }}</h6>
                     <h6>{{ $associazione->sito_web }}</h6>
-                    <h6>{{ $associazione->telefono1 }}</h6>
+                    <h6>{{ $associazione->telefono_1 }}</h6>
                     <h6>{{ $associazione->indirizzo }}</h6>
                 </div>
             </div>

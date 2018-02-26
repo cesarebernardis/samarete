@@ -2,6 +2,8 @@
 
 namespace Samarete\Http\Controllers;
 
+use Samarete\Repositories\AssociazioneRepository;
+
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $associazioni = AssociazioneRepository::getActive();
+        return view('home', array('associazioni' => $associazioni));
     }
 }
