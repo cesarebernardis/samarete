@@ -40,7 +40,7 @@
 	<link rel='stylesheet' href='{{ asset("components/aperio-theme/css/prettyPhoto.css") }}' type='text/css' media='all'/>
 	<link rel='stylesheet' href='{{ asset("components/aperio-theme/css/responsive.css") }}' type='text/css' media='all'/>
 	<link rel='stylesheet' href='{{ asset("components/aperio-theme/css/js_composer.css") }}' type='text/css' media='all'/>
-	<link rel='stylesheet' href='{{ asset("components/aperio-theme/css/default.css") }}' type='text/css' media='screen'/>
+	<link rel='stylesheet' href='{{ asset("components/aperio-theme/css/default.css?v=".time()) }}' type='text/css' media='screen'/>
 	<link rel='stylesheet' href='{{ asset("components/aperio-theme/css/fontawesome.css") }}' type='text/css' media='screen'/>
 	<link rel='stylesheet' href='{{ asset("components/aperio-theme/css/font-awesome.css") }}' type='text/css' media='screen'/>
 
@@ -97,7 +97,7 @@
 	<script type='text/javascript' src='{{ asset("components/aperio-theme/js/contact-form.js") }}'></script>
     
 </head>
-<body class="page page-id-7816 page-template page-template-header-boxed3-php  solid-header header-scheme-light type3 header-fullwidth-no border-default wpb-js-composer js-comp-ver-4.3.5 vc_responsive layout6">
+<body class="home page page-id-12 page-template page-template-fullwidth-php solid-header header-scheme-light type1 header-fullwidth-no border-default wpb-js-composer js-comp-ver-4.3.5 vc_responsive">
     <div id="mobile_navigation">
         <a id="close-mobile-menu" href="#">X</a>
         <ul id="mobile_menu" class="mobile_menu">
@@ -134,7 +134,8 @@
     </div>
     
     <!-- Boxed Layout -->
-    <div class="boxed-layout boxed-shadow-no tcover-padding-no hcover-padding-yes  padding-yes vpadding-no style-default">
+    <!-- <div class="boxed-layout boxed-shadow-no tcover-padding-no hcover-padding-yes  padding-yes vpadding-no style-default"> -->
+    <div class="tcover-padding-no hcover-padding-yes  padding-yes vpadding-no style-default">
         <!-- Header -->
         <div id="header_wrapper" class=" solid-header header-scheme-light type3">
             <div class="header_container">
@@ -151,7 +152,6 @@
                                 <div class="logo-container">
                                     <a id="logo" href="/">
                                     <img src="{{ asset('components/aperio-theme/images/logo.png') }}" class="default-logo" alt="Samarete">
-                                    <img src="{{ asset('components/aperio-theme/images/logowhite.png') }}" class="white-logo" alt="Samarete">
                                     </a>
                                 </div>
                                 <!-- Tooggle Menu will displace on mobile devices -->
@@ -233,7 +233,9 @@
             </div>
         </div>
         <!--End Header -->
+        <div class="fullwidth">
         @yield('content')
+        </div>
         
     </div>
 
@@ -247,10 +249,8 @@
             jQuery(document).ready(function($){ 
               var retina = window.devicePixelRatio > 1 ? true : false;
                          if(retina) {
-                    jQuery('#logo .default-logo').attr('src', 'images/logo_2x.png');
-                    jQuery('#logo img').css('max-width', '110px');
-                                jQuery('#logo .white-logo').attr('src', 'images/logowhite_2x.png');
-                                        }
+                    jQuery('#logo .default-logo').attr('src', "{{ asset('components/aperio-theme/images/logo_2x.png') }}" );
+                    
                 /* ------------------------------------------------------------------------ */
                 /* Add PrettyPhoto */
                 /* ------------------------------------------------------------------------ */

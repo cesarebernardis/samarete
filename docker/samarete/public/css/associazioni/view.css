@@ -9,3 +9,8 @@
     font-size: 13px;
     color: #333;
 }
+
+section.section {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}

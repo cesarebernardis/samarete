@@ -1,3 +1,7 @@
 div.well.item {
     height: 350px;
 }
+
+.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
+    border-radius: 0px;
+}

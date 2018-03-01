@@ -15,6 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+    echo $exitCode;
+});
+
 //ADMIN
 Route::middleware('admin')->group(function(){
     Route::get('/admin', 'AdminController@index');

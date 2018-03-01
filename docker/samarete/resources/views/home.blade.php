@@ -131,7 +131,7 @@
                                                 <div class="inner-content">
                                                     <div class="image hoverlay">
                                                         <a href="/associazioni/view-associazione?id={{ $associazione->id }}" target="_self">
-                                                        <img src="{{ empty($associazione->logo_base64) ? asset('img/no-image-available.png') : $associazione->logo_base64 }}" class="attachment-thumb-medium" alt="portfolio16"/>
+                                                        <img src="{{ empty($associazione->logo_base64) ? asset('img/no-image-available.png') : $associazione->logo_base64 }}" class="attachment-thumb-medium" alt="{{ $associazione->nome }}"/>
                                                         </a>
                                                         <div class="overlay">
                                                             <div class="overlay-content">
@@ -173,51 +173,24 @@
             </div>
         </div>
         </section>
-    </div>
-    <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="row itemlist">
-                <div class="col-md-6">
-                    <a href="/associazioni"><div class="well item text-align-center">
-                        <div class="thumbnail"><img src="{{ asset('img/associazioni.jpeg') }}"/></div>
-                        <h3 class="title">Associazioni</h3>
-                    </div></a>
-                </div>
-                <div class="col-md-6">
-                    <a href="/richieste/new"><div class="well item text-align-center">
-                        <div class="thumbnail"><img src="{{ asset('img/aiuto.jpg') }}"/></div>
-                        <h3 class="title">Chiedi aiuto</h3>
-                    </div></a>
-                </div>
-            </div>
-            <div class="row itemlist">
-                <div class="col-md-4">
-                    <a href="/eventi"><div class="well item text-align-center">
-                        <div class="thumbnail"><img src="{{ asset('img/evento.jpg') }}"/></div>
-                        <h3 class="title">Eventi</h3>
-                    </div></a>
-                </div>
-                <div class="col-md-4">
-                    <a href="/servizi"><div class="well item text-align-center">
-                        <div class="thumbnail"><img src="{{ asset('img/servizio.jpg') }}"/></div>
-                        <h3 class="title">Servizi</h3>
-                    </div></a>
-                </div>
-                <div class="col-md-4">
-                    <a href="/progetti"><div class="well item text-align-center">
-                        <div class="thumbnail"><img src="{{ asset('img/progetto.jpg') }}"/></div>
-                        <h3 class="title">Progetti</h3>
-                    </div></a>
+        <section id="section_1300744414" class="section content-box section-border-no section-bborder-no 
+            section-height-content section-bgtype-image section-fixed-background-no section-bgstyle-stretch section-triangle-no 
+            triangle-location-top parallax-section-no section-overlay-no section-overlay-dot-no "  data-video-ratio="" data-parallax-speed="1" style="padding:60px 90px;background-color:#454545;background-color:rgba(69,69,69,1);">
+        <div class="section-overlay" style=""></div>
+        <div class="container section-content" style="padding:0 75px;">
+            <div class="row-fluid">
+                <div class="row-fluid equal-cheight-no element-padding-default element-vpadding-default">
+                    <div id="brad_box_1" class="box content-box scheme1 border-bottom-radius-no border-top-radius-no ">
+                           <div class="callout callout-align-justify ">
+                               <a class="button button_default button_default" href="/eventi"><span>SCOPRI</span></a>
+                               <h3>Scopri i prossimi eventi</h3>
+                           </div>
+                    </div>
                 </div>
             </div>
         </div>
+        </section>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-        </div>
-    </div>
-</div>
 @endsection
 
 @section('scripts')
