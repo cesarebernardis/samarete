@@ -1,7 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.default')
 
 @section('content')
-<div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -50,11 +49,11 @@
 
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="button button_small button_color_default border-radius-default icon-align-left">
                                     Login
                                 </button>
 
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                <a class="" href="{{ route('password.request') }}">
                                     Hai dimenticato la tua password?
                                 </a>
                             </div>
@@ -64,5 +63,16 @@
             </div>
         </div>
     </div>
-</div>
+@endsection
+
+@section('scripts')
+<script type="text/javascript">
+
+$(document).ready(function() {
+    
+    $('div#main_navigation_container ul#main_menu li#menu-item-login').addClass('active current-menu-parent');
+    
+});
+
+</script>
 @endsection

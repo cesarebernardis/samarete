@@ -11,6 +11,10 @@ use Samarete\Http\Requests\SaveFileRequest;
 use Samarete\Http\Requests\DeleteAssociazioneRequest;
 use Samarete\Http\Requests\ManagePermessoRequest;
 
+use Samarete\Http\Requests\FileAssociazioneRequest;
+use Samarete\Http\Requests\PublishFileAssociazioneRequest;
+use Samarete\Http\Requests\ConfirmFileAssociazioneRequest;
+
 use Illuminate\Http\UploadedFile;
 
 use Samarete\Models\Associazione;
@@ -44,7 +48,7 @@ class AssociazioneController extends Controller
     {
         $query = trim(strip_tags($request->search));
         $associazioni = $this->associazioni->getAll(strtolower($query));
-        return response()->view('associazioni.index', ['associazioni' => $associazioni, 'query' => $query]);
+        return response()->view('associazioni.index', ['associazioni' => $associazioni, 'query' => $query, 'page' => $request->page]);
     }
     
     public function viewAssociazione(ViewAssociazioneRequest $request)
@@ -58,9 +62,9 @@ class AssociazioneController extends Controller
     {
         $associazione = $request->associazione();
         if($associazione)
-            $this->authorize('create', Associazione::class);
-        else
             $this->authorize('update', $associazione);
+        else
+            $this->authorize('create', Associazione::class);
         $this->associazione = Auth::user()->associazione();
         
         $params = ['associazione' => $this->associazione,'associazione' => is_object($associazione) ? $associazione : null];
@@ -69,10 +73,14 @@ class AssociazioneController extends Controller
         return response()->view('associazioni.edit', $params);
     }
     
-    public function getAssociazioni(Request $request)
+    public function getAssociazioni(SearchAssociazioneRequest $request)
     {
-        $this->authorize('view', Associazione::class);
-        return response()->json($this->associazioni->getAll());
+        $query = trim(strip_tags($request->search));
+        $associazioni = $this->associazioni->getAll(strtolower($query));
+        if(isset($request->page)){
+            $associazioni = array_slice($associazioni, ($request->page - 1) * 9, 9, true);
+        }
+        return response()->json($associazioni);
     }
     
     public function getAssociazione(ViewAssociazioneRequest $request)
@@ -80,6 +88,68 @@ class AssociazioneController extends Controller
         $associazione = $this->associazioni->getById($request->id);
         $this->authorize('view', $associazione);
         return response()->json($associazione);
+    }
+    
+    public function confirmFile(ConfirmFileAssociazioneRequest $request)
+    {
+        $associazione = $this->associazioni->getById($request->associazione_id);
+        if(empty((array)$associazione))
+            return response()->json(array("status" => 400, "message" => "ERROR"));
+        $this->authorize('update', $associazione);
+        
+        foreach(explode(',', $request->file_ids) as $fileid){
+            $file = FileRepository::confirmFileById(Auth::user(), intval($fileid));
+            if(empty($file)) continue;
+            $this->associazioni->addFile($associazione, $file);
+        }
+        
+        return response()->json(["status" => 200, "message" => "OK"]);
+    }
+    
+    public function publishFile(PublishFileAssociazioneRequest $request)
+    {
+        $associazione = $this->associazioni->getById($request->associazione_id);
+        $file = FileRepository::getById($request->file_id);
+        if(empty($file) || empty((array)$associazione))
+            return response()->json(array("status" => 400, "message" => "ERROR"));
+        $this->authorize('update', $associazione);
+        if(!isset($request->public)){
+            $public = 0;
+        }else{
+            $public = $request->public;
+        }
+        $this->associazioni->publishFile($associazione, $file, $public);
+        return response()->json(["status" => 200, "message" => "OK"]);
+    }
+    
+    public function deleteFile(FileAssociazioneRequest $request)
+    {
+        $associazione = $this->associazioni->getById($request->associazione_id);
+        $file = FileRepository::getById($request->file_id);
+        if(empty((array)$file) || empty((array)$associazione))
+            return response()->json(array("status" => 400, "message" => "ERROR"));
+        $this->authorize('update', $associazione);
+        $this->associazioni->deleteFile($associazione, $file);
+        return response()->json(["status" => 200, "message" => "OK"]);
+    }
+    
+    public function downloadFile(FileAssociazioneRequest $request)
+    {
+        $associazione = $this->associazioni->getById($request->associazione_id);
+        $file = FileRepository::getById($request->file_id);
+        if(empty((array)$file) || empty((array)$associazione))
+            return response()->json(array("status" => 400, "message" => "ERROR"));
+        if(!$associazione->isPublic($file))
+            $this->authorize('update', $associazione);
+        $pathToFile = FileRepository::getCompleteFilePath($file);
+        return response()->download(storage_path("app/data/".$pathToFile), $file->nome_originale);
+    }
+    
+    public function getFiles(ViewAssociazioneRequest $request)
+    {
+        $associazione = $request->associazione();
+        $onlypublic = empty(Auth::user()) || !Auth::user()->can('update', $associazione);
+        return response()->json($this->associazioni->getFilesWithSideInfo($associazione, $onlypublic));
     }
     
     public function getLogo(ViewAssociazioneRequest $request)
@@ -95,7 +165,6 @@ class AssociazioneController extends Controller
     
     public function checkNome(Request $request)
     {
-        $this->authorize('create', Associazione::class);
         $nome = $request->nome;
         $id = $request->id;
         $result = $this->associazioni->checkNome($nome, $id);
@@ -126,7 +195,7 @@ class AssociazioneController extends Controller
             $associazione = AssociazioneRepository::getById($request->id);
             if(empty($associazione))
                 return response()->json(array("status" => 400, "message" => "ID Associazione non valido"));
-            $this->authorize('edit', $associazione);
+            $this->authorize('update', $associazione);
         }else{
             $this->authorize('create', Associazione::class);
             $associazione->data_creazione = new \DateTime();

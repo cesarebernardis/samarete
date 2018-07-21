@@ -91,7 +91,6 @@ class ServizioController extends Controller
     public function getCalendar(ViewServizioCalendarRequest $request)
     {
         $servizio = $request->servizio();
-        $this->authorize('view', $servizio);
         $giorni = [];
         foreach($servizio->getGiorni($request->start, $request->end) as $giorno){
             $obj = new \stdClass();
@@ -126,6 +125,7 @@ class ServizioController extends Controller
         $servizio->nome = $request->nome;
         $servizio->oggetto = $request->oggetto;
         $servizio->descrizione = $request->descrizione;
+        $servizio->luogo = $request->luogo;
         $servizio->periodicita = $request->periodicita;
         $servizio->data_fine = Carbon::createFromFormat('d/m/Y', $request->data_fine);
         $servizio->logo = $request->logo;

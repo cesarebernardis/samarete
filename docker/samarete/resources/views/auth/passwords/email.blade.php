@@ -1,7 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.default')
 
 @section('content')
-<div class="container">
+<section id="section_589096598" class="section content-box section-border-no section-bborder-no section-height-content section-bgtype-image section-fixed-background-no section-bgstyle-stretch section-triangle-no triangle-location-top parallax-section-no section-overlay-no section-overlay-dot-no ">
+    <div class="section-overlay" style=""></div>
+    <div class="container section-content">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -17,7 +19,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                            <label for="email" class="col-md-4 control-label">Indirizzo E-Mail</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
@@ -32,8 +34,8 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Send Password Reset Link
+                                <button type="button" class="button button_small button_color_default border-radius-default icon-align-left">
+                                    Invia link reset password
                                 </button>
                             </div>
                         </div>
@@ -42,5 +44,18 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
+</section>
+@endsection
+
+@section('scripts')
+<script type="text/javascript">
+
+$(document).ready(function() {
+    
+    $('div#main_navigation_container ul#main_menu li#menu-item-login').addClass('active current-menu-parent');
+    
+});
+
+</script>
 @endsection

@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+
+@section('styles')
+<link href="{{ asset('css/home.css?v='.time()) }}" rel="stylesheet">
+@endsection
+
 @section('content')
 
 <!-- Rev Slider Start -->
@@ -94,75 +99,89 @@
             </div>
         </div>
     </section>
-    <section id="section_1300744414" class="section content-box section-border-no section-bborder-no section-height-content section-bgtype-image section-fixed-background-no section-bgstyle-stretch section-triangle-no triangle-location-top parallax-section-no section-overlay-no section-overlay-dot-no "  data-video-ratio="" data-parallax-speed="1">
+    <section id="section_1530575777" class="section content-box section-border-no section-bborder-no section-height-content section-bgtype-image section-fixed-background-no section-bgstyle-stretch section-triangle-no triangle-location-top parallax-section-no section-overlay-no section-overlay-dot-no " style="padding-top:60px;padding-bottom:60px;background-color:#ffffff;" data-video-ratio="" data-parallax-speed="1">
         <div class="section-overlay" style=""></div>
-        <div class="container section-content">
+        <!-- <div class="container section-content">-->
             <div class="row-fluid">
                 <div class="row-fluid equal-cheight-no element-padding-default element-vpadding-default">
                     <div class="section-column span12" style="">
-                        <div class="inner-content content-box textnone" id="div_c1fb_0">
-                            <h2 class="title textcenter default bw-defaultpx dh-defaultpx divider-dark bc-default dw-default color-default" id="h2_c1fb_0"><span>Servizi</span></h2>
-                            <div class="hr border-small dh-2px aligncenter hr-border-primary" id="div_c1fb_1">
-                                <span></span>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="section_2 section content-box section-border-no section-bborder-no section-height-content section-bgtype-image section-fixed-background-no section-bgstyle-stretch section-triangle-yes triangle-location-top parallax-section-no section-overlay-no section-overlay-dot-no " style="padding-top:90px;padding-bottom:90px;background-color:#f6f6f6;" data-video-ratio="" data-parallax-speed="1">
-        <div class="section-overlay" style=""></div>
-        <div class="container section-content">
-            <div class="row-fluid">
-                <div class="row-fluid equal-cheight-no element-padding-medium element-vpadding-medium">
-                    <div class="section-column span12" style="">
-                        <div class="inner-content content-box textnone" style="padding-top:0px;padding-bottom:0px;padding-left:0px;padding-right:0px;">
-                            <h2 class="title textcenter default bw-2px dh-2px divider-dark bc-dark dw-default color-default" style="margin-bottom:0px"><span>Associazioni</span></h2>
-                            <div class="hr border-small dh-2px aligncenter hr-border-primary" style="margin-top:20px;margin-bottom:45px;"><span></span></div>
-                            <div class="carousel-container portfolio-carousel pagination-no navigation-yes" data-columns="3" data-fullwidth="no" data-autoplay="no">
-                                <a class="bx-next" href="#"></a><a class="bx-prev" href="#"></a>
-                                <div class="carouel-outer clearfix">
-                                    <div class="carousel-wrapper carousel-padding-small">
-                                        <div class="row carousel-items portfolio-items portfolio-style2 enable-hr-yes hr-type-small hr-color-primary hr-style-2px love-it-no element-padding-small bg-style-white columns-3" data-columns="3">
-                                            @foreach($associazioni as $associazione)
-                                            <div class="portfolio-item span scheme-default">
-                                                <div class="inner-content">
-                                                    <div class="image hoverlay">
-                                                        <a href="/associazioni/view-associazione?id={{ $associazione->id }}" target="_self">
-                                                        <img src="{{ empty($associazione->logo_base64) ? asset('img/no-image-available.png') : $associazione->logo_base64 }}" class="attachment-thumb-medium" alt="{{ $associazione->nome }}"/>
-                                                        </a>
-                                                        <div class="overlay">
-                                                            <div class="overlay-content">
-                                                                <div class="overlay-icons">
-                                                                    <a href="/associazioni/view-associazione?id={{ $associazione->id }}" target="_self" title="{{ $associazione->nome }}" class="lightbox-icon"><i class="fa fa-icon_link"></i></a>
-                                                                </div>
-                                                            </div>
+                        <div class="inner-content content-box textnone" style="padding:0px;">
+                            <div id="portfolio_929218575" class="portfolio padding-no">
+                                <div class="row-fluid portfolio-items bg-style-white sortable-items portfolio-style1 columns-2 love-it-no enable-hr-no hr-type-tiny hr-color-light hr-style-normal element-padding-no info-style-left element-vpadding-default info-onhover-yes " data-columns="2" data-animation-delay="0" data-animation-effect="" data-masonry-layout="no" style="opacity: 1; position: relative; height: 1081.59px;">
+                                    <div class="portfolio-item span scheme-default">
+                                        <div class="inner-content">
+                                            <div class="image hoverlay">
+                                                <a href="/associazioni" target="_self"><img class="" src="/public/img/associazioni.jpeg" alt="Associazioni"></a>
+                                                <div class="overlay">
+                                                    <div class="overlay-content" link-target="/associazioni">
+                                                        <!-- <div class="overlay-icons">
+                                                            <a href="/associazioni" target="_self" title="Associazioni" class="lightbox-icon"><i class="fa fa-icon_link"></i></a>
+                                                        </div> -->
+                                                        <div class="info">
+                                                            <h1><a href="/associazioni" target="_self" title="Associazioni">Associazioni</a></h1>
+                                                            <div class="hr"><span></span></div>
+                                                            <!--<h5><a href="#" rel="tag">Associazioni</a></h5>-->
                                                         </div>
-                                                    </div>
-                                                    <div class="info">
-                                                        <h3><a href="/associazioni/view-associazione?id={{ $associazione->id }}" target="_self" title="{{ $associazione->nome }}">{{ $associazione->nome }}</a></h3>
-                                                        <div class="hr"><span></span></div>
-                                                        @if(!empty($associazione->acronimo))
-                                                            <h5>{{ $associazione->acronimo }}</h5>
-                                                        @endif
-                                                        @if(!empty($associazione->email))
-                                                            <h5>{{ $associazione->email }}</h5>
-                                                        @endif
-                                                        @if(!empty($associazione->telefono_1))
-                                                            <h5>{{ $associazione->telefono_1 }}</h5>
-                                                        @endif
-                                                        @if(!empty($associazione->indirizzo))
-                                                            <h5>{{ $associazione->indirizzo }}</h5>
-                                                        @endif
-                                                        @if(!empty($associazione->sito_web))
-                                                            <h5>{{ $associazione->sito_web }}</h5>
-                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
-                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-item span scheme-default">
+                                        <div class="inner-content">
+                                            <div class="image hoverlay">
+                                                <a href="/eventi" target="_self"><img class="" src="/public/img/evento.jpg" alt="Eventi"></a>
+                                                <div class="overlay">
+                                                    <div class="overlay-content" link-target="/eventi">
+                                                        <!-- <div class="overlay-icons">
+                                                            <a href="/eventi" target="_self" title="Eventi" class="lightbox-icon"><i class="fa fa-icon_link"></i></a>
+                                                        </div> -->
+                                                        <div class="info">
+                                                            <h1><a href="/eventi" target="_self" title="Eventi">Eventi</a></h1>
+                                                            <div class="hr"><span></span></div>
+                                                            <!--<h5><a href="#" rel="tag">Eventi</a></h5>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-item span scheme-default">
+                                        <div class="inner-content">
+                                            <div class="image hoverlay">
+                                                <a href="/progetti" target="_self"><img class="" src="/public/img/progetto.jpg" alt="Progetti"></a>
+                                                <div class="overlay">
+                                                    <div class="overlay-content" link-target="/progetti">
+                                                        <!-- <div class="overlay-icons">
+                                                            <a href="/progetti" target="_self" title="Progetti" class="lightbox-icon"><i class="fa fa-icon_link"></i></a>
+                                                        </div> -->
+                                                        <div class="info">
+                                                            <h1><a href="/progetti" target="_self" title="Progetti">Progetti</a></h1>
+                                                            <div class="hr"><span></span></div>
+                                                            <!--<h5><a href="#" rel="tag">Progetti</a></h5>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-item span scheme-default">
+                                        <div class="inner-content">
+                                            <div class="image hoverlay">
+                                                <a href="/servizi" target="_self"><img class="" src="/public/img/servizio.jpg" alt="Servizi"></a>
+                                                <div class="overlay">
+                                                    <div class="overlay-content" link-target="/servizi">
+                                                        <!-- <div class="overlay-icons">
+                                                            <a href="/servizi" target="_self" title="Servizi" class="lightbox-icon"><i class="fa fa-icon_link"></i></a>
+                                                        </div> -->
+                                                        <div class="info">
+                                                            <h1><a href="/servizi" target="_self" title="Servizi">Servizi</a></h1>
+                                                            <div class="hr"><span></span></div>
+                                                            <!-- <h5><a href="#" rel="tag">Servizi</a></h5> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -171,24 +190,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        </section>
-        <section id="section_1300744414" class="section content-box section-border-no section-bborder-no 
-            section-height-content section-bgtype-image section-fixed-background-no section-bgstyle-stretch section-triangle-no 
-            triangle-location-top parallax-section-no section-overlay-no section-overlay-dot-no "  data-video-ratio="" data-parallax-speed="1" style="padding:60px 90px;background-color:#454545;background-color:rgba(69,69,69,1);">
-        <div class="section-overlay" style=""></div>
-        <div class="container section-content" style="padding:0 75px;">
-            <div class="row-fluid">
-                <div class="row-fluid equal-cheight-no element-padding-default element-vpadding-default">
-                    <div id="brad_box_1" class="box content-box scheme1 border-bottom-radius-no border-top-radius-no ">
-                           <div class="callout callout-align-justify ">
-                               <a class="button button_default button_default" href="/eventi"><span>SCOPRI</span></a>
-                               <h3>Scopri i prossimi eventi</h3>
-                           </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- </div> -->
         </section>
     </div>
 @endsection
@@ -258,6 +260,9 @@
         tpj.noConflict();
         var revapi1;
         tpj(document).ready(function() {
+    
+            tpj('div#main_navigation_container ul#main_menu li#menu-item-home').addClass('active current-menu-parent');
+            
             if (tpj('#rev_slider_1_1').revolution == undefined) {
                 revslider_showDoubleJqueryError('#rev_slider_1_1');
             } else {
@@ -315,6 +320,14 @@
                     startWithSlide: 0
                 });
             }
+            
+            
+            
         }); /*ready*/
+        
+        tpj(document).on("click", "div.overlay-content", function(){
+            var target = tpj(this).attr("link-target");
+            if(target) window.location.href = target;
+        });
 </script>
 @endsection

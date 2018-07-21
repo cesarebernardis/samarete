@@ -1,34 +1,77 @@
-@extends('layouts.app')
+@extends('layouts.default')
 @section('styles')
-<link href="{{ asset('css/progetti/view.css') }}" rel="stylesheet">
+<link href="{{ asset('css/progetti/view.css?v='.time()) }}" rel="stylesheet">
 @endsection
 
 @section('content')
-<div class="container">
-    <div class="row margin-bottom-20">
-        <div class="col-md-6 text-align-center logo">
-            <img src="{{ empty($progetto->logo_base64) ? '/public/img/no-image-available.png' : $progetto->logo_base64 }}"/>
+    <section id="section_589096598" class="section content-box section-border-no section-bborder-no section-height-content section-bgtype-image section-fixed-background-no section-bgstyle-stretch section-triangle-no triangle-location-top parallax-section-no section-overlay-no section-overlay-dot-no ">
+        <div class="section-overlay" style=""></div>
+        <div class="container section-content">
+            <div class="row-fluid">
+                <div class="row-fluid equal-cheight-no element-padding-large element-vpadding-medium">
+                    <div class="section-column span6" style="margin-bottom: 0px;">
+                        <div class="inner-content content-box textnone" style="padding:0px;">
+                            <div class="single-image-container img-align-center ">
+                                <div class="single-image" >
+                                    <img src="{{ empty($progetto->logo_base64) ? '/public/img/no-image-available.png' : $progetto->logo_base64 }}" class="attachment-full" alt="{{ $progetto->nome }}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section-column span6" style="margin-bottom: 0px;">
+                        <div class="inner-content content-box textnone" style="padding:0px;">
+                            <h2 class="title textleft default bw-2px dh-2px divider-dark bc-dark dw-default color-default" style="margin-bottom:0px">
+                                <span>{{ $progetto->nome }}</span>
+                            </h2>
+                            <div class="hr border-small dh-2px alignleft hr-border-primary">
+                                <span></span>
+                            </div>
+                            <h4 class="title textleft default bw-2px dh-2px divider-dark bc-dark dw-default color-default" style="margin-bottom:0px">
+                                <span>Oggetto</span>
+                            </h4>
+                            <div class="inner-content content-box textnone" style="padding:0px;">
+                                <div class="column-text ">{{ $progetto->oggetto }}</div>
+                            </div>
+                        <div class="col-md-12 text-align-center margin-top-10">
+                            @can('invite', $progetto)
+                                <div class="inline">
+                                <button id="invita" class="button button_default button_color_green button_default border-radius-default icon-align-left" data-toggle="modal" data-target="#modal-form">Invita a collaborare</button>
+                                </div>
+                            @endcan
+                            @can('update', $progetto)
+                                <div class="inline">
+                                <a id="modifica" class="button button_default button_color_default button_default border-radius-default icon-align-left" title="Modifica" href="/progetti/edit-progetto?id={{ $progetto->id }}"><span>Modifica</span></a>
+                                </div>
+                            @endcan
+                            @can('delete', $progetto)
+                                <div class="inline">
+                                <a id="elimina" class="button button_default button_color_black button_default border-radius-default icon-align-left" title="Elimina" href="#"><span>Elimina</span></a>
+                                </div>
+                            @endcan
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-6">
-            <h2>{{ $progetto->nome }}</h2>
-            <div class="oggetto well">{{ $progetto->oggetto }}</div>
-            @can('invite', $progetto)
-                <div class="inline"><button id="invita" class="btn btn-primary" data-toggle="modal" data-target="#modal-form">Invita a collaborare</button></div>
-            @endcan
-            @can('update', $progetto)
-                <div class="inline"><a href="/progetti/edit-progetto?id={{ $progetto->id }}" id="modifica" class="btn btn-success">Modifica</a></div>
-            @endcan
-            @can('delete', $progetto)
-                <div class="inline"><a href="#" id="elimina" class="btn btn-danger inline">Elimina</a></div>
-            @endcan
+    </section>
+    
+    <section class="section content-box section-border-no section-bborder-no section-height-content section-bgtype-image section-fixed-background-no section-bgstyle-stretch section-triangle-no triangle-location-top parallax-section-no section-overlay-no section-overlay-dot-no " data-video-ratio="" data-parallax-speed="1">
+        <div class="section-overlay" style=""></div>
+        <div class="container section-content">
+            <div class="row-fluid">
+                <div class="row-fluid equal-cheight-no element-padding-medium element-vpadding-medium">
+                    <div class="section-column span12" style="">
+                        <div class="inner-content content-box textnone" style="padding:0px;">
+                            <div class="column-text ">{!! $progetto->descrizione !!}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div><div class="row">
-        <div class="col-md-12">
-        <div class="well">
-            {!! $progetto->descrizione !!}
-        </div>
-        </div>
-    </div><div class="row">
+    </section>
+    
+    <div class="row">
         <div class="col-md-12">
             <table id="files" class="table table-bordered table-hover table-striped dataTable">
                 <thead>
@@ -56,7 +99,7 @@
             </div>
         </div>
         <div class="col-md-12">
-        <button type="button" class="btn btn-primary" id="confirm-files">Conferma i file caricati</button>
+        <button type="button" class="button button_default button_color_default button_default border-radius-default icon-align-left" id="confirm-files">Conferma i file caricati</button>
         </div>
     </div>
     @endcan
@@ -182,6 +225,8 @@ function toggleForm(){
 }
 
 $(document).ready(function() {
+    
+    $('div#main_navigation_container ul#main_menu li#menu-item-progetti').addClass('active current-menu-parent');
     
     $('#associazioni').select2();
     

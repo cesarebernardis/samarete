@@ -28,6 +28,24 @@ class EventoRepository
         }
         return $eventi;
     }
+
+    public static function getProssimi($number = 5)
+    {
+        $eventi = array();
+        $a = DB::select('
+            SELECT DISTINCT evento_id
+            FROM evento_has_giorno
+            WHERE giorno > ?
+            ORDER BY giorno, da ASC
+            LIMIT ?', [time(), $number]);
+        foreach($a as $e){
+            $evento = self::getById($e->evento_id);
+            $evento->logo_base64 = self::getLogoBase64($evento);
+            $evento->giorni = self::getGiorni($evento);
+            $eventi[] = $evento;
+        }
+        return $eventi;
+    }
     
     public static function getByNome($name)
     {

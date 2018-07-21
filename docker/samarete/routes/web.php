@@ -63,7 +63,6 @@ Route::middleware('admin')->group(function(){
     Route::post('/admin/users/check-username', 'UserController@checkUsername')->middleware('ajax');
     Route::post('/admin/ruolo/check-nome', 'RuoloController@checkNome')->middleware('ajax');
     Route::post('/admin/permesso/check-nome', 'PermessoController@checkNome')->middleware('ajax');
-    Route::post('/admin/associazione/check-nome', 'AssociazioneController@checkNome')->middleware('ajax');
 });
 
 //USERS
@@ -71,12 +70,19 @@ Route::post('/users/get-free', 'UserController@getFreeUsers')->middleware('ajax'
 
 //ASSOCIAZIONI
 Route::get('/associazioni', 'AssociazioneController@index');
+Route::get('/associazioni/get-associazioni', 'AssociazioneController@getAssociazioni')->middleware('ajax');
 Route::get('/associazioni/view-associazione', 'AssociazioneController@viewAssociazione');
 Route::get('/associazioni/edit-associazione', 'AssociazioneController@editAssociazione');
 Route::post('/associazioni/save-associazione', 'AssociazioneController@saveAssociazione');
+Route::post('/associazioni/check-nome', 'AssociazioneController@checkNome')->middleware('ajax');
 
 Route::post('/associazioni/save-logo', 'AssociazioneController@saveLogo');
 Route::post('/associazioni/get-logo', 'AssociazioneController@getLogo');
+
+Route::get('/associazioni/get-files', 'AssociazioneController@getFiles')->middleware('ajax');
+Route::post('/associazioni/delete-file', 'AssociazioneController@deleteFile')->middleware('ajax');
+Route::post('/associazioni/publish-file', 'AssociazioneController@publishFile')->middleware('ajax');
+Route::post('/associazioni/confirm-files', 'AssociazioneController@confirmFile')->middleware('ajax');
 
 //FILES
 Route::post('/file/upload', 'FileController@saveTmpFile')->middleware('ajax');

@@ -34,8 +34,8 @@ class Evento extends Model
     /**
      * @var array
      */
-    protected $fillable = ['nome', 'oggetto', 'descrizione', 'logo', 'data_creazione'];
-    protected static $logAttributes  = ['nome', 'oggetto', 'descrizione', 'logo', 'data_creazione'];
+    protected $fillable = ['nome', 'oggetto', 'descrizione', 'logo', 'luogo', 'data_creazione'];
+    protected static $logAttributes  = ['nome', 'oggetto', 'descrizione', 'logo', 'luogo', 'data_creazione'];
     protected static $logOnlyDirty = true;
 
     /**
@@ -57,6 +57,8 @@ class Evento extends Model
     public function save(array $options = [])
     {
         $this->descrizione = \Purifier::clean($this->descrizione);
+        $this->descrizione = trim($this->descrizione);
+        $this->oggetto = trim(strip_tags($this->oggetto));
         unset($this->logo_base64);
         parent::save($options);
     }

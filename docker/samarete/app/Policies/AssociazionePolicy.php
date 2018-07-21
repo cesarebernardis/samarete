@@ -27,7 +27,7 @@ class AssociazionePolicy
      */
     public function view(User $user, Associazione $associazione)
     {
-        return UserRepository::checkPermesso($user, 'view-associazione') && $this->isOwner($user, $associazione);
+        return true;
     }
 
     /**

@@ -67,6 +67,8 @@ class Progetto extends Model
     public function save(array $options = [])
     {
         $this->descrizione = \Purifier::clean($this->descrizione);
+        $this->descrizione = trim($this->descrizione);
+        $this->oggetto = trim(strip_tags($this->oggetto));
         unset($this->logo_base64);
         parent::save($options);
     }

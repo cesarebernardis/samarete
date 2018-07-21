@@ -1,11 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.default')
 
 @section('styles')
 <link href="{{ asset('css/progetti/edit.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
-<div class="container">
     <div class="row margin-bottom-20 border-bottom-thin">
         <div class="col-md-12 text-align-center"><h2 class="title">{{ $progetto ? 'Modifica' : 'Nuovo' }} Progetto</h2></div>
     </div>
@@ -53,7 +52,6 @@
         </div>
     </div>
     </form>
-</div>
 @endsection
 
 @section('scripts')
@@ -108,6 +106,8 @@ var logoDropzone = new Dropzone("div#upload-logo", {
 
 
 $(document).ready(function() {
+    
+    $('div#main_navigation_container ul#main_menu li#menu-item-progetti').addClass('active current-menu-parent');
     
     @if (!empty($progetto))
 

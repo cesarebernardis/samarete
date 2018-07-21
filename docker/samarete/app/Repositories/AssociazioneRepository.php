@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Samarete\Models\User;
 use Samarete\Models\Associazione;
 use Samarete\Models\Permesso;
+use Samarete\Models\File;
 
 use Samarete\Repositories\FileRepository;
 
@@ -100,6 +101,38 @@ class AssociazioneRepository
         $logo = FileRepository::getById($associazione->logo);
         if(empty($logo)) return null;
         return FileRepository::getBase64Uri($logo);
+    }
+    
+    public static function addFile(Associazione $associazione, File $file, $public=false)
+    {
+        DB::insert('INSERT IGNORE INTO associazione_has_file (associazione_id, file_id, public) VALUES(?,?,?)', array($associazione->id, $file->id, $public));
+    }
+    
+    public static function publishFile(Associazione $associazione, File $file, $public=true)
+    {
+        if(empty($associazione) || empty($file)) return null;
+        DB::table('associazione_has_file')->where('associazione_id', $associazione->id)->where('file_id', $file->id)->update(['public' => $public]);
+        return true;
+    }
+    
+    public static function deleteFile(Associazione $associazione, File $file)
+    {
+        if(empty($associazione) || empty($file)) return null;
+        DB::delete('DELETE FROM associazione_has_file WHERE associazione_id = ? AND file_id = ?', [$associazione->id, $file->id]);
+        FileRepository::delete($file);
+        return true;
+    }
+    
+    public static function getFilesWithSideInfo(Associazione $associazione, $onlypublic = false)
+    {
+        if(empty($associazione)) return array();
+        $files = array();
+        foreach($associazione->files as $file){
+            $file->public = $file->pivot->public;
+            if($onlypublic && $file->public < 1) continue;
+            $files[] = $file;
+        }
+        return $files;
     }
     
 }

@@ -38,12 +38,17 @@ class Servizio extends Model
     /**
      * @var array
      */
-    protected $fillable = ['nome', 'oggetto', 'descrizione', 'data_inizio', 'data_fine', 'logo', 'data_creazione'];
-    protected static $logAttributes = ['nome', 'oggetto', 'descrizione', 'data_inizio', 'data_fine', 'logo', 'data_creazione'];
+    protected $fillable = ['nome', 'oggetto', 'descrizione', 'data_inizio', 'data_fine', 'logo', 'luogo', 'data_creazione'];
+    protected static $logAttributes = ['nome', 'oggetto', 'descrizione', 'data_inizio', 'data_fine', 'logo', 'luogo', 'data_creazione'];
 
     public function associazioni()
     {
         return $this->belongsToMany('Samarete\Models\Associazione', 'associazione_has_servizio');
+    }
+    
+    public function categoria()
+    {
+        return $this->belongsTo('Samarete\Models\CategoriaServizi', 'categoria_id');
     }
 
     /**
@@ -96,6 +101,8 @@ class Servizio extends Model
     public function save(array $options = [])
     {
         $this->descrizione = \Purifier::clean($this->descrizione);
+        $this->descrizione = trim($this->descrizione);
+        $this->oggetto = trim(strip_tags($this->oggetto));
         unset($this->logo_base64);
         parent::save($options);
     }

@@ -1,1 +1,10 @@
 .fa.removeday { margin-top: 6px; }
+
+section.section {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+input[type="text"], input[type="password"], input[type="email"], textarea, select {
+    width: 300px;
+}

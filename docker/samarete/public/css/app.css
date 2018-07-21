@@ -40,6 +40,8 @@ button.btn.btn-icon-only { width: 38px; border-color: transparent; }
 .border-bottom-thin { border-bottom: 1px solid #E0E0E0; }
 .inline { display: inline-block; }
 .modal-title { display: inline-block; }
+.float-left { float: left !important; }
+.float-right { float: right !important; }
 
 .itemlist .item .thumbnail {
     width: 100%;
@@ -60,4 +62,13 @@ div.portfolio-carousel div.carousel-items div.portfolio-item.span div.image.hove
     max-height: 210px;
     width: auto;
     margin: 0 auto;
+}
+
+.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
+    border-radius: 0px;
+}
+
+.break-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

@@ -1,11 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.default')
 
 @section('styles')
 <link href="{{ asset('css/richieste/index.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
-<div class="container">
     <div class="row itemlist">
     @if (empty($richieste))
         <h2>Nessun richiesta trovata</h2>
@@ -21,11 +20,16 @@
         @endforeach
     @endif
     </div>
-</div>
 @endsection
 
 @section('scripts')
 <script type="text/javascript">
+
+$(document).ready(function() {
+    
+    $('div#main_navigation_container ul#main_menu li#menu-item-richieste-new').addClass('active current-menu-parent');
+    
+});
 
 </script>
 @endsection

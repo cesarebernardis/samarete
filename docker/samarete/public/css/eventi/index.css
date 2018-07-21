@@ -5,3 +5,13 @@ div.well.item {
 .input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
     border-radius: 0px;
 }
+
+.posts-grid{
+    opacity: 1;
+}
+
+.posts-grid > li .excerpt {
+    height: 75px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

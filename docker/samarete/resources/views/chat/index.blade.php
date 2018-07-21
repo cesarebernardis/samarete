@@ -1,11 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.default')
 
 @section('styles')
 <link href="{{ asset('css/chat/index.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
-<div class="container">
     @if (!empty($mainchat))
         <div class="row">
             @include('chat', ['titolo' => 'Chat pi&ugrave; recente: '.$mainchat->partecipanti(), 'chat' => $mainchat])
@@ -58,7 +57,6 @@
         </div>
     </div>
     @endcan
-</div>
 @endsection
 
 @section('scripts')

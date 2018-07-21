@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 use Samarete\Models\Richiesta;
+use Samarete\Models\CategoriaServizi;
 use Samarete\Repositories\RichiestaRepository;
 use Samarete\Repositories\ChatRepository;
 
@@ -107,6 +108,11 @@ class Associazione extends Model
         return $richieste;
     }
     
+    public function files()
+    {
+        return $this->belongsToMany('Samarete\Models\File', 'associazione_has_file')->withPivot('public');
+    }
+    
     public function lastChat()
     {
         $chats = DB::select('SELECT c.* FROM chat c JOIN messaggio m ON m.chat_id = c.id WHERE autore_id = ? AND NOT EXISTS(SELECT * FROM progetto p WHERE p.chat_id = c.id) ORDER BY m.data DESC', [$this->id]);
@@ -114,12 +120,30 @@ class Associazione extends Model
         return empty($chat) ? null : ChatRepository::getById($chat->id);
     }
     
+    public function categorie_servizi()
+    {
+        $catids = DB::select('SELECT DISTINCT categoria_id FROM servizio s JOIN associazione_has_servizio ahs ON s.id = ahs.servizio_id WHERE ahs.associazione_id = ? AND categoria_id IS NOT NULL', [$this->id]);
+        $cats = array();
+        foreach($catids as $catid){
+            $cats[] = CategoriaServizi::where('id', $catid->categoria_id)->first();
+        }
+        return $cats;
+    }
+    
     public function save(array $options = [])
     {
         $this->descrizione = \Purifier::clean($this->descrizione);
+        $this->descrizione = trim($this->descrizione);
+        $this->oggetto = trim(strip_tags($this->oggetto));
         unset($this->logo_base64);
         if(empty($this->telefono_1) && !empty($this->telefono_2)) $this->telefono_1 = $this->telefono_2;
         if(empty($this->referente_telefono_1) && !empty($this->referente_telefono_2)) $this->referente_telefono_1 = $this->referente_telefono_2;
         parent::save($options);
+    }
+    
+    public function isPublic(File $file)
+    {
+        if(empty($file)) return false;
+        return $this->files()->where('file_id', '=', $file->id)->first()->pivot->public > 0;
     }
 }

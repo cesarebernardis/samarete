@@ -1,11 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.default')
 
 @section('styles')
 <link href="{{ asset('css/eventi/edit.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
-<div class="container">
     <div class="row margin-bottom-20 border-bottom-thin">
         <div class="col-md-12 text-align-center"><h2 class="title">{{ $evento ? 'Modifica' : 'Nuovo' }} Evento</h2></div>
     </div>
@@ -34,12 +33,18 @@
                       </div><div class="form-group">
                         <label class="control-label col-sm-4" for="oggetto">Oggetto: </label>
                         <div class="col-sm-8">
-                          <input type="textarea" class="form-control" id="oggetto" name="oggetto" placeholder="Oggetto" value="{{ $evento ? $evento->oggetto : '' }}">
+                          <input type="text" class="form-control" id="oggetto" name="oggetto" placeholder="Oggetto" value="{{ $evento ? $evento->oggetto : '' }}">
                         </div>
                       </div><div class="form-group">
                         <label class="control-label col-sm-4" for="descrizione">Descrizione: </label>
                         <div class="col-sm-8">
                           <textarea class="form-control tinymce" id="descrizione" name="descrizione" placeholder="Descrizione" rows="8">{!! $evento ? $evento->descrizione : '' !!}</textarea>
+                        </div>
+                      </div><div class="form-group">
+                        <label class="control-label col-sm-4" for="luogo">Luogo: </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="luogo" name="luogo" value="{{ $evento ? $evento->luogo : '' }}"/>
+                            <div id="luogo-map"></div>
                         </div>
                       </div>
                       <div class="giorni">
@@ -67,11 +72,51 @@
         </div>
     </div>
     </form>
-</div>
 @endsection
 
 @section('scripts')
 <script type="text/javascript">
+var map;
+var autocomplete;
+var marker;
+                                
+function update_map() {
+    
+    var place = autocomplete.getPlace();
+    if(place.geometry){
+        marker.setVisible(false);
+        if (place.geometry.viewport) {
+          map.fitBounds(place.geometry.viewport);
+        } else {
+          map.setCenter(place.geometry.location);
+          map.setZoom(15);
+        }
+        marker.setPosition(place.geometry.location);
+        marker.setVisible(true);
+    }
+                                  
+}
+
+function initializeMaps() {
+
+    map = new google.maps.Map(document.getElementById('luogo-map'), {
+        center: new google.maps.LatLng(SAMARATE_LAT, SAMARATE_LNG),
+        zoom: 15,
+    });
+                                    
+    autocomplete = new google.maps.places.Autocomplete(
+        (document.getElementById('luogo')),
+        {types: ['geocode']},
+    );
+                                    
+    autocomplete.addListener('place_changed', update_map);
+    
+    marker = new google.maps.Marker({
+        map: map,
+        anchorPoint: new google.maps.Point(0, 0)
+    });
+
+}
 
 var logoDropzone = new Dropzone("div#upload-logo", {
 		paramName: "file", 
@@ -194,6 +239,8 @@ function removeDay(){
 }
 
 $(document).ready(function() {
+    
+    $('div#main_navigation_container ul#main_menu li#menu-item-eventi').addClass('active current-menu-parent');
     
     @if (!empty($evento))
 

@@ -1,11 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.default')
 
 @section('styles')
 <link href="{{ asset('css/richieste/view.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
-<div class="container">
     <div class="row">
         <div class="col-md-12">
             <div class="well col-md-12">
@@ -19,13 +18,15 @@
             </div>
         </div>
     </div>
-</div>
 @endsection
 
 @section('scripts')
 <script type="text/javascript">
 
 $(document).ready(function() {
+    
+    $('div#main_navigation_container ul#main_menu li#menu-item-richieste-new').addClass('active current-menu-parent');
+    
     $("button#evadi").click(function(){
         var data = $(this).attr('data-id');
         $.ajax({

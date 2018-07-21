@@ -4,9 +4,7 @@ namespace Samarete\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-use Illuminate\Support\Facades\Auth;
-
-class SearchAssociazioneRequest extends FormRequest
+class ConfirmFileAssociazioneRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +24,8 @@ class SearchAssociazioneRequest extends FormRequest
     public function rules()
     {
         return [
-            'search' => 'string|nullable|max:50',
-            'page' => 'integer|nullable',
+            'file_ids' => 'string|required|max:150',
+            'associazione_id' => 'integer|required|exists:associazione,id',
         ];
     }
 }

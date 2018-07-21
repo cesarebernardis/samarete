@@ -27,6 +27,7 @@ class SearchEventoRequest extends FormRequest
     {
         return [
             'search' => 'string|nullable|max:50',
+            'page' => 'integer|nullable',
         ];
     }
 }

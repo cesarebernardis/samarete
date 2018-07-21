@@ -572,6 +572,7 @@ span.divider {
 input[type="text"],
 input[type="password"],
 input[type="email"],
+input[type="username"],
 textarea,
 select {
 	background: #ffffff;
@@ -581,7 +582,7 @@ select {
 	margin: 0;
 	max-width: 100%;
 	display: block;
-	width: 180px;
+	/*width: 180px;*/
 	color:inherit;
 	border:0;
 	font-family: inherit;
@@ -618,6 +619,7 @@ select {
 input[type="text"]:focus,
 input[type="password"]:focus,
 input[type="email"]:focus,
+input[type="username"]:focus,
 textarea:focus {
    border-color:#696969;
 }
@@ -632,6 +634,7 @@ select{
 .content-box.scheme1 input[type="text"],
 .content-box.scheme1 input[type="password"],
 .content-box.scheme1 input[type="email"],
+.content-box.scheme1 input[type="username"],
 .content-box.scheme1 textarea,
 .content-box.scheme1 select {
 	background-color:transparent;
@@ -642,6 +645,7 @@ select{
 .content-box.scheme1 input[type="text"]:focus,
 .content-box.scheme1 input[type="password"]:focus,
 .content-box.scheme1 input[type="email"]:focus,
+.content-box.scheme1 input[type="username"]:focus,
 .content-box.scheme1 textarea:focus {
    background-color:rgba(0,0,0,0.5);
    color:#fff!important;
@@ -677,9 +681,9 @@ select{
     color:    #eee;
 }
 
-textarea {
+/*textarea {
 	min-height: 100px
-}
+}*/
 
 .special_amp {
 	font-family: "Baskerville", "Palatino Linotype", "Palatino", "Times New Roman", serif;
@@ -3213,7 +3217,6 @@ table {
 	border-collapse: separate;
 	border-spacing: 0;
 	border-width: 1px 0 0 1px;
-	margin-bottom: 24px;
 	width: 100%;
 }
 
@@ -4900,7 +4903,7 @@ background-color: #f4bf1e;
 #section_8152_3{padding-top:50px;padding-bottom:50px;background-color:#f6f6f6;}
 #div_8152_17{padding-top:0px;padding-bottom:0px;padding-left:0px;padding-right:0px;}
 
-
+.fullwidth{width:100%;}
 
 /*Buttons*/
 #brad_button_1640218933{color:#ffffff;background-color:#3498db;border:0px solid transparent;}#brad_button_1640218933:hover{color:#eeeeee;background-color:#2980b9;border-color:transparent;}

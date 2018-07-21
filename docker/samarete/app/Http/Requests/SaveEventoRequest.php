@@ -32,6 +32,7 @@ class SaveEventoRequest extends FormRequest
             'nome' => 'string|required|max:100',
             'oggetto' => 'string|nullable|max:200',
             'descrizione' => 'string|nullable',
+            'luogo' => 'string|nullable|max:250',
             'logo' => 'integer|nullable|exists:file,id',
             'new_logo' => 'integer|nullable|exists:file_tmp,id',
             'giorno' => 'array',

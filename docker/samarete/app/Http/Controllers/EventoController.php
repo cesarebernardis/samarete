@@ -42,7 +42,8 @@ class EventoController extends Controller
     {
         $query = trim(strip_tags($request->search));
         $eventi = $this->eventi->getAll(strtolower($query));
-        return response()->view('eventi.index', ['eventi' => $eventi, 'query' => $query]);
+        $prossimi_eventi = $this->eventi->getProssimi();
+        return response()->view('eventi.index', ['eventi' => $eventi, 'query' => $query, 'page' => $request->page, 'prossimi_eventi' => $prossimi_eventi]);
     }
     
     public function viewEvento(ViewEventoRequest $request)
@@ -63,9 +64,16 @@ class EventoController extends Controller
         return response()->view('eventi.edit', ['associazione' => $this->associazione,'evento' => is_object($evento) ? $evento : null]);
     }
     
-    public function getEventi(Request $request)
+    
+    
+    public function getEventi(SearchEventoRequest $request)
     {
-        return response()->json($this->eventi->getAll());
+        $query = trim(strip_tags($request->search));
+        $eventi = $this->eventi->getAll(strtolower($query));
+        if(isset($request->page)){
+            $eventi = array_slice($eventi, ($request->page - 1) * 9, 9, true);
+        }
+        return response()->json($eventi);
     }
     
     public function getEvento(ViewEventoRequest $request)
@@ -108,6 +116,7 @@ class EventoController extends Controller
         $evento->nome = $request->nome;
         $evento->oggetto = $request->oggetto;
         $evento->descrizione = $request->descrizione;
+        $evento->luogo = $request->luogo;
         $evento->logo = $request->logo;
         $associazione = AssociazioneRepository::getById($request->creatore_id);
         if(!empty($request->new_logo)){

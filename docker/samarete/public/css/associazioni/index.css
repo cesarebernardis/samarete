@@ -2,10 +2,6 @@ div.well.item {
     height: 350px;
 }
 
-.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
-    border-radius: 0px;
-}
-
 div.portfolio-item div.hoverlay.image {
     height: 210px;
 }
@@ -16,4 +12,8 @@ div.portfolio-item div.hoverlay.image img {
     width: auto;
     max-width: 100%;
     display: block;
+}
+
+.portfolio-item.scheme-default .inner-content {
+    min-height: 400px;
 }

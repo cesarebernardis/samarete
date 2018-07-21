@@ -1,118 +1,119 @@
-@extends('layouts.app')
+@extends('layouts.default')
 
 @section('styles')
 <link href="{{ asset('css/associazioni/edit.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
-<div class="container">
-    <div class="row margin-bottom-20 border-bottom-thin">
-        <div class="col-md-12 text-align-center"><h2 class="title">Nuovo/Modifica Associazione</h2></div>
-    </div>
-    <form class="form-horizontal" id="associazione">
-    <div class="row">
-        <div class="col-md-12">
-            {{ csrf_field() }}
-                      <input type="hidden" class="form-control" id="id" name="id" value="{{ $associazione ? $associazione->id : '' }}">
-                      <div class="form-group">
-                        <label class="control-label col-sm-4" for="nome">Nome*: </label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" value="{{ $associazione ? $associazione->nome : '' }}" autofocus>
-                        </div>
-                      </div><div class="form-group">
-                        <label class="control-label col-sm-4" for="acronimo">Acronimo: </label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="acronimo" name="acronimo" placeholder="Acronimo" value="{{ $associazione ? $associazione->acronimo : '' }}">
-                        </div>
-                      </div><div class="form-group">
-                        <label class="control-label col-sm-4" for="indirizzo">Indirizzo: </label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="indirizzo" name="indirizzo" placeholder="Indirizzo"value="{{ $associazione ? $associazione->indirizzo : '' }}">
-                        </div>
-                      </div><div class="form-group">
-                        <label class="control-label col-sm-4" for="telefono_1">Telefono 1: </label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="telefono_1" name="telefono_1" placeholder="Telefono 1" value="{{ $associazione ? $associazione->telefono_1 : '' }}">
-                        </div>
-                      </div><div class="form-group">
-                        <label class="control-label col-sm-4" for="telefono_2">Telefono 2: </label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="telefono_2" name="telefono_2" placeholder="Telefono 2" value="{{ $associazione ? $associazione->telefono_2 : '' }}">
-                        </div>
-                      </div><div class="form-group">
-                        <label class="control-label col-sm-4" for="email">Email: </label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="{{ $associazione ? $associazione->email : '' }}">
-                        </div>
-                      </div><div class="form-group">
-                        <label class="control-label col-sm-4" for="sito_web">Sito WEB: </label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="sito_web" name="sito_web" placeholder="Sito WEB" value="{{ $associazione ? $associazione->sito_web : '' }}">
-                        </div>
-                      </div><div class="form-group">
-                        <label class="control-label col-sm-4">Logo: </label>
-                        <input type="hidden" class="form-control" id="logo" name="logo" value="{{ $associazione ? $associazione->logo : '' }}">
-                        <input type="hidden" class="form-control" id="new_logo" name="new_logo" value="">
-                        <div class="col-sm-8">
-                            <div class="dropzone dz-little" id="upload-logo">
-                                <div class="dz-default dz-message">
-                                   <span>Trascina il logo o clicca per selezionarlo</span>
+            <div class="row margin-bottom-20 border-bottom-thin">
+                <div class="col-md-12 text-align-center"><h2 class="title">Nuovo/Modifica Associazione</h2></div>
+            </div>
+            <form class="form-horizontal" id="associazione">
+            <div class="row">
+                <div class="col-md-12">
+                    {{ csrf_field() }}
+                              <input type="hidden" class="form-control" id="id" name="id" value="{{ $associazione ? $associazione->id : '' }}">
+                              <div class="form-group">
+                                <label class="control-label col-sm-4" for="nome">Nome*: </label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" value="{{ $associazione ? $associazione->nome : '' }}" autofocus>
                                 </div>
-                            </div>
-                        </div>
-                      </div><div class="form-group">
-                        <label class="control-label col-sm-4" for="descrizione">Descrizione: </label>
-                        <div class="col-sm-8">
-                          <textarea class="form-control tinymce" id="descrizione" name="descrizione" rows="12">{!! $associazione ? $associazione->descrizione : '' !!}</textarea>
-                        </div>
-                      </div>
-                      @if(Auth::user()->isAdmin())
-                        <div class="form-group">
-                        <label class="control-label col-sm-4" for="gestore_id">Gestore: </label>
-                        <div class="col-sm-8">
-                        <select class="custom-select form-control" name="gestore_id" id="gestore_id">
-                                <option value="" selected>Seleziona...</option>
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->nome . " " . $user->cognome }}</option>
-                                @endforeach
-                        </select>
-                        </div>
-                      @else
-                        <input type="hidden" class="form-control" id="gestore_id" name="gestore_id" value="{{ $associazione ? Auth::user()->id : '' }}">
-                      @endif
-                      <div class="col-sm-12"><h3 class="text-align-center">Referente</h3></div>
-                      <div class="form-group">
-                        <label class="control-label col-sm-4" for="referente_nome">Nome*: </label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="referente_nome" name="referente_nome" placeholder="Nome" value="{{ $associazione ? $associazione->referente_nome : '' }}">
-                        </div>
-                      </div><div class="form-group">
-                        <label class="control-label col-sm-4" for="referente_indirizzo">Indirizzo: </label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="referente_indirizzo" name="referente_indirizzo" placeholder="Indirizzo" value="{{ $associazione ? $associazione->referente_indirizzo : '' }}">
-                        </div>
-                      </div><div class="form-group">
-                        <label class="control-label col-sm-4" for="referente_telefono_1">Telefono 1: </label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="referente_telefono_1" name="referente_telefono_1" placeholder="Telefono Primario" value="{{ $associazione ? $associazione->referente_telefono_1 : '' }}">
-                        </div>
-                      </div><div class="form-group">
-                        <label class="control-label col-sm-4" for="referente_telefono_2">Telefono 2: </label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="referente_telefono_2" name="referente_telefono_2" placeholder="Telefono Secondario" value="{{ $associazione ? $associazione->referente_telefono_2 : '' }}">
-                        </div>
-                      </div>
+                              </div><div class="form-group">
+                                <label class="control-label col-sm-4" for="acronimo">Acronimo: </label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="acronimo" name="acronimo" placeholder="Acronimo" value="{{ $associazione ? $associazione->acronimo : '' }}">
+                                </div>
+                              </div><div class="form-group">
+                                <label class="control-label col-sm-4" for="indirizzo">Indirizzo: </label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="indirizzo" name="indirizzo" placeholder="Indirizzo"value="{{ $associazione ? $associazione->indirizzo : '' }}">
+                                </div>
+                              </div><div class="form-group">
+                                <label class="control-label col-sm-4" for="telefono_1">Telefono 1: </label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="telefono_1" name="telefono_1" placeholder="Telefono 1" value="{{ $associazione ? $associazione->telefono_1 : '' }}">
+                                </div>
+                              </div><div class="form-group">
+                                <label class="control-label col-sm-4" for="telefono_2">Telefono 2: </label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="telefono_2" name="telefono_2" placeholder="Telefono 2" value="{{ $associazione ? $associazione->telefono_2 : '' }}">
+                                </div>
+                              </div><div class="form-group">
+                                <label class="control-label col-sm-4" for="email">Email: </label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="{{ $associazione ? $associazione->email : '' }}">
+                                </div>
+                              </div><div class="form-group">
+                                <label class="control-label col-sm-4" for="sito_web">Sito WEB: </label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="sito_web" name="sito_web" placeholder="Sito WEB" value="{{ $associazione ? $associazione->sito_web : '' }}">
+                                </div>
+                              </div><div class="form-group">
+                                <label class="control-label col-sm-4">Logo: </label>
+                                <input type="hidden" class="form-control" id="logo" name="logo" value="{{ $associazione ? $associazione->logo : '' }}">
+                                <input type="hidden" class="form-control" id="new_logo" name="new_logo" value="">
+                                <div class="col-sm-8">
+                                    <div class="dropzone dz-little" id="upload-logo">
+                                        <div class="dz-default dz-message">
+                                           <span>Trascina il logo o clicca per selezionarlo</span>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div><div class="form-group">
+                                <label class="control-label col-sm-4" for="descrizione">Descrizione: </label>
+                                <div class="col-sm-8">
+                                  <textarea class="form-control tinymce" id="descrizione" name="descrizione" rows="12">{!! $associazione ? $associazione->descrizione : '' !!}</textarea>
+                                </div>
+                              </div>
+                              @if(Auth::user()->isAdmin())
+                                <div class="form-group">
+                                <label class="control-label col-sm-4" for="gestore_id">Gestore: </label>
+                                <div class="col-sm-8">
+                                <select class="custom-select form-control" name="gestore_id" id="gestore_id">
+                                        <option value="" selected>Seleziona...</option>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->nome . " " . $user->cognome }}</option>
+                                        @endforeach
+                                </select>
+                                </div>
+                              @else
+                                <input type="hidden" class="form-control" id="gestore_id" name="gestore_id" value="{{ $associazione ? Auth::user()->id : '' }}">
+                              @endif
+                              <div class="col-sm-12"><h3 class="text-align-center">Referente</h3></div>
+                              <div class="form-group">
+                                <label class="control-label col-sm-4" for="referente_nome">Nome*: </label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="referente_nome" name="referente_nome" placeholder="Nome" value="{{ $associazione ? $associazione->referente_nome : '' }}">
+                                </div>
+                              </div><div class="form-group">
+                                <label class="control-label col-sm-4" for="referente_indirizzo">Indirizzo: </label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="referente_indirizzo" name="referente_indirizzo" placeholder="Indirizzo" value="{{ $associazione ? $associazione->referente_indirizzo : '' }}">
+                                </div>
+                              </div><div class="form-group">
+                                <label class="control-label col-sm-4" for="referente_telefono_1">Telefono 1: </label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="referente_telefono_1" name="referente_telefono_1" placeholder="Telefono Primario" value="{{ $associazione ? $associazione->referente_telefono_1 : '' }}">
+                                </div>
+                              </div><div class="form-group">
+                                <label class="control-label col-sm-4" for="referente_telefono_2">Telefono 2: </label>
+                                <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="referente_telefono_2" name="referente_telefono_2" placeholder="Telefono Secondario" value="{{ $associazione ? $associazione->referente_telefono_2 : '' }}">
+                                </div>
+                              </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-4 text-align-right">
+                    
+                    <a class="button button_default button_color_default button_default border-radius-default icon-align-left submit" title="Salva" href="#"><span>Salva</span></a>
+                    <a class="button button_default button_color_black button_default border-radius-default icon-align-left cancel" title="Annulla" href="#"><span>Annulla</span></a>
+                    
+                </div>
+            </div>
+            </form>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8"></div>
-        <div class="col-md-4 text-align-right">
-            <button type="button" class="btn btn-primary submit">Salva</button>
-            <button type="button" class="btn btn-secondary cancel">Annulla</button>
-        </div>
-    </div>
-    </form>
-</div>
 @endsection
 
 @section('scripts')
@@ -167,6 +168,8 @@ var logoDropzone = new Dropzone("div#upload-logo", {
 
 $(document).ready(function() {
     
+    $('div#main_navigation_container ul#main_menu li#menu-item-associazioni').addClass('active current-menu-parent');
+    
     @if (!empty($associazione))
 
         $.ajax({
@@ -204,7 +207,7 @@ $(document).ready(function() {
             nome: {
                 required: true,
                 remote: {
-                    url: "/admin/associazione/check-nome",
+                    url: "/associazioni/check-nome",
                     type: "post",
                     data: {
                       id: function() { return $( "#id" ).val(); },
@@ -230,7 +233,7 @@ $(document).ready(function() {
         }
     });
     
-    $("#associazione button.submit").click(function(){
+    $("#associazione a.submit").click(function(){
         tinyMCE.triggerSave();
         if(!$('form#associazione').valid())
             return;
@@ -248,7 +251,7 @@ $(document).ready(function() {
        });
     });
     
-    $("#associazione button.cancel").click(function(){ window.location.href = "/associazioni"; });
+    $("#associazione a.cancel").click(function(){ window.location.href = "/associazioni"; });
 });
 </script>
 @endsection

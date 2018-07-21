@@ -5,3 +5,15 @@ div.well.item {
 .input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
     border-radius: 0px;
 }
+
+div.span {
+    margin-bottom: 20px;
+}
+
+.hr-type-tiny .feature_box .hr {
+    margin: 5px 0 5px!important;
+}
+
+.feature_boxes.iconbox-style2.large-size .feature_box > .brad-icon {
+    padding-top: 8px;
+}
