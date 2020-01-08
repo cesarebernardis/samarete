@@ -66,6 +66,34 @@
         </div>
     </section>
     
+    <section id="section_913510768" class="section content-box full-width section-border-no section-bborder-no section-height-content section-bgtype-image section-fixed-background-no section-bgstyle-stretch section-triangle-no triangle-location-top parallax-section-no section-overlay-no section-overlay-dot-no " style="padding-top:0;padding-bottom:0;background-color:#ffffff;" data-video-ratio="" data-parallax-speed="1">
+        <div class="section-overlay" style=""></div>
+        <div class="container section-content">
+            <div class="row-fluid">
+                <div class="row-fluid equal-cheight-no element-padding-medium element-vpadding-medium">
+                    <div class="section-column span12" style="">
+                        <div class="inner-content content-box textnone" style="padding:0px;">
+                            <div class="static-content maps-style">
+                                <div id="google_map" style="width: 100%; height: 450px; position: relative; overflow: hidden;">
+                                    <div style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; background-color: rgb(229, 227, 223);">
+                                        <div class="gm-err-container">
+                                            <div class="gm-err-content">
+                                                <div class="gm-err-icon"><img src="http://maps.gstatic.com/mapfiles/api-3/images/icon_error.png" draggable="false" style="user-select: none;"></div>
+                                                <div class="gm-err-title">Spiacenti, si è verificato un problema.</div>
+                                                <div class="gm-err-message">Google Maps non è stata caricata correttamente. Contatta un amministratore.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- map container -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+    
     <section id="section_1612688709" class="section content-box full-width section-border-no section-bborder-no section-height-content section-bgtype-image section-fixed-background-no section-bgstyle-stretch section-triangle-no triangle-location-top parallax-section-no section-overlay-no section-overlay-dot-no " style="padding-top:0;padding-bottom:0;background-color:#ffffff;" data-video-ratio="" data-parallax-speed="1">
                     <div class="section-overlay" style=""></div>
                     @foreach($evento->associazioni as $associazione)
@@ -99,34 +127,6 @@
                         </div>
                     </div>
                     @endforeach
-    </section>
-    
-    <section id="section_913510768" class="section content-box full-width section-border-no section-bborder-no section-height-content section-bgtype-image section-fixed-background-no section-bgstyle-stretch section-triangle-no triangle-location-top parallax-section-no section-overlay-no section-overlay-dot-no " style="padding-top:0;padding-bottom:0;background-color:#ffffff;" data-video-ratio="" data-parallax-speed="1">
-        <div class="section-overlay" style=""></div>
-        <div class="container section-content">
-            <div class="row-fluid">
-                <div class="row-fluid equal-cheight-no element-padding-medium element-vpadding-medium">
-                    <div class="section-column span12" style="">
-                        <div class="inner-content content-box textnone" style="padding:0px;">
-                            <div class="static-content maps-style">
-                                <div id="google_map" style="width: 100%; height: 450px; position: relative; overflow: hidden;">
-                                    <div style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; background-color: rgb(229, 227, 223);">
-                                        <div class="gm-err-container">
-                                            <div class="gm-err-content">
-                                                <div class="gm-err-icon"><img src="http://maps.gstatic.com/mapfiles/api-3/images/icon_error.png" draggable="false" style="user-select: none;"></div>
-                                                <div class="gm-err-title">Spiacenti, si è verificato un problema.</div>
-                                                <div class="gm-err-message">Google Maps non è stata caricata correttamente. Contatta un amministratore.</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><!-- map container -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
     </section>
     
     <div class="row">

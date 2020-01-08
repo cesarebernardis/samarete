@@ -6,7 +6,7 @@
 
 @section('content')
     <section id="titlebar" class="titlebar titlebar-type-solid border-yes titlebar-scheme-light titlebar-alignment-center titlebar-valignment-center titlebar-size-large enable-hr-yes" data-height="350" data-rs-height="yes">
-            <!-- <div class="parallax-image parallax-section-no"></div> -->
+            <div class="parallax-image parallax-section-no" style="background-image: url('{{ asset('img/eventi/header.jpg') }}');"></div>
             <div class="section-overlay"></div>
             <div class="titlebar-wrapper" style="height: 350px; min-height: 350px;">
                 <div class="titlebar-content">

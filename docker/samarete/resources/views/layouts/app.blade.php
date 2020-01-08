@@ -390,6 +390,13 @@
               ],
             toolbar1: 'undo redo | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table ',
         });
+        
+        $.extend( true, $.fn.dataTable.defaults, {
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Italian.json"
+            }
+        });
+        
     </script>
     
 </body>

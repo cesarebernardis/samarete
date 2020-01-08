@@ -91,8 +91,43 @@
                 </div>
             </div>
         </div>
-        
     </section>
+    
+    <section id="section_1612688709" class="section content-box full-width section-border-no section-bborder-no section-height-content section-bgtype-image section-fixed-background-no section-bgstyle-stretch section-triangle-no triangle-location-top parallax-section-no section-overlay-no section-overlay-dot-no " style="padding-top:0;padding-bottom:0;background-color:#ffffff;" data-video-ratio="" data-parallax-speed="1">
+                    <div class="section-overlay" style=""></div>
+                    @foreach($servizio->associazioni as $associazione)
+                    <div class="container section-content">
+                        <div class="row-fluid">
+                            <div class="row-fluid equal-cheight-yes element-padding-medium element-vpadding-no">
+                                <div class="section-column span6" style="">
+                                    <div class="inner-content content-box textright" style="padding:40px 15px;">
+                                        <h3 class="title textright default bw-2px dh-2px divider-dark bc-dark dw-default color-default" style="margin-bottom:0px">
+                                            <span>{{ $associazione->nome }}</span>
+                                        </h3>
+                                        <div class="hr border-small dh-2px alignright hr-border-primary" style="margin: 15px 0px;"><span></span></div>
+                                        <div class="column-text"></div>
+                                        <h4 class="title textright default bw-2px dh-2px divider-dark bc-dark dw-default color-default" style="margin-bottom:0px">{{ $associazione->acronimo }}</h4>
+                                        <div class="break-text" style="height:160px;">{{ strip_tags($associazione->descrizione) }}</div>
+                                        <a id="brad_button_475111020" class="button button_default button_color_default button_small icon-align-right" title="Scopri di piu" href="/associazioni/view-associazione?id={{ $associazione->id }}">
+                                            <span>Scopri di pi&ugrave;</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="section-column span6" style="">
+                                    <div class="inner-content content-box textnone" style="padding:0px;">
+                                        <div class="single-image-container img-align-center">
+                                            <div class="single-image animate-when-visible fadeInRight start-animation" data-animation-delay="0" data-animation-effect="fadeInRight">
+                                                <img src="{{ empty($associazione->logo_base64) ? asset('img/no-image-available.png') : $associazione->logo_base64 }}" class="attachment-full" alt="{{ $associazione->nome }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+    </section>
+    
     <div class="row">
         <div class="col-md-12">
             <div class="" id="calendar">

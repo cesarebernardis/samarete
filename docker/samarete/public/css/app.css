@@ -53,6 +53,30 @@ button.btn.btn-icon-only { width: 38px; border-color: transparent; }
     max-height: 100%;
 }
 
+.dt-bootstrap select.input-sm, .dt-bootstrap .input-sm{
+    font-size: 12px;
+    line-height: 1;
+    border-radius: 0;
+}
+
+.dt-bootstrap .pagination {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    bottom: auto;
+    left: auto;
+    line-height: 1;
+    position: relative;
+}
+
+.dt-bootstrap .pagination a {
+    border-radius: 0;
+    text-indent: 0;
+    float: unset;
+    width: auto;
+    height: auto;
+}
+
 /* LAYOUT */
 #app-navbar-collapse .nav .dropdown i.fa {
     margin: 0 8px 0 0;

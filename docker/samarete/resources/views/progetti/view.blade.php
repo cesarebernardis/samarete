@@ -71,24 +71,34 @@
         </div>
     </section>
     
-    <div class="row">
-        <div class="col-md-12">
-            <table id="files" class="table table-bordered table-hover table-striped dataTable">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Dimensione</th>
-                        <th>Data caricamento</th>
-                        @can('update', $progetto)
-                        <th>Pubblico</th>
-                        <th></th>
-                        @endcan
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+    <section class="section content-box section-border-no section-bborder-no section-height-content section-bgtype-image section-fixed-background-no section-bgstyle-stretch section-triangle-no triangle-location-top parallax-section-no section-overlay-no section-overlay-dot-no " data-video-ratio="" data-parallax-speed="1">
+        <div class="section-overlay" style=""></div>
+        <div class="container section-content">
+            <div class="row-fluid">
+                <div class="row-fluid equal-cheight-no element-padding-medium element-vpadding-medium">
+                    <div class="section-column span12" style="">
+                        <div class="inner-content content-box textnone" style="padding:0px;">
+                        <table id="files" class="table table-bordered table-hover table-striped dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Dimensione</th>
+                                    <th>Data caricamento</th>
+                                    @can('update', $progetto)
+                                    <th>Pubblico</th>
+                                    <th></th>
+                                    @endcan
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
+    
     @can('uploadFile', $progetto)
     <div class="row margin-bottom-20">
         <div class="col-md-12">
