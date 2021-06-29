@@ -55,5 +55,12 @@ class AdminController extends Controller
     {
         return response()->view('admin.associazioni', ['users' => UserRepository::getFree()]);
     }
+
+    public function clear_cache()
+    {
+        $exitCode = Artisan::call('cache:clear');
+		echo $exitCode;
+		return;
+    }
     
 }

@@ -15,13 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/clear-cache', function() {
-    $exitCode = Artisan::call('cache:clear');
-    echo $exitCode;
-});
+
 
 //ADMIN
 Route::middleware('admin')->group(function(){
+	
+	Route::get('/clear-cache', 'AdminController@clear_cache');
+	
     Route::get('/admin', 'AdminController@index');
     Route::get('/admin/users', 'AdminController@users');
     Route::get('/admin/ruoli', 'AdminController@ruoli');
