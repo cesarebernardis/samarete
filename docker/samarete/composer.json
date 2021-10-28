@@ -12,6 +12,7 @@
         "mews/purifier": "~3.3"
     },
     "require-dev": {
+        "bennett-treptow/laravel-migration-generator": "^4.0",
         "fzaninotto/faker": "~1.4",
         "krlove/eloquent-model-generator": "^1.2",
         "mockery/mockery": "0.9.*",

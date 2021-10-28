@@ -59,7 +59,7 @@ class PermessoController extends Controller
             $permesso = PermessoRepository::getById($request->id);
             if(empty($permesso))
                 return response()->json(array("status" => 400, "message" => "ID Permesso non valido"));
-            $this->authorize('edit', $permesso);
+            $this->authorize('update', $permesso);
         }else{
             $this->authorize('create', Permesso::class);
         }

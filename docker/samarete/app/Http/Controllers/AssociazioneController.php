@@ -174,7 +174,7 @@ class AssociazioneController extends Controller
     public function toggleAssociazione(DeleteAssociazioneRequest $request)
     {
         $associazione = $this->associazioni->getById($request->id);
-        $this->authorize('edit', $associazione);
+        $this->authorize('update', $associazione);
         $associazione->attivo = !$associazione->attivo;
         $associazione->save();
         return response()->json(array("status" => 200, "message" => "OK"));

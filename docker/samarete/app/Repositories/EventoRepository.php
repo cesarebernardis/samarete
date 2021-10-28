@@ -33,7 +33,7 @@ class EventoRepository
     {
         $eventi = array();
         $a = DB::select('
-            SELECT DISTINCT evento_id
+            SELECT DISTINCT *
             FROM evento_has_giorno
             WHERE giorno > ?
             ORDER BY giorno, da ASC

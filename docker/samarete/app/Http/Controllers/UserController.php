@@ -58,7 +58,7 @@ class UserController extends Controller
     
     public function getRuoliUsers(Request $request)
     {
-        $this->authorize('edit', User::class);
+        $this->authorize('update', User::class);
         return response()->json($this->users->getRuoliUsers());
     }
     
@@ -106,7 +106,7 @@ class UserController extends Controller
     public function toggleUser(DeleteUserRequest $request)
     {
         $user = $this->users->getById($request->id);
-        $this->authorize('edit', $user);
+        $this->authorize('update', $user);
         $user->updated_at = new \DateTime();
         $user->attivo = !$user->attivo;
         $user->save();
@@ -120,7 +120,7 @@ class UserController extends Controller
             $user = UserRepository::getById($request->id);
             if(empty($user))
                 return response()->json(array("status" => 400, "message" => "ID Utente non valido"));
-            $this->authorize('edit', $user);
+            $this->authorize('update', $user);
         }else{
             if(empty($request->password))
                 return response()->json(array("status" => 400, "message" => "Password vuota"));

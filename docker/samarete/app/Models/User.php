@@ -22,6 +22,7 @@ class User extends Authenticatable
      *
      * @var array
      */
+	// protected $table = "users";
     protected $fillable = ['username', 'password', 'remember_token', 'nome', 'cognome', 'email', 'ultimo_accesso', 'attivo', 'datapath', 'admin', 'created_at', 'updated_at', 'associazione_id'];
     protected static $logAttributes = ['username', 'remember_token', 'nome', 'cognome', 'email', 'attivo', 'admin', 'associazione_id'];
 

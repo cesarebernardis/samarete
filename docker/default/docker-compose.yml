@@ -1,15 +1,25 @@
-version: '2'
+version: '3.9'
 services:
-### Applications Code Container #############################
+
   application:
-    image: tianon/true
+    build:
+      args:
+        user: defaultuser
+        uid: 1000
+      context: ./laravel-app
+      dockerfile: Dockerfile
+    image: samarete-app
+    restart: unless-stopped
+    working_dir: /var/www/
     volumes:
       - ../samarete/:/var/www/html/samarete
-### Applications Code Container #############################
+    networks:
+      - samaretenetwork
 
   apache2:
     build: ./apache2
     image: default/php:7.4-apache
+    restart: unless-stopped
     ports:
       - "80:80"
     environment:
@@ -21,8 +31,12 @@ services:
       - ./apache2/vhost/:/etc/apache2/sites-enabled
     depends_on:
       - db
+    networks:
+      - samaretenetwork
+      
   db:
     image: mysql:5.7.34
+    restart: unless-stopped
     ports:
       - "3307:3306"
     volumes_from:
@@ -33,12 +47,21 @@ services:
     environment:
       TZ: "Europe/Rome"
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    networks:
+      - samaretenetwork
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
     environment:
-     - PMA_ARBITRARY=1
+      - PMA_ARBITRARY=1
     ports:
-     - "8081:80"
+      - "8081:80"
     depends_on:
-     - db
+      - db
+    networks:
+      - samaretenetwork
+
+networks:
+  samaretenetwork:
+    driver: bridge

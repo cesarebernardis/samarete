@@ -10,6 +10,15 @@
         'dev' => true,
     ),
     'versions' => array(
+        'bennett-treptow/laravel-migration-generator' => array(
+            'pretty_version' => '4.0.2',
+            'version' => '4.0.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../bennett-treptow/laravel-migration-generator',
+            'aliases' => array(),
+            'reference' => 'cebb884ada89372c6bd68c47fa02550cc43dd0b6',
+            'dev_requirement' => true,
+        ),
         'composer/package-versions-deprecated' => array(
             'pretty_version' => '1.11.99.2',
             'version' => '1.11.99.2',
@@ -411,6 +420,15 @@
             'aliases' => array(),
             'reference' => '3b9dff8aaf7323590c1d2e443db701eb1f9aa0d3',
             'dev_requirement' => false,
+        ),
+        'marcj/topsort' => array(
+            'pretty_version' => '2.0.0',
+            'version' => '2.0.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../marcj/topsort',
+            'aliases' => array(),
+            'reference' => '972f58e42b5f110a0a1d8433247f65248abcfd5c',
+            'dev_requirement' => true,
         ),
         'mews/purifier' => array(
             'pretty_version' => '3.3.5',

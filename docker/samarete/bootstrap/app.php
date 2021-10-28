@@ -41,6 +41,7 @@ $app->singleton(
     Samarete\Exceptions\Handler::class
 );
 
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
