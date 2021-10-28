@@ -90,7 +90,7 @@
             @can('create', Samarete\Models\Progetto::class)
             <div class="row">
                 <div class="col-md-12">
-                    <a href="/progetti/edit-progetto"><button class="btn btn-primary">Crea nuovo progetto</button></a>
+                    <a href="/progetti/edit-progetto"><button class="button button_default button_color_default button_default border-radius-default icon-align-left">Crea nuovo progetto</button></a>
                 </div>
             </div>
             @endcan

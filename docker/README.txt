@@ -35,5 +35,9 @@ Per la prima installazione, è inoltre necessario creare il database dell'applic
   - Eseguire il seguente comando: "docker exec -it default-apache2-1 bash". (Controllare il nome del container in caso di fallimento del comando con "docker container ls".)
 - Dalla shell, accedere alla cartella samarete ("cd samarete").
 - Lanciare il comando "php artisan migrate".
+- Potrebbe essere necessario rigenerare le cache per un corretto accesso alle risorse. In tal caso, lanciare i seguenti comandi:
+  - php artisan config:cache
+  - php artisan route:cache
+  - php artisan view:cache
 
 A questo punto sarà possibile accedere al sito all'indirizzo http://127.0.0.1

@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 
 
 //ADMIN
@@ -157,5 +153,5 @@ Route::post('/richieste/evadi-richiesta', 'RichiestaController@evadiRichiesta')-
 Auth::routes();
 
 //HOME
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('empty-home');
 Route::get('/home', 'HomeController@index')->name('home');
