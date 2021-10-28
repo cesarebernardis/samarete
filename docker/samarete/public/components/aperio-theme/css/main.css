@@ -902,7 +902,7 @@ body.expanded .boxed-layout #header_wrapper.transparent-header{
 	position:relative;
 	width: 100%;
 	overflow: visible;
-	z-index:9998;
+	z-index:1001;
 	display:block;
 }
 
