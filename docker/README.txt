@@ -1,15 +1,16 @@
 DOCKER
-Per emulare un server WEB Ë stato utilizzato Docker
-Date le molte limitazioni in termini di compatibilit‡ della versione completa,
-Ë consigliato scaricare la Docker Toolbox (https://www.docker.com/products/docker-toolbox).
+Per emulare un server WEB √® stato utilizzato Docker
+Date le molte limitazioni in termini di compatibilit√† della versione completa,
+√® consigliato scaricare la Docker Toolbox (https://www.docker.com/products/docker-toolbox).
+(NOTA: con le nuove versioni di Docker, non √® pi√π necessario l'utilizzo della toolbox)
 
-Una volta scaricata e installata, baster‡ creare la vostra build:
+Una volta scaricata e installata, baster√† creare la vostra build:
 - Aprite la docker toolbox
 - Da linea di comando raggiungete la cartella default di questa directory
 ad esempio: "cd C:/Users/nomeutente/Documents/GitHub/samarete/docker/default"
-- Lanciare il comando "docker-build" e attendere che termini (Ë necessaria una connessione a internet)
+- Lanciare il comando "docker-build" e attendere che termini (√® necessaria una connessione a internet)
 
-A questo punto la vostra build Ë pronta per l'uso.
+A questo punto la vostra build √® pronta per l'uso.
 Per avviarla:
 - Aprite la docker toolbox
 - Da linea di comando raggiungete la cartella default di questa directory
@@ -23,6 +24,16 @@ ad esempio: cd C:/Users/nomeutente/Documents/GitHub/samarete/docker/default
 - Lanciare il comando "docker-compose stop"
 
 ATTENZIONE: la creazione della build va eseguita solo la prima volta che la utilizzate.
-Una volta creata, non sar‡ pi˘ necessario ricrearla (salvo malfunzionamenti).
+Una volta creata, non sar√† pi√π necessario ricrearla (salvo malfunzionamenti).
 Al contrario, ogni volta che la macchina viene arrestata, volontariamente o involontariamente
 (per esempio dopo un riavvio o uno spegnimento del computer), deve essere avviata.
+
+Per la prima installazione, √® inoltre necessario creare il database dell'applicazione.
+- Accedere a phpmyadmin (di default l'indirizzo √® http://127.0.0.1:8081) e creare un database vuoto di nome "samarete".
+- Lanciare una shell sul container del server apache
+  - Aprire un terminale 
+  - Eseguire il seguente comando: "docker exec -it default-apache2-1 bash". (Controllare il nome del container in caso di fallimento del comando con "docker container ls".)
+- Dalla shell, accedere alla cartella samarete ("cd samarete").
+- Lanciare il comando "php artisan migrate".
+
+A questo punto sar√† possibile accedere al sito all'indirizzo http://127.0.0.1
