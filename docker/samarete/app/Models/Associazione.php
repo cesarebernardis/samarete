@@ -134,7 +134,6 @@ class Associazione extends Model
     {
         $this->descrizione = \Purifier::clean($this->descrizione);
         $this->descrizione = trim($this->descrizione);
-        $this->oggetto = trim(strip_tags($this->oggetto));
         unset($this->logo_base64);
         if(empty($this->telefono_1) && !empty($this->telefono_2)) $this->telefono_1 = $this->telefono_2;
         if(empty($this->referente_telefono_1) && !empty($this->referente_telefono_2)) $this->referente_telefono_1 = $this->referente_telefono_2;
