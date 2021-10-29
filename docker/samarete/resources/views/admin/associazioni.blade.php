@@ -276,7 +276,7 @@ $(document).ready(function() {
                     }
                 }
             },
-            gestore_id{
+            gestore_id: {
                 required: true,
             },
         }, 
@@ -285,7 +285,7 @@ $(document).ready(function() {
                 required: "Inserisci un nome",
                 remote: "Nome già in uso",
             },
-            gestore_id{
+            gestore_id: {
                 required: 'Inserisci un gestore',
             },
         },
